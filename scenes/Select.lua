@@ -1,3 +1,4 @@
+local Song = require("classes/Song")
 local Select = Class:new()
 
 local songs = {}

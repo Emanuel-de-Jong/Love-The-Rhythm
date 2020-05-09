@@ -1,4 +1,7 @@
 require "init"
+
+lfs = require("libs/lfs/lfs")
+
 Class = require("instances/Class")
 Collision = require("instances/Collision")
 FontList = require("instances/FontList")
