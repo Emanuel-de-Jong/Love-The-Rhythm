@@ -11,6 +11,8 @@ local scrollY = 0
 Select.song = ""
 
 Select.load = function()
+    local testSong = Song:new({"D:\\Programming\\Repos\\Learning-Love\\resources\\songs"})
+
     for i=1, 30 do
         songs[i] = "Song " .. i
     end
