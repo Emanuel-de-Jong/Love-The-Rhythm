@@ -37,10 +37,6 @@ Menu.load = function()
     end
 end
 
-Menu.update = function(dt)
-
-end
-
 Menu.draw = function()
     love.graphics.setFont(titleFont)
     love.graphics.print(title.text, title.x, title.y)
@@ -51,7 +47,7 @@ Menu.draw = function()
     end
 end
 
-Menu.mousepressed = function(x, y, button)
+Menu.mousepressed = function(x, y, button, istouch, presses)
     if button == 1 then
         for k, v in pairs(buttons) do
             if Collision.checkPointBox(x,y, v.x,v.y,v.w,v.h) then
