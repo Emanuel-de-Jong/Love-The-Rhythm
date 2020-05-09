@@ -1,6 +1,6 @@
 require "init"
 
-lfs = require("libs/lfs/lfs")
+lfs = require("libs/lfs/lfs_ffi")
 
 Class = require("instances/Class")
 Collision = require("instances/Collision")

@@ -1,8 +1,9 @@
 local ffi = require("ffi")
-local lfs = {}
 
 ffi.cdef([[
 
 ]])
+
+local lfs = ffi.load("lfs")
 
 return lfs
