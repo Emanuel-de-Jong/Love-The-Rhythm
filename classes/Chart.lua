@@ -1,9 +1,15 @@
 local Chart = Class:new()
 
-Chart.var = 0
+Chart.path = ""
+Chart.name = ""
 
-Chart.func = function(par)
-    return par
+Chart.construct = function(self, name, path)
+    self.name = name
+    self.path = path
+    self:load()
+end
+
+Chart.load = function(self)
 end
 
 return Chart

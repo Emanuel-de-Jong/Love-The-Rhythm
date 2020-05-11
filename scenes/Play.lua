@@ -9,7 +9,7 @@ Play.update = function(dt)
 end
 
 Play.draw = function()
-    love.graphics.print(Select.song, 0, 0)
+    love.graphics.print(Select.song.name, 0, 0)
 end
 
 return Play

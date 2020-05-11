@@ -32,4 +32,25 @@ FileSystem.getFiles = function(path, extension)
     return paths
 end
 
+FileSystem.findFile = function(path, extension, name)
+    local path = {}
+    local paths = FileSystem.getFiles(path, extension)
+    if name then
+        local filename = name .. extension
+
+        for k, v in pairs(paths) do
+            if k == filename then
+                path[k] = v
+                break;
+            end
+        end
+    else
+        for k, v in pairs(paths) do
+            path[k] = v
+            break;
+        end
+    end
+    return path
+end
+
 return FileSystem

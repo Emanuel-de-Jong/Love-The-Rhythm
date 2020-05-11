@@ -2,22 +2,22 @@ local Song = require("classes/Song")
 local Select = Class:new()
 
 local songs = {}
-local songsFont = FontList.getFont("Modak.ttf", 20)
+local songsFont = FontList.getFont("Modak.ttf", 13)
 local songsSpacing = 50
 local songsX = 0
 
 local scrollY = 0
 
-Select.song = ""
+Select.song = nil
 
 Select.load = function()
-    local testSong = Song:new({"D:\\Programming\\Repos\\Learning-Love\\resources\\songs"})
+    local songPaths = FileSystem.getDirectories(love.filesystem.getWorkingDirectory() .. "\\resources\\songs")
 
-    for i=1, 30 do
-        songs[i] = "Song " .. i
+    for k, v in pairs(songPaths) do
+        table.insert(songs, Song:new(nil, k, v))
     end
 
-    songsX = (love.graphics.getWidth() / 3) * 2
+    songsX = (love.graphics.getWidth() / 2)
 end
 
 Select.draw = function()
@@ -25,7 +25,7 @@ Select.draw = function()
     love.graphics.translate(0, scrollY)
 
     for i, v in ipairs(songs) do
-        love.graphics.print(v, songsX, i * songsSpacing)
+        love.graphics.print(v.name, songsX, i * songsSpacing)
     end
     
     love.graphics.pop()
