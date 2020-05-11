@@ -1,10 +1,9 @@
 require "init"
 
-lfs = require("libs/lfs/lfs_ffi")
-
 Class = require("instances/Class")
 Collision = require("instances/Collision")
 FontList = require("instances/FontList")
+FileSystem = require("instances/FileSystem")
 Menu = require("scenes/Menu")
 Select = require("scenes/Select")
 Play = require("scenes/Play")
