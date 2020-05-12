@@ -1,17 +1,5 @@
 local Chart = Class:new()
 
-Chart.path = ""
-Chart.name = ""
-
-Chart.Format = ""
-Chart.General = {}
-Chart.Editor = {}
-Chart.Metadata = {}
-Chart.Difficulty = {}
-Chart.Events = {}
-Chart.TimingPoints = {}
-Chart.HitObjects = {}
-
 local typePerCategory = {
     Format = "format",
     General = "setting",
@@ -26,6 +14,16 @@ local typePerCategory = {
 Chart.construct = function(self, name, path)
     self.name = name
     self.path = path
+
+    self.Format = ""
+    self.General = {}
+    self.Editor = {}
+    self.Metadata = {}
+    self.Difficulty = {}
+    self.Events = {}
+    self.TimingPoints = {}
+    self.HitObjects = {}
+
     self:load()
 end
 
