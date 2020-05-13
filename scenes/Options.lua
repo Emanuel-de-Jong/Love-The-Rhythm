@@ -1,14 +1,5 @@
 local Options = Class:new()
 
-Options.options = {
-    volume = 0,
-    scrollSpeed = 10,
-    -- noteColor = {
-    --     value= 'white',
-    --     choices = {'white', 'red', 'green', 'blue'}
-    -- }
-}
-
 local spacing = 50
 local scroll = 0
 
@@ -24,6 +15,18 @@ local optionsValues = {
     font=FontList.getFont("Modak.ttf", 20)
 }
 
+Options.options = {
+    volume = 0,
+    scrollSpeed = 10,
+    -- noteColor = {
+    --     value= 'white',
+    --     choices = {'white', 'red', 'green', 'blue'}
+    -- }
+}
+
+Options.construct = function(self)
+    ConfigManager.configList["Options"] = "options"
+end
 
 Options.load = function()
     optionsSettings.x = 0

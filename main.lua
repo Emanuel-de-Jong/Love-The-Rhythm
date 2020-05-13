@@ -1,6 +1,7 @@
 require "init"
 
 Class = require("instances/Class")
+ConfigManager = require("instances/ConfigManager")
 Collision = require("instances/Collision")
 FontList = require("instances/FontList")
 FileSystem = require("instances/FileSystem")
@@ -11,8 +12,11 @@ Options = require("scenes/Options")
 Quit = require("scenes/Quit")
 
 scene = "Menu"
+rootPath = love.filesystem.getWorkingDirectory()
 
 function love.load(arg, unfilteredArg)
+    ConfigManager.loadAll()
+
     Menu.load()
 end
 

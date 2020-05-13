@@ -9,7 +9,7 @@ Select.currentSong = nil
 local chartsSettings = {spacing=50, x=0, w=0, scroll=0, font=FontList.getFont("Modak.ttf", 15)}
 
 Select.load = function()
-    local songPaths = FileSystem.getDirectories(love.filesystem.getWorkingDirectory() .. "\\resources\\songs")
+    local songPaths = FileSystem.getDirectories(rootPath .. "\\resources\\songs")
 
     for k, v in pairs(songPaths) do
         table.insert(songs, Song:new(nil, k, v))
