@@ -2,11 +2,11 @@ local Song = require("classes/Song")
 local Select = Class:new()
 
 local songs = {}
-local songsSettings = {spacing=50, x=0, w=0, scroll=0, font=FontList.getFont("Modak.ttf", 10)}
+local songsSettings = {spacing=50, x=0, w=0, scroll=0, font=FontList.getFont("Modak.ttf", 20)}
 
 Select.currentSong = nil
 
-local chartsSettings = {spacing=50, x=0, w=0, scroll=0, font=FontList.getFont("Modak.ttf", 7)}
+local chartsSettings = {spacing=50, x=0, w=0, scroll=0, font=FontList.getFont("Modak.ttf", 15)}
 
 Select.load = function()
     local songPaths = FileSystem.getDirectories(love.filesystem.getWorkingDirectory() .. "\\resources\\songs")
@@ -26,6 +26,8 @@ Select.draw = function()
     love.graphics.push()
     love.graphics.translate(0, songsSettings.scroll)
 
+    love.graphics.setFont(songsSettings.font)
+
     for i, v in ipairs(songs) do
         love.graphics.print(v.name, songsSettings.x, i * songsSettings.spacing)
     end
@@ -35,6 +37,8 @@ Select.draw = function()
     if Select.currentSong ~= nil then
         love.graphics.push()
         love.graphics.translate(0, chartsSettings.scroll)
+
+        love.graphics.setFont(chartsSettings.font)
 
         for i, v in ipairs(Select.currentSong.charts) do
             love.graphics.print(v.name, chartsSettings.x, i * chartsSettings.spacing)

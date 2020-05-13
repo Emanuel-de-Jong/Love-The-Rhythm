@@ -7,6 +7,7 @@ FileSystem = require("instances/FileSystem")
 Menu = require("scenes/Menu")
 Select = require("scenes/Select")
 Play = require("scenes/Play")
+Options = require("scenes/Options")
 Quit = require("scenes/Quit")
 
 scene = "Menu"
