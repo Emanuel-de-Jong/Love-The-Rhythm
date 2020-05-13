@@ -24,9 +24,9 @@ Options.options = {
     -- }
 }
 
-Options.construct = function(self)
-    ConfigManager.configList["Options"] = "options"
-end
+-- BAD CODE ALERT --
+ConfigManager.configList["Options"] = "options"
+-- BAD CODE ALERT --
 
 Options.load = function()
     optionsSettings.x = 0

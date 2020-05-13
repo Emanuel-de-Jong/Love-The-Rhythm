@@ -1,21 +1,21 @@
 local ConfigManager = Class:new()
 
--- local configEmpty = true
--- local config = io.open(path, "r")
--- if config ~= nil then
---     if config:read("*a") ~= "" then
---         configEmpty = false
---     end
---     config:close()
--- end
-
--- if configEmpty then
---     return {}
--- end
-
 ConfigManager.configList = {}
 
 ConfigManager.load = function(path)
+    -- local configEmpty = true
+    -- local config = io.open(path, "r")
+    -- if config ~= nil then
+    --     if config:read("*a") ~= "" then
+    --         configEmpty = false
+    --     end
+    --     config:close()
+    -- end
+
+    -- if configEmpty then
+    --     return {}
+    -- end
+
     local data = {}
     local colonPos = 0
     local k = ""
@@ -45,7 +45,7 @@ end
 ConfigManager.loadAll = function()
     local data = {}
     for k, v in pairs(ConfigManager.configList) do
-        data = ConfigManager.load(rootPath .. "\\resources\\configs\\" + k + ".txt")
+        data = ConfigManager.load(rootPath .. "\\resources\\configs\\" .. k .. ".txt")
         if #data ~= 0 then
             _G[k][v] = data
         end
@@ -78,7 +78,7 @@ end
 
 ConfigManager.saveAll = function()
     for k, v in pairs(ConfigManager.configList) do
-        ConfigManager.save(rootPath .. "\\resources\\configs\\" + k + ".txt", _G[k][v])
+        ConfigManager.save(rootPath .. "\\resources\\configs\\" .. k .. ".txt", _G[k][v])
     end
 end
 
