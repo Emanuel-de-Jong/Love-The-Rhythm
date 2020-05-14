@@ -1,15 +1,15 @@
-local Play = Class:new()
+local PlayScene = Class:new()
 
-Play.load = function()
+PlayScene.load = function()
     
 end
 
-Play.update = function(dt)
+PlayScene.update = function(dt)
 
 end
 
-Play.draw = function()
-    love.graphics.print(Select.currentSong.currentChart.name, 0, 0)
+PlayScene.draw = function()
+    love.graphics.print(SelectScene.currentSong.currentChart.name, 0, 0)
 end
 
-return Play
+return PlayScene

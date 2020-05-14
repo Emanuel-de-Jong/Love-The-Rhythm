@@ -6,19 +6,19 @@ Collision = require("instances/Collision")
 FontList = require("instances/FontList")
 FileSystem = require("instances/FileSystem")
 
-Menu = require("scenes/Menu")
-Select = require("scenes/Select")
-Play = require("scenes/Play")
-Options = require("scenes/Options")
-Quit = require("scenes/Quit")
+MenuScene = require("scenes/MenuScene")
+SelectScene = require("scenes/SelectScene")
+PlayScene = require("scenes/PlayScene")
+OptionsScene = require("scenes/OptionsScene")
+QuitScene = require("scenes/QuitScene")
 
-scene = "Menu"
+scene = "MenuScene"
 rootPath = love.filesystem.getWorkingDirectory()
 
 function love.load(arg, unfilteredArg)
     ConfigManager.loadAll()
 
-    Menu.load()
+    MenuScene.load()
 end
 
 function love.update(dt)

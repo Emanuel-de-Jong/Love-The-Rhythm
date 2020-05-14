@@ -1,7 +1,7 @@
-local Quit = Class:new()
+local QuitScene = Class:new()
 
-Quit.load = function()
+QuitScene.load = function()
     love.event.quit()
 end
 
-return Quit
+return QuitScene

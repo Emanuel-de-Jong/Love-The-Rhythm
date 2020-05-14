@@ -1,16 +1,16 @@
-local Menu = Class:new()
+local MenuScene = Class:new()
 
 local title = {text="VSRRG", x=0, y=0, w=0, h=0}
 local titleFont = FontList.getFont("Modak.ttf", 50)
 
 local buttons = {
-    {text="Start", scene="Select", x=0, y=0, w=0, h=0},
-    {text="Options", scene="Options", x=0, y=0, w=0, h=0},
-    {text="Quit", scene="Quit", x=0, y=0, w=0, h=0}
+    {text="Start", scene="SelectScene", x=0, y=0, w=0, h=0},
+    {text="Options", scene="OptionsScene", x=0, y=0, w=0, h=0},
+    {text="Quit", scene="QuitScene", x=0, y=0, w=0, h=0}
 }
 local buttonsFont = FontList.getFont("Modak.ttf", 30)
 
-Menu.load = function()
+MenuScene.load = function()
     local screenHeight = love.graphics.getHeight()
     -- amount of screenHeight dedicated to the buttons section
     local buttonsHeight = screenHeight * 0.7
@@ -37,7 +37,7 @@ Menu.load = function()
     end
 end
 
-Menu.draw = function()
+MenuScene.draw = function()
     love.graphics.setFont(titleFont)
     love.graphics.print(title.text, title.x, title.y)
 
@@ -47,7 +47,7 @@ Menu.draw = function()
     end
 end
 
-Menu.mousepressed = function(x, y, button, istouch, presses)
+MenuScene.mousepressed = function(x, y, button, istouch, presses)
     if button == 1 then
         for k, v in pairs(buttons) do
             if Collision.checkPointBox(x,y, v.x,v.y,v.w,v.h) then
@@ -58,4 +58,4 @@ Menu.mousepressed = function(x, y, button, istouch, presses)
     end
 end
 
-return Menu
+return MenuScene
