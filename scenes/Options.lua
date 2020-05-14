@@ -29,6 +29,10 @@ ConfigManager.configList["Options"] = "options"
 -- BAD CODE ALERT --
 
 Options.load = function()
+    for k, v in pairs(Options.options) do
+        print(k, ' - ', v)
+    end
+
     optionsSettings.x = 0
     optionsSettings.w = love.graphics.getWidth() / 2
 

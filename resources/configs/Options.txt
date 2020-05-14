@@ -1,0 +1,2 @@
+scrollSpeed:10
+volume:0

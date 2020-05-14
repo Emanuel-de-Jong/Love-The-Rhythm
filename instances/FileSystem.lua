@@ -53,4 +53,32 @@ FileSystem.findFile = function(path, extension, name)
     return path
 end
 
+FileSystem.checkFileExists = function(path)
+    local file = io.open(path, "r")
+    if file ~= nil then
+        io.close(file)
+        return true
+    else
+        return false
+    end
+end
+
+FileSystem.checkFileEmpty = function(path)
+    local file = io.open(path, "r")
+    if file ~= nil then
+        local content = file:read("*a")
+        io.close(file)
+        if content ~= "" then
+            return true
+        end
+    end
+    return false
+end
+
+FileSystem.createFile = function(path, name, extension)
+    local filePath = path .. "\\" .. name .. "." .. extension
+    io.open(filePath, "w"):close()
+    return filePath
+end
+
 return FileSystem

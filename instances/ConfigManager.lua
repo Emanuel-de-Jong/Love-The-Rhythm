@@ -3,18 +3,9 @@ local ConfigManager = Class:new()
 ConfigManager.configList = {}
 
 ConfigManager.load = function(path)
-    -- local configEmpty = true
-    -- local config = io.open(path, "r")
-    -- if config ~= nil then
-    --     if config:read("*a") ~= "" then
-    --         configEmpty = false
-    --     end
-    --     config:close()
-    -- end
-
-    -- if configEmpty then
-    --     return {}
-    -- end
+    if FileSystem.checkFileEmpty(path) == false then
+        return {}
+    end
 
     local data = {}
     local colonPos = 0
