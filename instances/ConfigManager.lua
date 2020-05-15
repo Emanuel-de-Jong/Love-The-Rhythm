@@ -2,7 +2,9 @@ local ConfigManager = Class:new()
 
 ConfigManager.configList = {}
 
-ConfigManager.load = function(path)
+ConfigManager.load = function(name)
+    local path = rootPath .. "\\resources\\configs\\" .. name .. ".txt"
+
     if FileSystem.checkFileEmpty(path) == false then
         return {}
     end
@@ -36,14 +38,16 @@ end
 ConfigManager.loadAll = function()
     local data = {}
     for k, v in pairs(ConfigManager.configList) do
-        data = ConfigManager.load(rootPath .. "\\resources\\configs\\" .. k .. ".txt")
+        data = ConfigManager.load(k)
         if #data ~= 0 then
             _G[k][v] = data
         end
     end
 end
 
-ConfigManager.save = function(path, data)
+ConfigManager.save = function(name, data)
+    local path = rootPath .. "\\resources\\configs\\" .. name .. ".txt"
+
     local config = io.open(path, "w")
 
     local line = ""
@@ -69,7 +73,7 @@ end
 
 ConfigManager.saveAll = function()
     for k, v in pairs(ConfigManager.configList) do
-        ConfigManager.save(rootPath .. "\\resources\\configs\\" .. k .. ".txt", _G[k][v])
+        ConfigManager.save(k, _G[k][v])
     end
 end
 

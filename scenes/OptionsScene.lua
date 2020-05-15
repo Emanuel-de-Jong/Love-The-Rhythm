@@ -15,15 +15,6 @@ local optionsValues = {
     font=FontList.getFont("Modak.ttf", 20)
 }
 
-OptionsScene.options = {
-    volume = 0,
-    scrollSpeed = 10,
-    -- noteColor = {
-    --     value= 'white',
-    --     choices = {'white', 'red', 'green', 'blue'}
-    -- }
-}
-
 OptionsScene.load = function()
     optionsSettings.x = 0
     optionsSettings.w = love.graphics.getWidth() / 2
@@ -39,7 +30,7 @@ OptionsScene.draw = function()
     love.graphics.setFont(optionsSettings.font)
 
     local i = 1
-    for k, v in pairs(OptionsScene.options) do
+    for k, v in pairs(Options.options) do
         love.graphics.print(k, optionsSettings.x, i * spacing)
 
         i = i + 1
@@ -48,7 +39,7 @@ OptionsScene.draw = function()
     love.graphics.setFont(optionsValues.font)
 
     i = 1
-    for k, v in pairs(OptionsScene.options) do
+    for k, v in pairs(Options.options) do
         love.graphics.print(v, optionsValues.x, i * spacing)
 
         i = i + 1

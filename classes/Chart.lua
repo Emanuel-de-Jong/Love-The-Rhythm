@@ -24,10 +24,6 @@ Chart.construct = function(self, name, path)
     self.TimingPoints = {}
     self.HitObjects = {}
 
-    self:load()
-end
-
-Chart.load = function(self)
     self:getFileInfo()
 end
 

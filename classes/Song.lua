@@ -6,10 +6,7 @@ Song.construct = function(self, name, path)
     self.path = path
     self.charts = {}
     self.currentChart = nil
-    self:load()
-end
 
-Song.load = function(self)
     local chartPaths = FileSystem.getFiles(self.path, ".osu")
 
     for k, v in pairs(chartPaths) do

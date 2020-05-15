@@ -6,6 +6,8 @@ Collision = require("instances/Collision")
 FontList = require("instances/FontList")
 FileSystem = require("instances/FileSystem")
 
+Options = require("instances/Options")
+
 MenuScene = require("scenes/MenuScene")
 SelectScene = require("scenes/SelectScene")
 PlayScene = require("scenes/PlayScene")
