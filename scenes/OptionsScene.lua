@@ -48,6 +48,28 @@ OptionsScene.draw = function()
     love.graphics.pop()
 end
 
+OptionsScene.mousepressed = function(x, y, button, istouch, presses)
+    if button == 1 or button == 2 then
+        if Collision.checkPointBoxX(x, optionsValues.x,optionsValues.w) then
+            y = y - scroll
+            local index = math.floor(y / spacing)
+
+            if Options.options[index] ~= nil then
+                local newValue = Options.options[index]
+                if button == 1 then
+                    newValue = newValue + 1
+                else
+                    newValue = newValue - 1
+                end
+
+                Options.options[index] = newValue
+
+                ConfigManager.save("Options", Options.options)
+            end
+        end
+    end
+end
+
 OptionsScene.wheelmoved = function(x, y)
     mouseX = love.mouse.getX()
     scroll = scroll + (y * 15)
