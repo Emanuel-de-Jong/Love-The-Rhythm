@@ -1,7 +1,9 @@
 require "init"
 
 Class = require("instances/Class")
+
 ConfigManager = require("instances/ConfigManager")
+SceneManager = require("instances/SceneManager")
 Collision = require("instances/Collision")
 FontList = require("instances/FontList")
 FileSystem = require("instances/FileSystem")
@@ -15,40 +17,40 @@ PlayScene = require("scenes/PlayScene")
 OptionsScene = require("scenes/OptionsScene")
 QuitScene = require("scenes/QuitScene")
 
-scene = "MenuScene"
 rootPath = love.filesystem.getWorkingDirectory()
 
 function love.load(arg, unfilteredArg)
     Options.load()
+    SceneManager.change("Menu")
     MenuScene.load()
 end
 
 function love.update(dt)
-    if _G[scene]["update"] then
-        _G[scene].update(dt)
+    if _G[SceneManager.scene]["update"] then
+        _G[SceneManager.scene].update(dt)
     end
 end
 
 function love.draw()
-    if _G[scene]["draw"] then
-        _G[scene].draw()
+    if _G[SceneManager.scene]["draw"] then
+        _G[SceneManager.scene].draw()
     end
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
-    if _G[scene]["mousepressed"] then
-        _G[scene].mousepressed(x, y, button, istouch, presses)
+    if _G[SceneManager.scene]["mousepressed"] then
+        _G[SceneManager.scene].mousepressed(x, y, button, istouch, presses)
     end
 end
 
 function love.keypressed(key, scancode, isrepeat)
-    if _G[scene]["keypressed"] then
-        _G[scene].keypressed(key, scancode, isrepeat)
+    if _G[SceneManager.scene]["keypressed"] then
+        _G[SceneManager.scene].keypressed(key, scancode, isrepeat)
     end
 end
 
 function love.wheelmoved(x, y)
-    if _G[scene]["wheelmoved"] then
-        _G[scene].wheelmoved(x, y)
+    if _G[SceneManager.scene]["wheelmoved"] then
+        _G[SceneManager.scene].wheelmoved(x, y)
     end
 end

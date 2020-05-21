@@ -60,8 +60,7 @@ SelectScene.mousepressed = function(x, y, button, istouch, presses)
             local index = math.floor(y / chartsSettings.spacing)
 
             SelectScene.currentSong.currentChart = SelectScene.currentSong.charts[index]
-            scene = "PlayScene"
-            _G[scene].load()
+            SceneManager.change("Play")
         end
     end
 end

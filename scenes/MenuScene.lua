@@ -4,9 +4,9 @@ local title = {text="VSRRG", x=0, y=0, w=0, h=0}
 local titleFont = FontList.getFont("Modak.ttf", 50)
 
 local buttons = {
-    {text="Start", scene="SelectScene", x=0, y=0, w=0, h=0},
-    {text="Options", scene="OptionsScene", x=0, y=0, w=0, h=0},
-    {text="Quit", scene="QuitScene", x=0, y=0, w=0, h=0}
+    {text="Start", scene="Select", x=0, y=0, w=0, h=0},
+    {text="Options", scene="Options", x=0, y=0, w=0, h=0},
+    {text="Quit", scene="Quit", x=0, y=0, w=0, h=0}
 }
 local buttonsFont = FontList.getFont("Modak.ttf", 30)
 
@@ -51,8 +51,7 @@ MenuScene.mousepressed = function(x, y, button, istouch, presses)
     if button == 1 then
         for k, v in pairs(buttons) do
             if Collision.checkPointBox(x,y, v.x,v.y,v.w,v.h) then
-                scene = v.scene
-                _G[scene].load()
+                SceneManager.change(v.scene)
             end
         end
     end
