@@ -10,7 +10,10 @@ Options.options = {
 }
 
 Options.load = function()
-    Options.options = ConfigManager.load("Options")
+    local data = ConfigManager.load("Options")
+    if data ~= nil then
+        Options.options = data
+    end
 end
 
 return Options

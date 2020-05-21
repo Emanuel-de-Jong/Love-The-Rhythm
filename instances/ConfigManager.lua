@@ -5,8 +5,8 @@ ConfigManager.configList = {}
 ConfigManager.load = function(name)
     local path = rootPath .. "\\resources\\configs\\" .. name .. ".txt"
 
-    if FileSystem.checkFileEmpty(path) == false then
-        return {}
+    if FileSystem.checkFileEmpty(path) == true then
+        return nil
     end
 
     local data = {}

@@ -54,15 +54,7 @@ OptionsScene.mousepressed = function(x, y, button, istouch, presses)
             y = y - scroll
             local index = math.floor(y / spacing)
 
-            local i = 1
-            local key = nil
-            for k, v in pairs(Options.options) do
-                if i == index then
-                    key = k
-                    break
-                end
-                i = i + 1
-            end
+            local key = TableSystem.getDataKey(Options.options, index)
 
             if Options.options[key] ~= nil then
                 if button == 1 then

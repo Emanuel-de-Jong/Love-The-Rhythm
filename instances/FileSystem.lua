@@ -69,10 +69,10 @@ FileSystem.checkFileEmpty = function(path)
         local content = file:read("*a")
         io.close(file)
         if content ~= "" then
-            return true
+            return false
         end
     end
-    return false
+    return true
 end
 
 FileSystem.createFile = function(path, name, extension)

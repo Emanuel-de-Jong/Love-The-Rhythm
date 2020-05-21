@@ -5,6 +5,7 @@ ConfigManager = require("instances/ConfigManager")
 Collision = require("instances/Collision")
 FontList = require("instances/FontList")
 FileSystem = require("instances/FileSystem")
+TableSystem = require("instances/TableSystem")
 
 Options = require("instances/Options")
 
