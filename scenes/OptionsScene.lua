@@ -19,12 +19,16 @@ local optionsValues = {
     font=FontList.getFont("Modak.ttf", 20)
 }
 
-OptionsScene.load = function()
+OptionsScene.calculatePositions = function()
     optionsSettings.x = 0
     optionsSettings.w = love.graphics.getWidth() / 2
 
     optionsValues.x = love.graphics.getWidth() / 2
     optionsValues.w = love.graphics.getWidth() / 2
+end
+
+OptionsScene.load = function()
+    OptionsScene.calculatePositions()
 end
 
 OptionsScene.draw = function()
@@ -73,6 +77,10 @@ end
 
 OptionsScene.wheelmoved = function(x, y)
     scroll = scroll + (y * 15)
+end
+
+OptionsScene.resize = function(w, h)
+    OptionsScene.calculatePositions()
 end
 
 return OptionsScene

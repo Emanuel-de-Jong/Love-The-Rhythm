@@ -16,6 +16,9 @@ SceneManager.goBack = function()
     if(#SceneManager.sceneHistory > 1) then
         SceneManager.sceneHistory[#SceneManager.sceneHistory] = nil
         SceneManager.scene = SceneManager.sceneHistory[#SceneManager.sceneHistory]
+        if SceneManager.scene["load"] then
+            SceneManager.scene.load()
+        end
     end
 end
 

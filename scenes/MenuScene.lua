@@ -3,17 +3,16 @@ local Collision = require("instances/Collision")
 local SceneManager = require("instances/SceneManager")
 local MenuScene = Class:new()
 
-local title = {text="VSRRG", x=0, y=0, w=0, h=0}
-local titleFont = FontList.getFont("Modak.ttf", 50)
+local title = {text="VSRRG", x = 0, y = 0, w = 0, h = 0, font = FontList.getFont("Modak.ttf", 50)}
 
 local buttons = {
-    {text="Start", scene="Select", x=0, y=0, w=0, h=0},
-    {text="Options", scene="Options", x=0, y=0, w=0, h=0},
-    {text="Quit", scene="Quit", x=0, y=0, w=0, h=0}
+    {text = "Start", scene = "Select", x = 0, y = 0, w = 0, h = 0},
+    {text = "Options", scene = "Options", x = 0, y = 0, w = 0, h = 0},
+    {text = "Quit", scene = "Quit", x = 0, y = 0, w = 0, h = 0}
 }
 local buttonsFont = FontList.getFont("Modak.ttf", 30)
 
-MenuScene.load = function()
+MenuScene.calculatePositions = function()
     local screenHeight = love.graphics.getHeight()
     -- amount of screenHeight dedicated to the buttons section
     local buttonsHeight = screenHeight * 0.7
@@ -22,11 +21,11 @@ MenuScene.load = function()
     local screenWidth = love.graphics.getWidth()
 
     -- half of the screen width - half of the text width = center of screen
-    title.x = (screenWidth / 2) - (titleFont:getWidth(title.text) / 2)
+    title.x = (screenWidth / 2) - (title.font:getWidth(title.text) / 2)
     -- upper side of screen height leftover from buttonsHeight
     title.y = (screenHeight - buttonsHeight) / 3
-    title.w = titleFont:getWidth(title.text)
-    title.h = titleFont:getHeight()
+    title.w = title.font:getWidth(title.text)
+    title.h = title.font:getHeight()
 
     for k, v in pairs(buttons) do
         -- half of the screen width - half of the text width = center of screen
@@ -40,8 +39,12 @@ MenuScene.load = function()
     end
 end
 
+MenuScene.load = function()
+    MenuScene.calculatePositions()
+end
+
 MenuScene.draw = function()
-    love.graphics.setFont(titleFont)
+    love.graphics.setFont(title.font)
     love.graphics.print(title.text, title.x, title.y)
 
     love.graphics.setFont(buttonsFont)
@@ -58,6 +61,10 @@ MenuScene.mousepressed = function(x, y, button, istouch, presses)
             end
         end
     end
+end
+
+MenuScene.resize = function(w, h)
+    MenuScene.calculatePositions()
 end
 
 return MenuScene

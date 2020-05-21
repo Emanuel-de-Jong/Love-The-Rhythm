@@ -8,13 +8,16 @@ local songsSettings = {spacing=50, x=0, w=0, scroll=0, font=FontList.getFont("Mo
 
 local chartsSettings = {spacing=50, x=0, w=0, scroll=0, font=FontList.getFont("Modak.ttf", 15)}
 
-SelectScene.load = function()
-
+SelectScene.calculatePositions = function()
     songsSettings.x = love.graphics.getWidth() / 2
     songsSettings.w = love.graphics.getWidth() / 2
 
     chartsSettings.x = 0
     chartsSettings.w = love.graphics.getWidth() / 2
+end
+
+SelectScene.load = function()
+    SelectScene.calculatePositions()
 end
 
 SelectScene.draw = function()
@@ -68,6 +71,10 @@ SelectScene.wheelmoved = function(x, y)
     elseif Collision.checkPointBoxX(mouseX, chartsSettings.x,chartsSettings.w) then
         chartsSettings.scroll = chartsSettings.scroll + (y * 15)
     end
+end
+
+SelectScene.resize = function(w, h)
+    SelectScene.calculatePositions()
 end
 
 return SelectScene

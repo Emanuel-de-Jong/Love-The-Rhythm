@@ -42,3 +42,9 @@ function love.wheelmoved(x, y)
         SceneManager.scene.wheelmoved(x, y)
     end
 end
+
+function love.resize(w, h)
+    if SceneManager.scene["resize"] then
+        SceneManager.scene.resize(w, h)
+    end
+end
