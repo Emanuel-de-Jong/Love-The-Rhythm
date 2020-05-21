@@ -58,12 +58,10 @@ OptionsScene.mousepressed = function(x, y, button, istouch, presses)
 
             if Options.options[key] ~= nil then
                 if button == 1 then
-                    Options.options[key] = Options.options[key] + 1
+                    Options.changeValue(key, Options.options[key] + 1)
                 else
-                    Options.options[key] = Options.options[key] - 1
+                    Options.changeValue(key, Options.options[key] - 1)
                 end
-
-                ConfigManager.save("Options", Options.options)
             end
         end
     end

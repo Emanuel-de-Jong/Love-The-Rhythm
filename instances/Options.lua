@@ -9,11 +9,29 @@ Options.options = {
     -- }
 }
 
-Options.load = function()
+function saveConfig()
+    ConfigManager.save("Options", Options.options)
+end
+
+function loadConfig()
     local data = ConfigManager.load("Options")
     if data ~= nil then
         Options.options = data
     end
+end
+
+Options.change = function(options)
+    Options.options = options
+    saveConfig()
+end
+
+Options.changeValue = function(key, value)
+    Options.options[key] = value
+    saveConfig()
+end
+
+Options.load = function()
+    loadConfig()
 end
 
 return Options
