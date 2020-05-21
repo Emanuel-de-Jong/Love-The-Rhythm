@@ -1,3 +1,4 @@
+local SongManager = require("instances/SongManager")
 local PlayScene = Class:new()
 
 PlayScene.load = function()

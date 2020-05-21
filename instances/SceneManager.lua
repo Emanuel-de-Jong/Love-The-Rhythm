@@ -1,22 +1,20 @@
 local SceneManager = Class:new()
 
 SceneManager.sceneHistory = {}
-SceneManager.scene = ""
+SceneManager.scene = nil
 
--- setmetatable(SceneManager.sceneHistory, {
---     __newindex = function(t, key, value)
---         SceneManager.scene = value
---         rawset(t, key, value)
---     end
--- })
-
-SceneManager.change = function(scene)
-    scene = scene .. "Scene"
-    SceneManager.sceneHistory[#SceneManager.sceneHistory + 1] = scene
-    SceneManager.scene = scene
-    if _G[scene]["load"] then
-        _G[scene].load()
+SceneManager.change = function(name)
+    name = name .. "Scene"
+    SceneManager.sceneHistory[#SceneManager.sceneHistory + 1] = require("scenes\\" .. name)
+    SceneManager.scene = SceneManager.sceneHistory[#SceneManager.sceneHistory]
+    if SceneManager.scene["load"] then
+        SceneManager.scene.load()
     end
+end
+
+SceneManager.goBack = function()
+    SceneManager.sceneHistory[#SceneManager.sceneHistory] = nil
+    SceneManager.scene = SceneManager.sceneHistory[#SceneManager.sceneHistory]
 end
 
 return SceneManager

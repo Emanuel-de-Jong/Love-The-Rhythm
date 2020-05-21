@@ -1,3 +1,4 @@
+local ConfigManager = require("instances/ConfigManager")
 local Options = Class:new()
 
 Options.options = {
@@ -30,7 +31,7 @@ Options.changeValue = function(key, value)
     saveConfig()
 end
 
-Options.load = function()
+Options.init = function()
     loadConfig()
 end
 

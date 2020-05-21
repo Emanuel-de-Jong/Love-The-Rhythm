@@ -1,3 +1,7 @@
+local FontList = require("instances/FontList")
+local Collision = require("instances/Collision")
+local Options = require("instances/Options")
+local TableSystem = require("instances/TableSystem")
 local OptionsScene = Class:new()
 
 local spacing = 50

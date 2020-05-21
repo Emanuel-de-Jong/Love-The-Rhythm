@@ -1,3 +1,6 @@
+local SongManager = require("instances/SongManager")
+local SceneManager = require("instances/SceneManager")
+local Collision = require("instances/Collision")
 local SelectScene = Class:new()
 
 local songsSettings = {spacing=50, x=0, w=0, scroll=0, font=FontList.getFont("Modak.ttf", 20)}

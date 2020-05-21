@@ -1,3 +1,4 @@
+local FileSystem = require("instances/FileSystem")
 local Chart = require("classes/Chart")
 local Song = Class:new()
 

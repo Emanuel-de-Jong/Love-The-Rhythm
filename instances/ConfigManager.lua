@@ -1,9 +1,52 @@
+local FileSystem = require("instances/FileSystem")
 local ConfigManager = Class:new()
 
 ConfigManager.configList = {}
 
-ConfigManager.load = function(name)
-    local path = rootPath .. "\\resources\\configs\\" .. name .. ".txt"
+ConfigManager.loadAll = function()
+    local data = {}
+    for k, v in pairs(ConfigManager.configList) do
+        data = ConfigManager.load(k)
+        if #data ~= 0 then
+            _G[k][v] = data
+        end
+    end
+end
+
+ConfigManager.save = function(name, data)
+    local path = FileSystem.rootPath .. "\\resources\\configs\\" .. name .. ".txt"
+
+    local config = io.open(path, "w")
+
+    local line = ""
+    for k, v in pairs(data) do
+        line = k .. ":"
+
+        if type(v) == "table" then
+            for s in pairs(v) do
+                line = line .. s .. ","
+            end
+        else
+            line = line .. v
+        end
+
+        line = line .. "\n"
+        config:write(line)
+    end
+
+    config:close()
+
+    return config
+end
+
+ConfigManager.saveAll = function()
+    for k, v in pairs(ConfigManager.configList) do
+        ConfigManager.save(k, _G[k][v])
+    end
+end
+
+ConfigManager.init = function(name)
+    local path = FileSystem.rootPath .. "\\resources\\configs\\" .. name .. ".txt"
 
     if FileSystem.checkFileEmpty(path) == true then
         return nil
@@ -33,48 +76,6 @@ ConfigManager.load = function(name)
     end
 
     return data
-end
-
-ConfigManager.loadAll = function()
-    local data = {}
-    for k, v in pairs(ConfigManager.configList) do
-        data = ConfigManager.load(k)
-        if #data ~= 0 then
-            _G[k][v] = data
-        end
-    end
-end
-
-ConfigManager.save = function(name, data)
-    local path = rootPath .. "\\resources\\configs\\" .. name .. ".txt"
-
-    local config = io.open(path, "w")
-
-    local line = ""
-    for k, v in pairs(data) do
-        line = k .. ":"
-
-        if type(v) == "table" then
-            for s in pairs(v) do
-                line = line .. s .. ","
-            end
-        else
-            line = line .. v
-        end
-
-        line = line .. "\n"
-        config:write(line)
-    end
-
-    config:close()
-
-    return config
-end
-
-ConfigManager.saveAll = function()
-    for k, v in pairs(ConfigManager.configList) do
-        ConfigManager.save(k, _G[k][v])
-    end
 end
 
 return ConfigManager

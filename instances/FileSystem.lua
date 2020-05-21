@@ -1,5 +1,7 @@
 local FileSystem = Class:new()
 
+FileSystem.rootPath = love.filesystem.getWorkingDirectory()
+
 FileSystem.getAll = function(path)
     local paths = {}
     local directory = io.popen('dir "'..path..'" /b')

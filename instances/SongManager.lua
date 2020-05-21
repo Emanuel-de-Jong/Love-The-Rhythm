@@ -1,4 +1,6 @@
 local Song = require("classes/Song")
+local ConfigManager = require("instances/ConfigManager")
+local FileSystem = require("instances.FileSystem")
 local SongManager = Class:new()
 
 SongManager.songs = {}
@@ -35,8 +37,8 @@ SongManager.changeByIndex = function(index)
     saveConfig()
 end
 
-SongManager.load = function()
-    local songPaths = FileSystem.getDirectories(rootPath .. "\\resources\\songs")
+SongManager.init = function()
+    local songPaths = FileSystem.getDirectories(FileSystem.rootPath .. "\\resources\\songs")
 
     for k, v in pairs(songPaths) do
         table.insert(SongManager.songs, Song:new(nil, k, v))

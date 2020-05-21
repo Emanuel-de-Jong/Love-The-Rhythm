@@ -1,3 +1,6 @@
+local FontList = require("instances/FontList")
+local Collision = require("instances/Collision")
+local SceneManager = require("instances/SceneManager")
 local MenuScene = Class:new()
 
 local title = {text="VSRRG", x=0, y=0, w=0, h=0}
