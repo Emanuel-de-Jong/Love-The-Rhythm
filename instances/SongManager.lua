@@ -41,7 +41,7 @@ SongManager.init = function()
     local songPaths = FileSystem.getDirectories(FileSystem.rootPath .. "\\resources\\songs")
 
     for k, v in pairs(songPaths) do
-        table.insert(SongManager.songs, Song:new(nil, k, v))
+        table.insert(SongManager.songs, Song:new(nil, v))
     end
 
     loadConfig()

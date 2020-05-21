@@ -11,8 +11,7 @@ local typePerCategory = {
     HitObjects = "event",
 }
 
-Chart.construct = function(self, name, path)
-    self.name = name
+Chart.construct = function(self, path)
     self.path = path
 
     self.Format = ""
@@ -25,6 +24,8 @@ Chart.construct = function(self, name, path)
     self.HitObjects = {}
 
     self:getFileInfo()
+
+    self.name = self.Metadata["Version"]
 end
 
 Chart.getFileInfo = function(self)
