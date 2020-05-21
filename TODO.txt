@@ -1,0 +1,7 @@
+code
+public or private
+code placement
+file placement
+naming
+comments
+check only and all outside files and input
