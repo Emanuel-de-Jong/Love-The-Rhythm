@@ -54,15 +54,22 @@ OptionsScene.mousepressed = function(x, y, button, istouch, presses)
             y = y - scroll
             local index = math.floor(y / spacing)
 
-            if Options.options[index] ~= nil then
-                local newValue = Options.options[index]
-                if button == 1 then
-                    newValue = newValue + 1
-                else
-                    newValue = newValue - 1
+            local i = 1
+            local key = nil
+            for k, v in pairs(Options.options) do
+                if i == index then
+                    key = k
+                    break
                 end
+                i = i + 1
+            end
 
-                Options.options[index] = newValue
+            if Options.options[key] ~= nil then
+                if button == 1 then
+                    Options.options[key] = Options.options[key] + 1
+                else
+                    Options.options[key] = Options.options[key] - 1
+                end
 
                 ConfigManager.save("Options", Options.options)
             end

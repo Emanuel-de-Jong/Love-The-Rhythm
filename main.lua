@@ -18,8 +18,7 @@ scene = "MenuScene"
 rootPath = love.filesystem.getWorkingDirectory()
 
 function love.load(arg, unfilteredArg)
-    ConfigManager.loadAll()
-
+    Options.load()
     MenuScene.load()
 end
 

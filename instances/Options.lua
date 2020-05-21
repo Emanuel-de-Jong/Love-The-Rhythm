@@ -10,9 +10,7 @@ Options.options = {
 }
 
 Options.load = function()
-    ConfigManager.configList["Options"] = "options"
+    Options.options = ConfigManager.load("Options")
 end
-
-Options.load()
 
 return Options
