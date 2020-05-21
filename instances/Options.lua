@@ -10,11 +10,11 @@ Options.options = {
     -- }
 }
 
-function saveConfig()
+local function saveConfig()
     ConfigManager.save("Options", Options.options)
 end
 
-function loadConfig()
+local function loadConfig()
     local data = ConfigManager.load("Options")
     if data ~= nil then
         Options.options = data

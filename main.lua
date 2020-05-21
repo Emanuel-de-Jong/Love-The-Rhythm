@@ -2,13 +2,6 @@ Class = require("instances/Class")
 
 local SceneManager = require("instances/SceneManager")
 
-setmetatable(_G, {
-	__newindex = function(a, b, c)
-		print(a, b, c, debug.traceback())
-		rawset(a, b, c)
-	end
-})
-
 function love.load(arg, unfilteredArg)
     SceneManager.change("Menu")
 end

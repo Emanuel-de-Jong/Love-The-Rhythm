@@ -45,7 +45,7 @@ ConfigManager.saveAll = function()
     end
 end
 
-ConfigManager.init = function(name)
+ConfigManager.load = function(name)
     local path = FileSystem.rootPath .. "\\resources\\configs\\" .. name .. ".txt"
 
     if FileSystem.checkFileEmpty(path) == true then

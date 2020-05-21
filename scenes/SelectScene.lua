@@ -1,6 +1,7 @@
 local SongManager = require("instances/SongManager")
 local SceneManager = require("instances/SceneManager")
 local Collision = require("instances/Collision")
+local FontList = require("instances/FontList")
 local SelectScene = Class:new()
 
 local songsSettings = {spacing=50, x=0, w=0, scroll=0, font=FontList.getFont("Modak.ttf", 20)}
@@ -61,7 +62,7 @@ SelectScene.mousepressed = function(x, y, button, istouch, presses)
 end
 
 SelectScene.wheelmoved = function(x, y)
-    mouseX = love.mouse.getX()
+    local mouseX = love.mouse.getX()
     if Collision.checkPointBoxX(mouseX, songsSettings.x,songsSettings.w) then
         songsSettings.scroll = songsSettings.scroll + (y * 15)
     elseif Collision.checkPointBoxX(mouseX, chartsSettings.x,chartsSettings.w) then

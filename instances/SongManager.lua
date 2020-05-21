@@ -7,11 +7,11 @@ SongManager.songs = {}
 
 SongManager.song = nil
 
-function saveConfig()
+local function saveConfig()
     ConfigManager.save("SongManager", {song = SongManager.song.name})
 end
 
-function loadConfig()
+local function loadConfig()
     local data = ConfigManager.load("SongManager")
     if data ~= nil then
         SongManager.changeByName(data["song"])

@@ -72,7 +72,6 @@ OptionsScene.mousepressed = function(x, y, button, istouch, presses)
 end
 
 OptionsScene.wheelmoved = function(x, y)
-    mouseX = love.mouse.getX()
     scroll = scroll + (y * 15)
 end
 
