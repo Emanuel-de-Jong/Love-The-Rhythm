@@ -13,7 +13,7 @@ Song.construct = function(self, name, path)
         table.insert(self.charts, Chart:new(nil, k, v))
     end
 
-    self.currentChart = self.charts[1]
+    self.chart = self.charts[1]
 end
 
 return Song

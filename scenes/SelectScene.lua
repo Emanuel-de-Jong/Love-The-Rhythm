@@ -1,19 +1,10 @@
-local Song = require("classes/Song")
 local SelectScene = Class:new()
 
-local songs = {}
 local songsSettings = {spacing=50, x=0, w=0, scroll=0, font=FontList.getFont("Modak.ttf", 20)}
-
-SelectScene.currentSong = nil
 
 local chartsSettings = {spacing=50, x=0, w=0, scroll=0, font=FontList.getFont("Modak.ttf", 15)}
 
 SelectScene.load = function()
-    local songPaths = FileSystem.getDirectories(rootPath .. "\\resources\\songs")
-
-    for k, v in pairs(songPaths) do
-        table.insert(songs, Song:new(nil, k, v))
-    end
 
     songsSettings.x = love.graphics.getWidth() / 2
     songsSettings.w = love.graphics.getWidth() / 2
@@ -28,19 +19,19 @@ SelectScene.draw = function()
 
     love.graphics.setFont(songsSettings.font)
 
-    for i, v in ipairs(songs) do
+    for i, v in ipairs(SongManager.songs) do
         love.graphics.print(v.name, songsSettings.x, i * songsSettings.spacing)
     end
     
     love.graphics.pop()
 
-    if SelectScene.currentSong ~= nil then
+    if SongManager.song ~= nil then
         love.graphics.push()
         love.graphics.translate(0, chartsSettings.scroll)
 
         love.graphics.setFont(chartsSettings.font)
 
-        for i, v in ipairs(SelectScene.currentSong.charts) do
+        for i, v in ipairs(SongManager.song.charts) do
             love.graphics.print(v.name, chartsSettings.x, i * chartsSettings.spacing)
         end
         
@@ -54,12 +45,13 @@ SelectScene.mousepressed = function(x, y, button, istouch, presses)
             y = y - songsSettings.scroll
             local index = math.floor(y / songsSettings.spacing)
 
-            SelectScene.currentSong = songs[index]
+            SongManager.changeByIndex(index)
         elseif Collision.checkPointBoxX(x, chartsSettings.x,chartsSettings.w) then
             y = y - chartsSettings.scroll
             local index = math.floor(y / chartsSettings.spacing)
 
-            SelectScene.currentSong.currentChart = SelectScene.currentSong.charts[index]
+            SongManager.song.chart = SongManager.song.charts[index]
+
             SceneManager.change("Play")
         end
     end

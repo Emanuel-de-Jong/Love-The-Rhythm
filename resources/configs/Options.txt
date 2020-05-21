@@ -1,2 +1,2 @@
-scrollSpeed:12
-volume:-2
+scrollSpeed:10
+volume:1

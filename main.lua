@@ -10,6 +10,7 @@ FileSystem = require("instances/FileSystem")
 TableSystem = require("instances/TableSystem")
 
 Options = require("instances/Options")
+SongManager = require("instances/SongManager")
 
 MenuScene = require("scenes/MenuScene")
 SelectScene = require("scenes/SelectScene")
@@ -21,8 +22,9 @@ rootPath = love.filesystem.getWorkingDirectory()
 
 function love.load(arg, unfilteredArg)
     Options.load()
+    SongManager.load()
+
     SceneManager.change("Menu")
-    MenuScene.load()
 end
 
 function love.update(dt)
