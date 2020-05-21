@@ -13,8 +13,10 @@ SceneManager.change = function(name)
 end
 
 SceneManager.goBack = function()
-    SceneManager.sceneHistory[#SceneManager.sceneHistory] = nil
-    SceneManager.scene = SceneManager.sceneHistory[#SceneManager.sceneHistory]
+    if(#SceneManager.sceneHistory > 1) then
+        SceneManager.sceneHistory[#SceneManager.sceneHistory] = nil
+        SceneManager.scene = SceneManager.sceneHistory[#SceneManager.sceneHistory]
+    end
 end
 
 return SceneManager

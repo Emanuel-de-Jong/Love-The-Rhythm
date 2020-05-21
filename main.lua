@@ -1,6 +1,7 @@
 Class = require("instances/Class")
 
 local SceneManager = require("instances/SceneManager")
+local Input = require("instances/Input")
 
 function love.load(arg, unfilteredArg)
     SceneManager.change("Menu")
@@ -19,18 +20,24 @@ function love.draw()
 end
 
 function love.mousepressed(x, y, button, istouch, presses)
+    Input.mousepressed(x, y, button, istouch, presses)
+
     if SceneManager.scene["mousepressed"] then
         SceneManager.scene.mousepressed(x, y, button, istouch, presses)
     end
 end
 
 function love.keypressed(key, scancode, isrepeat)
+    Input.keypressed(key, scancode, isrepeat)
+
     if SceneManager.scene["keypressed"] then
         SceneManager.scene.keypressed(key, scancode, isrepeat)
     end
 end
 
 function love.wheelmoved(x, y)
+    Input.wheelmoved(x, y)
+
     if SceneManager.scene["wheelmoved"] then
         SceneManager.scene.wheelmoved(x, y)
     end
