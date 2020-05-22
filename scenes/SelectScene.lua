@@ -1,7 +1,7 @@
 local SongManager = require("instances/SongManager")
 local SceneManager = require("instances/SceneManager")
-local Collision = require("libraries/Collision")
-local FontList = require("instances/FontList")
+local CollisionSystem = require("libraries/CollisionSystem")
+local FontManager = require("instances/FontManager")
 local SelectScene = Class:new()
 
 local songsSettings = {
@@ -9,7 +9,7 @@ local songsSettings = {
     x = 0,
     w = 0,
     scroll = 0,
-    font = FontList.get("Modak.ttf", 20)
+    font = FontManager.get("Modak.ttf", 20)
 }
 
 local chartsSettings = {
@@ -17,7 +17,7 @@ local chartsSettings = {
     x = 0,
     w = 0,
     scroll = 0,
-    font = FontList.get("Modak.ttf", 15)
+    font = FontManager.get("Modak.ttf", 15)
 }
 
 local function calculatePositions()
@@ -62,12 +62,12 @@ end
 
 SelectScene.mousepressed = function(x, y, button, istouch, presses)
     if button == 1 then
-        if Collision.checkPointBoxX(x, songsSettings.x,songsSettings.w) then
+        if CollisionSystem.checkPointBoxX(x, songsSettings.x,songsSettings.w) then
             y = y - songsSettings.scroll
             local index = math.floor(y / songsSettings.spacing)
 
             SongManager.setWithIndex(index)
-        elseif Collision.checkPointBoxX(x, chartsSettings.x,chartsSettings.w) then
+        elseif CollisionSystem.checkPointBoxX(x, chartsSettings.x,chartsSettings.w) then
             y = y - chartsSettings.scroll
             local index = math.floor(y / chartsSettings.spacing)
 
@@ -81,9 +81,9 @@ end
 SelectScene.wheelmoved = function(x, y)
     local mouseX = love.mouse.getX()
 
-    if Collision.checkPointBoxX(mouseX, songsSettings.x,songsSettings.w) then
+    if CollisionSystem.checkPointBoxX(mouseX, songsSettings.x,songsSettings.w) then
         songsSettings.scroll = songsSettings.scroll + (y * 15)
-    elseif Collision.checkPointBoxX(mouseX, chartsSettings.x,chartsSettings.w) then
+    elseif CollisionSystem.checkPointBoxX(mouseX, chartsSettings.x,chartsSettings.w) then
         chartsSettings.scroll = chartsSettings.scroll + (y * 15)
     end
 end

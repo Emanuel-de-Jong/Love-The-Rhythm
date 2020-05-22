@@ -1,16 +1,16 @@
-local FontList = require("instances/FontList")
-local Collision = require("libraries/Collision")
+local FontManager = require("instances/FontManager")
+local CollisionSystem = require("libraries/CollisionSystem")
 local SceneManager = require("instances/SceneManager")
 local MenuScene = Class:new()
 
-local title = {text="VSRRG", x = 0, y = 0, w = 0, h = 0, font = FontList.get("Modak.ttf", 50)}
+local title = {text="VSRRG", x = 0, y = 0, w = 0, h = 0, font = FontManager.get("Modak.ttf", 50)}
 
 local buttons = {
     {text = "Start", scene = "Select", x = 0, y = 0, w = 0, h = 0},
     {text = "Options", scene = "Options", x = 0, y = 0, w = 0, h = 0},
     {text = "Quit", scene = "Quit", x = 0, y = 0, w = 0, h = 0}
 }
-local buttonsFont = FontList.get("Modak.ttf", 30)
+local buttonsFont = FontManager.get("Modak.ttf", 30)
 
 local function calculatePositions()
     local screenHeight = love.graphics.getHeight()
@@ -56,7 +56,7 @@ end
 MenuScene.mousepressed = function(x, y, button, istouch, presses)
     if button == 1 then
         for k, v in pairs(buttons) do
-            if Collision.checkPointBox(x,y, v.x,v.y,v.w,v.h) then
+            if CollisionSystem.checkPointBox(x,y, v.x,v.y,v.w,v.h) then
                 SceneManager.set(v.scene)
             end
         end

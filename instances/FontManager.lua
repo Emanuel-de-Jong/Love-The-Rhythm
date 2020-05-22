@@ -1,8 +1,8 @@
-local FontList = Class:new()
+local FontManager = Class:new()
 
 local fonts = {}
 
-FontList.set = function(filename, size)
+FontManager.set = function(filename, size)
 	if not fonts[filename] then
 		fonts[filename] = {}
 	end
@@ -13,10 +13,10 @@ FontList.set = function(filename, size)
 	end
 end
 
-FontList.get = function(filename, size)
-	FontList.set(filename, size)
+FontManager.get = function(filename, size)
+	FontManager.set(filename, size)
 	
 	return fonts[filename][size]
 end
 
-return FontList
+return FontManager

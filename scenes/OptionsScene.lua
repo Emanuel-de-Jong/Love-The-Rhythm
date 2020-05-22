@@ -1,6 +1,6 @@
-local FontList = require("instances/FontList")
-local Collision = require("libraries/Collision")
-local Options = require("instances/Options")
+local FontManager = require("instances/FontManager")
+local CollisionSystem = require("libraries/CollisionSystem")
+local OptionManager = require("instances/OptionManager")
 local TableSystem = require("libraries/TableSystem")
 local OptionsScene = Class:new()
 
@@ -10,13 +10,13 @@ local scroll = 0
 local optionsSettings = {
     x = 0,
     w = 0,
-    font = FontList.get("Modak.ttf", 20)
+    font = FontManager.get("Modak.ttf", 20)
 }
 
 local optionsValues = {
     x = 0,
     w = 0,
-    font = FontList.get("Modak.ttf", 20)
+    font = FontManager.get("Modak.ttf", 20)
 }
 
 local function calculatePositions()
@@ -40,7 +40,7 @@ OptionsScene.draw = function()
     love.graphics.setFont(optionsSettings.font)
 
     local i = 1
-    for k in pairs(Options.options) do
+    for k in pairs(OptionManager.options) do
         love.graphics.print(k, optionsSettings.x, i * spacing)
         i = i + 1
     end
@@ -48,7 +48,7 @@ OptionsScene.draw = function()
     love.graphics.setFont(optionsValues.font)
 
     i = 1
-    for k, v in pairs(Options.options) do
+    for k, v in pairs(OptionManager.options) do
         love.graphics.print(v, optionsValues.x, i * spacing)
         i = i + 1
     end
@@ -58,17 +58,17 @@ end
 
 OptionsScene.mousepressed = function(x, y, button, istouch, presses)
     if button == 1 or button == 2 then
-        if Collision.checkPointBoxX(x, optionsValues.x,optionsValues.w) then
+        if CollisionSystem.checkPointBoxX(x, optionsValues.x,optionsValues.w) then
             y = y - scroll
             local index = math.floor(y / spacing)
 
-            local key = TableSystem.getKeyWithPosition(Options.options, index)
+            local key = TableSystem.getKeyWithPosition(OptionManager.options, index)
 
-            if Options.options[key] then
+            if OptionManager.options[key] then
                 if button == 1 then
-                    Options.setWithValue(key, Options.options[key] + 1)
+                    OptionManager.setWithValue(key, OptionManager.options[key] + 1)
                 else
-                    Options.setWithValue(key, Options.options[key] - 1)
+                    OptionManager.setWithValue(key, OptionManager.options[key] - 1)
                 end
             end
         end
