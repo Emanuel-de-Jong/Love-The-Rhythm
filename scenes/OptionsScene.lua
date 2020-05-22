@@ -13,7 +13,7 @@ local optionsSettings = {
     font = FontManager.get("Modak.ttf", 20)
 }
 
-local optionsValues = {
+local valuesSettings = {
     x = 0,
     w = 0,
     font = FontManager.get("Modak.ttf", 20)
@@ -25,8 +25,8 @@ local function calculatePositions()
     optionsSettings.x = 0
     optionsSettings.w = horizontalCenter
 
-    optionsValues.x = horizontalCenter
-    optionsValues.w = horizontalCenter
+    valuesSettings.x = horizontalCenter
+    valuesSettings.w = horizontalCenter
 end
 
 OptionsScene.load = function()
@@ -45,11 +45,11 @@ OptionsScene.draw = function()
         i = i + 1
     end
 
-    love.graphics.setFont(optionsValues.font)
+    love.graphics.setFont(valuesSettings.font)
 
     i = 1
     for k, v in pairs(OptionManager.options) do
-        love.graphics.print(v, optionsValues.x, i * spacing)
+        love.graphics.print(v, valuesSettings.x, i * spacing)
         i = i + 1
     end
 
@@ -58,7 +58,7 @@ end
 
 OptionsScene.mousepressed = function(x, y, button, istouch, presses)
     if button == 1 or button == 2 then
-        if CollisionSystem.checkPointBoxX(x, optionsValues.x,optionsValues.w) then
+        if CollisionSystem.checkPointBoxX(x, valuesSettings.x,valuesSettings.w) then
             y = y - scroll
             local index = math.floor(y / spacing)
 
