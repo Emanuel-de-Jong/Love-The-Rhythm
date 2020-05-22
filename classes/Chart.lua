@@ -34,16 +34,16 @@ local function syncWithFile(self)
     local colonPos = nil
 
     for line in io.lines(self.path) do
-        if #line ~= 0 and string.sub(line, 1, 2) ~= "//" then
-            if string.sub(line, 1, 1) == "[" then
-                category = string.sub(line, 2, #line - 1)
+        if #line ~= 0 and line:sub(1, 2) ~= "//" then
+            if line:sub(1, 1) == "[" then
+                category = line:sub(2, #line - 1)
                 type = typePerCategory[category]
             else
                 if type == "format" then
-                    self.Format = string.sub(line, #line - 1)
+                    self.Format = line:sub(#line - 1)
                 elseif type == "setting" then
-                    colonPos = string.find(line, ":")
-                    self[category][string.sub(line, 1, colonPos - 1)] = string.sub(line, colonPos + 1)
+                    colonPos = line:find(":")
+                    self[category][line:sub(1, colonPos - 1)] = line:sub(colonPos + 1):gsub("^%s*(.-)%s*$", "%1")
                 elseif type == "event" then
                     table.insert(self[category], line)
                 end

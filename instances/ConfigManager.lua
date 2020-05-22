@@ -37,14 +37,14 @@ ConfigManager.get = function(name)
     local value = nil
     local t = {}
     for line in io.lines(path) do
-        colonPosition = string.find(line, ":")
-        key = string.sub(line, 1, colonPosition - 1)
-        value = string.sub(line, colonPosition + 1)
+        colonPosition = line:find(":")
+        key = line:sub(1, colonPosition - 1)
+        value = line:sub(colonPosition + 1)
 
         if tonumber(value) then
             data[key] = tonumber(value)
-        elseif string.find(value, ",") then
-            for s in string.gmatch(value, '([^,]+)') do
+        elseif value:find(",") then
+            for s in value:gmatch("([^,]+)") do
                 table.insert(t, s)
             end
             data[key] = t

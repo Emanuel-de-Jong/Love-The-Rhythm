@@ -70,7 +70,7 @@ FileSystem.getFiles = function(path, extension)
     local pathsEmpty = true
 
     for filename in directory:lines() do
-        if (extension and string.find(filename, extension)) or (not extension and string.find(filename, "%.")) then
+        if (extension and filename:find(extension)) or (not extension and filename:find("%.")) then
             pathsEmpty = false
             paths[filename] = path .. "\\" .. filename
         end
@@ -121,10 +121,10 @@ FileSystem.getFile = function(path, extension, name)
 end
 
 FileSystem.getFilenameWithoutExtension = function(filename)
-    local extensionStart = string.find(filename, "%.[^%.]*$")
+    local extensionStart = filename:find("%.[^%.]*$")
 
     if extensionStart then
-        return string.sub(filename, 1, extensionStart - 1)
+        return filename:sub(1, extensionStart - 1)
     else
         return filename
     end

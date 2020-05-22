@@ -3,17 +3,18 @@ local FileSystem = require("libraries/FileSystem")
 local Song = Class:new()
 
 local function checkValid(self)
-    if self.charts[1] then
-        local path = self.path .. "\\" .. self.charts[1].General.AudioFilename -- has space before AudioFilename because of stupid .osu file
-        print(path)
-        if FileSystem.checkFileExists(path) then
-            self.isValid = true
-            return true
-        end
-    end
+    -- if self.charts[1] then
+    --     local path = self.path .. "\\" .. self.charts[1].General.AudioFilename -- has space before AudioFilename because of stupid .osu file
+    --     if FileSystem.checkFileExists(path) then
+    --         self.isValid = true
+    --         return true
+    --     end
+    -- end
 
-    self.isValid = false
-    return false
+    -- self.isValid = false
+    -- return false
+    self.isValid = true
+    return true
 end
 
 Song.construct = function(self, path)
