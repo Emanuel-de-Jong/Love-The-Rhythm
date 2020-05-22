@@ -8,7 +8,7 @@ TableSystem.checkEmpty = function(t)
     return true
 end
 
-TableSystem.getElementByPosition = function(t, position)
+TableSystem.getElementWithPosition = function(t, position)
     local i = 1
     local element = {}
     local elementEmpty = true
@@ -29,7 +29,7 @@ TableSystem.getElementByPosition = function(t, position)
     end
 end
 
-TableSystem.getKeyByPosition = function(t, position)
+TableSystem.getKeyWithPosition = function(t, position)
     local i = 1
     local key = nil
 
@@ -44,7 +44,7 @@ TableSystem.getKeyByPosition = function(t, position)
     return key
 end
 
-TableSystem.getValueByPosition = function(t, position)
+TableSystem.getValueWithPosition = function(t, position)
     local i = 1
     local value = nil
 

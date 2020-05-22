@@ -66,7 +66,7 @@ SelectScene.mousepressed = function(x, y, button, istouch, presses)
             y = y - songsSettings.scroll
             local index = math.floor(y / songsSettings.spacing)
 
-            SongManager.changeByIndex(index)
+            SongManager.setWithIndex(index)
         elseif Collision.checkPointBoxX(x, chartsSettings.x,chartsSettings.w) then
             y = y - chartsSettings.scroll
             local index = math.floor(y / chartsSettings.spacing)

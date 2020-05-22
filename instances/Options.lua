@@ -14,7 +14,7 @@ local function setConfig()
     ConfigManager.set("Options", Options.options)
 end
 
-local function getConfig()
+local function syncWithConfig()
     local data = ConfigManager.get("Options")
 
     for k, v in pairs(data) do
@@ -29,13 +29,13 @@ Options.set = function(options)
     setConfig()
 end
 
-Options.setValue = function(key, value)
+Options.setWithValue = function(key, value)
     Options.options[key] = value
     setConfig()
 end
 
 Options.init = function()
-    getConfig()
+    syncWithConfig()
 end
 
 return Options

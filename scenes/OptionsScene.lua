@@ -62,13 +62,13 @@ OptionsScene.mousepressed = function(x, y, button, istouch, presses)
             y = y - scroll
             local index = math.floor(y / spacing)
 
-            local key = TableSystem.getKeyByPosition(Options.options, index)
+            local key = TableSystem.getKeyWithPosition(Options.options, index)
 
             if Options.options[key] then
                 if button == 1 then
-                    Options.setValue(key, Options.options[key] + 1)
+                    Options.setWithValue(key, Options.options[key] + 1)
                 else
-                    Options.setValue(key, Options.options[key] - 1)
+                    Options.setWithValue(key, Options.options[key] - 1)
                 end
             end
         end
