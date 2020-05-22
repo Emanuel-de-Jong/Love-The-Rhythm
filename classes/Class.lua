@@ -14,7 +14,7 @@ Class.new = function(self, object, ...)
 	self.__index = self
 	self.__newindex = Class.__newindex
 	
-	if object["construct"] then
+	if object.construct then
 		object:construct(...)
 	end
 	

@@ -14,7 +14,7 @@ Song.construct = function(self, path)
 
     if self.charts[1] then
         self.chart = self.charts[1]
-        self.name = self.chart.Metadata["Title"]
+        self.name = self.chart.Metadata.Title
     end
 end
 

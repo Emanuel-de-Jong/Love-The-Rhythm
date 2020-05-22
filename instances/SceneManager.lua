@@ -8,7 +8,7 @@ SceneManager.set = function(name)
     SceneManager.sceneHistory[#SceneManager.sceneHistory + 1] = require("scenes\\" .. name)
     SceneManager.scene = SceneManager.sceneHistory[#SceneManager.sceneHistory]
     
-    if SceneManager.scene["load"] then
+    if SceneManager.scene.load then
         SceneManager.scene.load()
     end
 end
@@ -22,7 +22,7 @@ SceneManager.goBack = function()
         SceneManager.sceneHistory[#SceneManager.sceneHistory] = nil
         SceneManager.scene = SceneManager.sceneHistory[#SceneManager.sceneHistory]
 
-        if SceneManager.scene["load"] then
+        if SceneManager.scene.load then
             SceneManager.scene.load()
         end
     end

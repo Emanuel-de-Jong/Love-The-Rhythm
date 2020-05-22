@@ -15,7 +15,7 @@ local function syncWithConfig()
     local data = ConfigManager.get("SongManager")
 
     if data then
-        SongManager.setWithName(data["song"])
+        SongManager.setWithName(data.song)
     end
 end
 

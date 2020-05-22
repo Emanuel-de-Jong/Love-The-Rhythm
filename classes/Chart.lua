@@ -25,7 +25,7 @@ Chart.construct = function(self, path)
 
     self:syncWithFile()
 
-    self.name = self.Metadata["Version"]
+    self.name = self.Metadata.Version
 end
 
 Chart.syncWithFile = function(self)
