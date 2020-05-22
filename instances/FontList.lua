@@ -2,24 +2,21 @@ local FontList = Class:new()
 
 FontList.fonts = {}
 
-local newFont = love.graphics.newFont
-
-FontList.set = function(path, size)
-	path = "resources/fonts/" .. path
-
-	if not FontList.fonts[path] then
-		FontList.fonts[path] = {}
+FontList.set = function(filename, size)
+	if not FontList.fonts[filename] then
+		FontList.fonts[filename] = {}
 	end
 
-	if not FontList.fonts[path][size] then
-		FontList.fonts[path][size] = newFont(path, size)
+	if not FontList.fonts[filename][size] then
+		local path = "resources/fonts/" .. filename
+		FontList.fonts[filename][size] = love.graphics.newFont(path, size)
 	end
 end
 
-FontList.get = function(path, size)
-	FontList.set(path, size)
+FontList.get = function(filename, size)
+	FontList.set(filename, size)
 	
-	return FontList.fonts[path][size]
+	return FontList.fonts[filename][size]
 end
 
 return FontList
