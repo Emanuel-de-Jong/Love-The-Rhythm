@@ -12,7 +12,7 @@ local buttons = {
 }
 local buttonsFont = FontList.get("Modak.ttf", 30)
 
-MenuScene.calculatePositions = function()
+local function calculatePositions()
     local screenHeight = love.graphics.getHeight()
     -- amount of screenHeight dedicated to the buttons section
     local buttonsHeight = screenHeight * 0.7
@@ -40,7 +40,7 @@ MenuScene.calculatePositions = function()
 end
 
 MenuScene.load = function()
-    MenuScene.calculatePositions()
+    calculatePositions()
 end
 
 MenuScene.draw = function()
@@ -64,7 +64,7 @@ MenuScene.mousepressed = function(x, y, button, istouch, presses)
 end
 
 MenuScene.resize = function(w, h)
-    MenuScene.calculatePositions()
+    calculatePositions()
 end
 
 return MenuScene

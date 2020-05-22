@@ -1,6 +1,6 @@
 local Chart = Class:new()
 
-local typePerCategory = {
+Chart.typePerCategory = {
     Format = "format",
     General = "setting",
     Editor = "setting",
@@ -37,7 +37,7 @@ Chart.syncWithFile = function(self)
         if #line ~= 0 and string.sub(line, 1, 2) ~= "//" then
             if string.sub(line, 1, 1) == "[" then
                 category = string.sub(line, 2, #line - 1)
-                type = typePerCategory[category]
+                type = Chart.typePerCategory[category]
             else
                 if type == "format" then
                     self.Format = string.sub(line, #line - 1)

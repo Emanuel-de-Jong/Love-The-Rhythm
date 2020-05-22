@@ -19,7 +19,7 @@ local optionsValues = {
     font = FontList.get("Modak.ttf", 20)
 }
 
-OptionsScene.calculatePositions = function()
+local function calculatePositions()
     local horizontalCenter = love.graphics.getWidth() / 2
 
     optionsSettings.x = 0
@@ -30,7 +30,7 @@ OptionsScene.calculatePositions = function()
 end
 
 OptionsScene.load = function()
-    OptionsScene.calculatePositions()
+    calculatePositions()
 end
 
 OptionsScene.draw = function()
@@ -80,7 +80,7 @@ OptionsScene.wheelmoved = function(x, y)
 end
 
 OptionsScene.resize = function(w, h)
-    OptionsScene.calculatePositions()
+    calculatePositions()
 end
 
 return OptionsScene

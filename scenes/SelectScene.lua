@@ -20,7 +20,7 @@ local chartsSettings = {
     font = FontList.get("Modak.ttf", 15)
 }
 
-SelectScene.calculatePositions = function()
+local function calculatePositions()
     local horizontalCenter = love.graphics.getWidth() / 2
 
     songsSettings.x = horizontalCenter
@@ -31,7 +31,7 @@ SelectScene.calculatePositions = function()
 end
 
 SelectScene.load = function()
-    SelectScene.calculatePositions()
+    calculatePositions()
 end
 
 SelectScene.draw = function()
@@ -89,7 +89,7 @@ SelectScene.wheelmoved = function(x, y)
 end
 
 SelectScene.resize = function(w, h)
-    SelectScene.calculatePositions()
+    calculatePositions()
 end
 
 return SelectScene
