@@ -1,2 +1,2 @@
 scrollSpeed:13
-volume:1
+volume:2

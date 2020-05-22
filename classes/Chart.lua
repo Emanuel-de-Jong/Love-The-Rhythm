@@ -14,7 +14,11 @@ Chart.typePerCategory = {
 Chart.construct = function(self, path)
     self.path = path
 
-    self.Format = ""
+    self:syncWithFile()
+end
+
+Chart.syncWithFile = function(self)
+    self.Format = nil
     self.General = {}
     self.Editor = {}
     self.Metadata = {}
@@ -23,12 +27,6 @@ Chart.construct = function(self, path)
     self.TimingPoints = {}
     self.HitObjects = {}
 
-    self:syncWithFile()
-
-    self.name = self.Metadata.Version
-end
-
-Chart.syncWithFile = function(self)
     local category = "Format"
     local type = "format"
     local colonPos = nil
@@ -50,6 +48,8 @@ Chart.syncWithFile = function(self)
             end
         end
     end
+    
+    self.name = self.Metadata.Version
 end
 
 return Chart

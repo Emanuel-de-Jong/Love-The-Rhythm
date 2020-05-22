@@ -31,10 +31,6 @@ SongManager.setWithIndex = function(index)
     SongManager.setConfig()
 end
 
-SongManager.get = function()
-    return SongManager.songs
-end
-
 SongManager.setConfig = function()
     ConfigManager.set("SongManager", {song = SongManager.song.name})
 end

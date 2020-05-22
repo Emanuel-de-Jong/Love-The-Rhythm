@@ -20,10 +20,6 @@ Options.setWithValue = function(key, value)
     Options.setConfig()
 end
 
-Options.get = function()
-    return Options.options
-end
-
 Options.setConfig = function()
     ConfigManager.set("Options", Options.options)
 end
