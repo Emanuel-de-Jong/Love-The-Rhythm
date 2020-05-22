@@ -73,7 +73,7 @@ SelectScene.mousepressed = function(x, y, button, istouch, presses)
 
             SongManager.song.chart = SongManager.song.charts[index]
 
-            SceneManager.change("Play")
+            SceneManager.set("Play")
         end
     end
 end

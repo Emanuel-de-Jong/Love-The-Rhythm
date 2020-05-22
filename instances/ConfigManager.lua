@@ -1,24 +1,11 @@
 local FileSystem = require("libraries/FileSystem")
 local ConfigManager = Class:new()
 
-ConfigManager.configList = {}
-
-ConfigManager.loadAll = function()
-    local data = {}
-    for k, v in pairs(ConfigManager.configList) do
-        data = ConfigManager.load(k)
-        if #data ~= 0 then
-            _G[k][v] = data
-        end
-    end
-end
-
-ConfigManager.save = function(name, data)
+ConfigManager.set = function(name, data)
     local path = FileSystem.rootPath .. "\\resources\\configs\\" .. name .. ".txt"
-
     local config = io.open(path, "w")
 
-    local line = ""
+    local line = nil
     for k, v in pairs(data) do
         line = k .. ":"
 
@@ -35,17 +22,9 @@ ConfigManager.save = function(name, data)
     end
 
     config:close()
-
-    return config
 end
 
-ConfigManager.saveAll = function()
-    for k, v in pairs(ConfigManager.configList) do
-        ConfigManager.save(k, _G[k][v])
-    end
-end
-
-ConfigManager.load = function(name)
+ConfigManager.get = function(name)
     local path = FileSystem.rootPath .. "\\resources\\configs\\" .. name .. ".txt"
 
     if FileSystem.checkFileEmpty(path) == true then
@@ -53,9 +32,9 @@ ConfigManager.load = function(name)
     end
 
     local data = {}
-    local colonPos = 0
-    local k = ""
-    local v = ""
+    local colonPos = nil
+    local k = nil
+    local v = nil
     local t = {}
     for line in io.lines(path) do
         colonPos = string.find(line, ":")

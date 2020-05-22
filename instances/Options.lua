@@ -10,29 +10,29 @@ Options.options = {
     -- }
 }
 
-local function saveConfig()
-    ConfigManager.save("Options", Options.options)
+local function setConfig()
+    ConfigManager.set("Options", Options.options)
 end
 
-local function loadConfig()
-    local data = ConfigManager.load("Options")
+local function getConfig()
+    local data = ConfigManager.get("Options")
     if data ~= nil then
         Options.options = data
     end
 end
 
-Options.change = function(options)
+Options.set = function(options)
     Options.options = options
-    saveConfig()
+    setConfig()
 end
 
-Options.changeValue = function(key, value)
+Options.setValue = function(key, value)
     Options.options[key] = value
-    saveConfig()
+    setConfig()
 end
 
 Options.init = function()
-    loadConfig()
+    getConfig()
 end
 
 return Options

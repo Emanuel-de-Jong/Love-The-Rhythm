@@ -23,16 +23,16 @@ Chart.construct = function(self, path)
     self.TimingPoints = {}
     self.HitObjects = {}
 
-    self:getFileInfo()
+    self:syncWithFile()
 
     self.name = self.Metadata["Version"]
 end
 
-Chart.getFileInfo = function(self)
+Chart.syncWithFile = function(self)
     local category = "Format"
     local type = "format"
-    local colonPos = 0
-    
+    local colonPos = nil
+
     for line in io.lines(self.path) do
         if #line ~= 0 and string.sub(line, 1, 2) ~= "//" then
             if string.sub(line, 1, 1) == "[" then

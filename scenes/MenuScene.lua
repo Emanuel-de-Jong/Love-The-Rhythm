@@ -57,7 +57,7 @@ MenuScene.mousepressed = function(x, y, button, istouch, presses)
     if button == 1 then
         for k, v in pairs(buttons) do
             if Collision.checkPointBox(x,y, v.x,v.y,v.w,v.h) then
-                SceneManager.change(v.scene)
+                SceneManager.set(v.scene)
             end
         end
     end

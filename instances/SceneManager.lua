@@ -3,7 +3,7 @@ local SceneManager = Class:new()
 SceneManager.sceneHistory = {}
 SceneManager.scene = nil
 
-SceneManager.change = function(name)
+SceneManager.set = function(name)
     name = name .. "Scene"
     SceneManager.sceneHistory[#SceneManager.sceneHistory + 1] = require("scenes\\" .. name)
     SceneManager.scene = SceneManager.sceneHistory[#SceneManager.sceneHistory]

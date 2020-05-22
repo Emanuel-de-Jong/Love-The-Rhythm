@@ -73,7 +73,7 @@ FileSystem.getFile = function(path, extension, name)
         end
     elseif name then
         for k, v in pairs(FileSystem.getFiles(path)) do
-            if FileSystem.removeExtension(k) == name then
+            if FileSystem.getFilenameWithoutExtension(k) == name then
                 pathEmpty = false
                 path[k] = v
                 break;
@@ -94,7 +94,7 @@ FileSystem.getFile = function(path, extension, name)
     end
 end
 
-FileSystem.removeExtension = function(filename)
+FileSystem.getFilenameWithoutExtension = function(filename)
     local extensionStart = string.find(filename, "%.[^%.]*$")
 
     if extensionStart then
@@ -128,14 +128,6 @@ FileSystem.checkFileEmpty = function(path)
     end
 
     return true
-end
-
-FileSystem.createFile = function(path, name, extension)
-    local filePath = path .. "\\" .. name .. "." .. extension
-
-    io.open(filePath, "w"):close()
-    
-    return filePath
 end
 
 return FileSystem

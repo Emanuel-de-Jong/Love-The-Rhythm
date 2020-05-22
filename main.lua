@@ -4,7 +4,7 @@ local SceneManager = require("instances/SceneManager")
 local Input = require("instances/Input")
 
 function love.load(arg, unfilteredArg)
-    SceneManager.change("Menu")
+    SceneManager.set("Menu")
 end
 
 function love.update(dt)

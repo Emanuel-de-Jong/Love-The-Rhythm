@@ -42,7 +42,6 @@ OptionsScene.draw = function()
     local i = 1
     for k, v in pairs(Options.options) do
         love.graphics.print(k, optionsSettings.x, i * spacing)
-
         i = i + 1
     end
 
@@ -51,7 +50,6 @@ OptionsScene.draw = function()
     i = 1
     for k, v in pairs(Options.options) do
         love.graphics.print(v, optionsValues.x, i * spacing)
-
         i = i + 1
     end
 
@@ -68,9 +66,9 @@ OptionsScene.mousepressed = function(x, y, button, istouch, presses)
 
             if Options.options[key] ~= nil then
                 if button == 1 then
-                    Options.changeValue(key, Options.options[key] + 1)
+                    Options.setValue(key, Options.options[key] + 1)
                 else
-                    Options.changeValue(key, Options.options[key] - 1)
+                    Options.setValue(key, Options.options[key] - 1)
                 end
             end
         end
