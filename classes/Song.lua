@@ -5,7 +5,6 @@ local Song = Class:new()
 Song.construct = function(self, path)
     self.path = path
     self.charts = {}
-    self.currentChart = nil
 
     local chartPaths = FileSystem.getFiles(self.path, ".osu")
 
@@ -13,8 +12,10 @@ Song.construct = function(self, path)
         table.insert(self.charts, Chart:new(nil, v))
     end
 
-    self.chart = self.charts[1]
-    self.name = self.chart.Metadata["Title"]
+    if self.charts[1] then
+        self.chart = self.charts[1]
+        self.name = self.chart.Metadata["Title"]
+    end
 end
 
 return Song

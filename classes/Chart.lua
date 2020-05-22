@@ -32,6 +32,7 @@ Chart.getFileInfo = function(self)
     local category = "Format"
     local type = "format"
     local colonPos = 0
+    
     for line in io.lines(self.path) do
         if #line ~= 0 and string.sub(line, 1, 2) ~= "//" then
             if string.sub(line, 1, 1) == "[" then
