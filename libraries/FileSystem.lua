@@ -2,6 +2,32 @@ local FileSystem = Class:new()
 
 FileSystem.rootPath = love.filesystem.getWorkingDirectory()
 
+FileSystem.checkFileExists = function(path)
+    local file = io.open(path, "r")
+
+    if file then
+        io.close(file)
+        return true
+    else
+        return false
+    end
+end
+
+FileSystem.checkFileEmpty = function(path)
+    local file = io.open(path, "r")
+
+    if file then
+        local content = file:read("*a")
+
+        io.close(file)
+        if content ~= "" then
+            return false
+        end
+    end
+
+    return true
+end
+
 FileSystem.getAll = function(path)
     local paths = {}
     local directory = io.popen('dir "'..path..'" /b')
@@ -102,32 +128,6 @@ FileSystem.getFilenameWithoutExtension = function(filename)
     else
         return filename
     end
-end
-
-FileSystem.checkFileExists = function(path)
-    local file = io.open(path, "r")
-
-    if file then
-        io.close(file)
-        return true
-    else
-        return false
-    end
-end
-
-FileSystem.checkFileEmpty = function(path)
-    local file = io.open(path, "r")
-
-    if file then
-        local content = file:read("*a")
-
-        io.close(file)
-        if content ~= "" then
-            return false
-        end
-    end
-
-    return true
 end
 
 return FileSystem

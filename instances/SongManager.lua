@@ -4,20 +4,7 @@ local FileSystem = require("libraries/FileSystem")
 local SongManager = Class:new()
 
 SongManager.songs = {}
-
 SongManager.song = nil
-
-SongManager.setConfig = function()
-    ConfigManager.set("SongManager", {song = SongManager.song.name})
-end
-
-SongManager.syncWithConfig = function()
-    local data = ConfigManager.get("SongManager")
-
-    if data then
-        SongManager.setWithName(data.song)
-    end
-end
 
 SongManager.set = function(songs)
     SongManager.songs = songs
@@ -46,6 +33,18 @@ end
 
 SongManager.get = function()
     return SongManager.songs
+end
+
+SongManager.setConfig = function()
+    ConfigManager.set("SongManager", {song = SongManager.song.name})
+end
+
+SongManager.syncWithConfig = function()
+    local data = ConfigManager.get("SongManager")
+
+    if data then
+        SongManager.setWithName(data.song)
+    end
 end
 
 SongManager.init = function()

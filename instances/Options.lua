@@ -10,20 +10,6 @@ Options.options = {
     -- }
 }
 
-Options.setConfig = function()
-    ConfigManager.set("Options", Options.options)
-end
-
-Options.syncWithConfig = function()
-    local data = ConfigManager.get("Options")
-
-    for k, v in pairs(data) do
-        if Options.options[k] then
-            Options.options[k] = v
-        end
-    end
-end
-
 Options.set = function(options)
     Options.options = options
     Options.setConfig()
@@ -36,6 +22,20 @@ end
 
 Options.get = function()
     return Options.options
+end
+
+Options.setConfig = function()
+    ConfigManager.set("Options", Options.options)
+end
+
+Options.syncWithConfig = function()
+    local data = ConfigManager.get("Options")
+
+    for k, v in pairs(data) do
+        if Options.options[k] then
+            Options.options[k] = v
+        end
+    end
 end
 
 Options.init = function()
