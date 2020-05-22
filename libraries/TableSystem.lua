@@ -4,45 +4,58 @@ TableSystem.checkEmpty = function(t)
     for k, v in pairs(t) do
         return false
     end
+
     return true
 end
 
-TableSystem.getData = function(t, index)
+TableSystem.getElementByPosition = function(t, position)
     local i = 1
-    local data = nil
+    local element = {}
+    local elementEmpty = true
+
     for k, v in pairs(t) do
-        if i == index then
-            data[k] = v
+        if i == position then
+            elementEmpty = false
+            element[k] = v
             break
         end
         i = i + 1
     end
-    return data
+
+    if elementEmpty then
+        return nil
+    else
+        return element
+    end
 end
 
-TableSystem.getDataKey = function(t, index)
+TableSystem.getKeyByPosition = function(t, position)
     local i = 1
     local key = nil
+
     for k, v in pairs(t) do
-        if i == index then
+        if i == position then
             key = k
             break
         end
         i = i + 1
     end
+
     return key
 end
 
-TableSystem.getDataValue = function(t, index)
+TableSystem.getValueByPosition = function(t, position)
     local i = 1
     local value = nil
+
     for k, v in pairs(t) do
-        if i == index then
+        if i == position then
             value = v
             break
         end
         i = i + 1
     end
+
     return value
 end
 
