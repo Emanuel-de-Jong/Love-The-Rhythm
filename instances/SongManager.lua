@@ -45,7 +45,7 @@ SongManager.setWithIndex = function(index)
 end
 
 SongManager.init = function()
-    local songPaths = FileSystem.getDirectories(FileSystem.rootPath .. "\\resources\\songs")
+    local songPaths = FileSystem.getDirectories(FileSystem.rootPath .. "/resources/songs")
 
     local song = nil
     for k, v in pairs(songPaths) do

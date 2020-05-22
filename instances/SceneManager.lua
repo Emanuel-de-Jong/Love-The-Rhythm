@@ -6,7 +6,7 @@ SceneManager.scene = nil
 
 SceneManager.set = function(name)
     name = name .. "Scene"
-    sceneHistory[#sceneHistory + 1] = require("scenes\\" .. name)
+    sceneHistory[#sceneHistory + 1] = require("scenes/" .. name)
     SceneManager.scene = sceneHistory[#sceneHistory]
     
     if SceneManager.scene.load then

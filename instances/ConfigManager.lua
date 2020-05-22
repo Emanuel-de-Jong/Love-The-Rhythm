@@ -2,7 +2,7 @@ local FileSystem = require("libraries/FileSystem")
 local ConfigManager = Class:new()
 
 ConfigManager.set = function(name, data)
-    local path = FileSystem.rootPath .. "\\resources\\configs\\" .. name .. ".txt"
+    local path = FileSystem.rootPath .. "/resources/configs/" .. name .. ".txt"
     local config = io.open(path, "w")
 
     local line = nil
@@ -25,7 +25,7 @@ ConfigManager.set = function(name, data)
 end
 
 ConfigManager.get = function(name)
-    local path = FileSystem.rootPath .. "\\resources\\configs\\" .. name .. ".txt"
+    local path = FileSystem.rootPath .. "/resources/configs/" .. name .. ".txt"
 
     if FileSystem.checkFileEmpty(path) then
         return nil

@@ -35,7 +35,7 @@ FileSystem.getAll = function(path)
 
     for filename in directory:lines() do
         pathsEmpty = false
-        paths[filename] = path .. "\\" .. filename
+        paths[filename] = path .. "/" .. filename
     end
     directory:close()
 
@@ -53,7 +53,7 @@ FileSystem.getDirectories = function(path)
 
     for filename in directory:lines() do
         pathsEmpty = false
-        paths[filename] = path .. "\\" .. filename
+        paths[filename] = path .. "/" .. filename
     end
     directory:close()
 
@@ -72,7 +72,7 @@ FileSystem.getFiles = function(path, extension)
     for filename in directory:lines() do
         if (extension and filename:find(extension)) or (not extension and filename:find("%.")) then
             pathsEmpty = false
-            paths[filename] = path .. "\\" .. filename
+            paths[filename] = path .. "/" .. filename
         end
     end
     directory:close()
