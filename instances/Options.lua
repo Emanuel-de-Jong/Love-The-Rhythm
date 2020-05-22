@@ -10,21 +10,11 @@ Options.options = {
     -- }
 }
 
-Options.set = function(options)
-    Options.options = options
-    Options.setConfig()
-end
-
-Options.setWithValue = function(key, value)
-    Options.options[key] = value
-    Options.setConfig()
-end
-
-Options.setConfig = function()
+local setConfig = function()
     ConfigManager.set("Options", Options.options)
 end
 
-Options.syncWithConfig = function()
+local syncWithConfig = function()
     local data = ConfigManager.get("Options")
 
     for k, v in pairs(data) do
@@ -34,8 +24,18 @@ Options.syncWithConfig = function()
     end
 end
 
+Options.set = function(options)
+    Options.options = options
+    setConfig()
+end
+
+Options.setWithValue = function(key, value)
+    Options.options[key] = value
+    setConfig()
+end
+
 Options.init = function()
-    Options.syncWithConfig()
+    syncWithConfig()
 end
 
 return Options

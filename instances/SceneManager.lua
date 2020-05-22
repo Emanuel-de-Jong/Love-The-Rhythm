@@ -1,12 +1,13 @@
 local SceneManager = Class:new()
 
-SceneManager.sceneHistory = {}
+local sceneHistory = {}
+
 SceneManager.scene = nil
 
 SceneManager.set = function(name)
     name = name .. "Scene"
-    SceneManager.sceneHistory[#SceneManager.sceneHistory + 1] = require("scenes\\" .. name)
-    SceneManager.scene = SceneManager.sceneHistory[#SceneManager.sceneHistory]
+    sceneHistory[#sceneHistory + 1] = require("scenes\\" .. name)
+    SceneManager.scene = sceneHistory[#sceneHistory]
     
     if SceneManager.scene.load then
         SceneManager.scene.load()
@@ -14,9 +15,9 @@ SceneManager.set = function(name)
 end
 
 SceneManager.goBack = function()
-    if(#SceneManager.sceneHistory > 1) then
-        SceneManager.sceneHistory[#SceneManager.sceneHistory] = nil
-        SceneManager.scene = SceneManager.sceneHistory[#SceneManager.sceneHistory]
+    if(#sceneHistory > 1) then
+        sceneHistory[#sceneHistory] = nil
+        SceneManager.scene = sceneHistory[#sceneHistory]
 
         if SceneManager.scene.load then
             SceneManager.scene.load()

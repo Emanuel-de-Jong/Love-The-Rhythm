@@ -1,6 +1,6 @@
 local Chart = Class:new()
 
-Chart.typePerCategory = {
+local typePerCategory = {
     Format = "format",
     General = "setting",
     Editor = "setting",
@@ -11,13 +11,7 @@ Chart.typePerCategory = {
     HitObjects = "event",
 }
 
-Chart.construct = function(self, path)
-    self.path = path
-
-    self:syncWithFile()
-end
-
-Chart.syncWithFile = function(self)
+local function syncWithFile(self)
     self.Format = nil
     self.General = {}
     self.Editor = {}
@@ -35,7 +29,7 @@ Chart.syncWithFile = function(self)
         if #line ~= 0 and string.sub(line, 1, 2) ~= "//" then
             if string.sub(line, 1, 1) == "[" then
                 category = string.sub(line, 2, #line - 1)
-                type = Chart.typePerCategory[category]
+                type = typePerCategory[category]
             else
                 if type == "format" then
                     self.Format = string.sub(line, #line - 1)
@@ -50,6 +44,12 @@ Chart.syncWithFile = function(self)
     end
     
     self.name = self.Metadata.Version
+end
+
+Chart.construct = function(self, path)
+    self.path = path
+
+    syncWithFile(self)
 end
 
 return Chart

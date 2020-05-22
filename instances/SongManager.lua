@@ -6,6 +6,18 @@ local SongManager = Class:new()
 SongManager.songs = {}
 SongManager.song = nil
 
+local setConfig = function()
+    ConfigManager.set("SongManager", {song = SongManager.song.name})
+end
+
+local syncWithConfig = function()
+    local data = ConfigManager.get("SongManager")
+
+    if data then
+        SongManager.setWithName(data.song)
+    end
+end
+
 SongManager.set = function(songs)
     SongManager.songs = songs
 end
@@ -16,31 +28,19 @@ SongManager.setWithName = function(name)
             SongManager.song = v
         end
     end
-    SongManager.setConfig()
+    setConfig()
 end
 
 SongManager.setWithInstance = function(song)
     SongManager.song = song
-    SongManager.setConfig()
+    setConfig()
 end
 
 SongManager.setWithIndex = function(index)
     if SongManager.songs[index] then
         SongManager.song = SongManager.songs[index]
     end
-    SongManager.setConfig()
-end
-
-SongManager.setConfig = function()
-    ConfigManager.set("SongManager", {song = SongManager.song.name})
-end
-
-SongManager.syncWithConfig = function()
-    local data = ConfigManager.get("SongManager")
-
-    if data then
-        SongManager.setWithName(data.song)
-    end
+    setConfig()
 end
 
 SongManager.init = function()
@@ -50,7 +50,7 @@ SongManager.init = function()
         table.insert(SongManager.songs, Song:new(nil, v))
     end
 
-    SongManager.syncWithConfig()
+    syncWithConfig()
 end
 
 return SongManager
