@@ -26,9 +26,10 @@ SongManager.setWithName = function(name)
     for i, v in ipairs(SongManager.songs) do
         if v.name == name then
             SongManager.song = v
+            setConfig()
+            return
         end
     end
-    setConfig()
 end
 
 SongManager.setWithInstance = function(song)
@@ -39,15 +40,19 @@ end
 SongManager.setWithIndex = function(index)
     if SongManager.songs[index] then
         SongManager.song = SongManager.songs[index]
+        setConfig()
     end
-    setConfig()
 end
 
 SongManager.init = function()
     local songPaths = FileSystem.getDirectories(FileSystem.rootPath .. "\\resources\\songs")
 
+    local song = nil
     for k, v in pairs(songPaths) do
-        table.insert(SongManager.songs, Song:new(nil, v))
+        song = Song:new(nil, v)
+        if song.isValid then
+            table.insert(SongManager.songs, song)
+        end
     end
 
     syncWithConfig()

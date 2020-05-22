@@ -8,7 +8,15 @@ local typePerCategory = {
     Difficulty = "setting",
     Events = "event",
     TimingPoints = "event",
-    HitObjects = "event",
+    HitObjects = "event"
+}
+
+local requiredOptions = {
+    General = {"AudioFilename", "PreviewTime", "Mode"},
+    Editor = {},
+    Metadata = {"Title", "Version"},
+    Difficulty = {},
+    Events = {}
 }
 
 local function syncWithFile(self)
@@ -42,14 +50,30 @@ local function syncWithFile(self)
             end
         end
     end
-    
-    self.name = self.Metadata.Version
+end
+
+local function checkValid(self)
+    for k, v in pairs(requiredOptions) do
+        for i, o in ipairs(v) do
+            if not self[k][o] then
+                self.isValid = false
+                return false
+            end
+        end
+    end
+
+    self.isValid = true
+    return true
 end
 
 Chart.construct = function(self, path)
     self.path = path
 
     syncWithFile(self)
+
+    if checkValid(self) then
+        self.name = self.Metadata.Version
+    end
 end
 
 return Chart
