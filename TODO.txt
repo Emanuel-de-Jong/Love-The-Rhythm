@@ -1,7 +1,10 @@
 code
 public or private
+check only and all outside files and input
 code placement
 file placement
 naming
 comments
-check only and all outside files and input
+
+for k, v
+	only key if value is not used

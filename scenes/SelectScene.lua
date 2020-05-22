@@ -4,16 +4,30 @@ local Collision = require("libraries/Collision")
 local FontList = require("instances/FontList")
 local SelectScene = Class:new()
 
-local songsSettings = {spacing=50, x=0, w=0, scroll=0, font=FontList.getFont("Modak.ttf", 20)}
+local songsSettings = {
+    spacing = 50,
+    x = 0,
+    w = 0,
+    scroll = 0,
+    font = FontList.getFont("Modak.ttf", 20)
+}
 
-local chartsSettings = {spacing=50, x=0, w=0, scroll=0, font=FontList.getFont("Modak.ttf", 15)}
+local chartsSettings = {
+    spacing = 50,
+    x = 0,
+    w = 0,
+    scroll = 0,
+    font = FontList.getFont("Modak.ttf", 15)
+}
 
 SelectScene.calculatePositions = function()
-    songsSettings.x = love.graphics.getWidth() / 2
-    songsSettings.w = love.graphics.getWidth() / 2
+    local horizontalCenter = love.graphics.getWidth() / 2
+
+    songsSettings.x = horizontalCenter
+    songsSettings.w = horizontalCenter
 
     chartsSettings.x = 0
-    chartsSettings.w = love.graphics.getWidth() / 2
+    chartsSettings.w = horizontalCenter
 end
 
 SelectScene.load = function()
@@ -66,6 +80,7 @@ end
 
 SelectScene.wheelmoved = function(x, y)
     local mouseX = love.mouse.getX()
+
     if Collision.checkPointBoxX(mouseX, songsSettings.x,songsSettings.w) then
         songsSettings.scroll = songsSettings.scroll + (y * 15)
     elseif Collision.checkPointBoxX(mouseX, chartsSettings.x,chartsSettings.w) then

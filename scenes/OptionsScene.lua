@@ -20,11 +20,13 @@ local optionsValues = {
 }
 
 OptionsScene.calculatePositions = function()
-    optionsSettings.x = 0
-    optionsSettings.w = love.graphics.getWidth() / 2
+    local horizontalCenter = love.graphics.getWidth() / 2
 
-    optionsValues.x = love.graphics.getWidth() / 2
-    optionsValues.w = love.graphics.getWidth() / 2
+    optionsSettings.x = 0
+    optionsSettings.w = horizontalCenter
+
+    optionsValues.x = horizontalCenter
+    optionsValues.w = horizontalCenter
 end
 
 OptionsScene.load = function()
