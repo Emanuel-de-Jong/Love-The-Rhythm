@@ -1,7 +1,7 @@
-local SongManager = require("instances/SongManager")
-local SceneManager = require("instances/SceneManager")
-local CollisionSystem = require("libraries/CollisionSystem")
 local FontManager = require("instances/FontManager")
+local SceneManager = require("instances/SceneManager")
+local SongManager = require("instances/SongManager")
+local CollisionSystem = require("libraries/CollisionSystem")
 local SelectScene = Class:new()
 
 local songsSettings = {

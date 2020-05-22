@@ -1,5 +1,5 @@
-local FileSystem = require("libraries/FileSystem")
 local Chart = require("classes/Chart")
+local FileSystem = require("libraries/FileSystem")
 local Song = Class:new()
 
 Song.construct = function(self, path)

@@ -1,6 +1,6 @@
 local FontManager = require("instances/FontManager")
-local CollisionSystem = require("libraries/CollisionSystem")
 local SceneManager = require("instances/SceneManager")
+local CollisionSystem = require("libraries/CollisionSystem")
 local MenuScene = Class:new()
 
 local title = {text="VSRRG", x = 0, y = 0, w = 0, h = 0, font = FontManager.get("Modak.ttf", 50)}

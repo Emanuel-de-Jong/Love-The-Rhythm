@@ -1,7 +1,7 @@
 Class = require("classes/Class")
 
-local SceneManager = require("instances/SceneManager")
 local InputManager = require("instances/InputManager")
+local SceneManager = require("instances/SceneManager")
 
 function love.load(arg, unfilteredArg)
     SceneManager.set("Menu")

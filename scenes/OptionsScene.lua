@@ -1,6 +1,6 @@
 local FontManager = require("instances/FontManager")
-local CollisionSystem = require("libraries/CollisionSystem")
 local OptionManager = require("instances/OptionManager")
+local CollisionSystem = require("libraries/CollisionSystem")
 local TableSystem = require("libraries/TableSystem")
 local OptionsScene = Class:new()
 
