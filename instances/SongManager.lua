@@ -24,7 +24,7 @@ SongManager.set = function(songs)
 end
 
 SongManager.setWithName = function(name)
-    for k, v in pairs(SongManager.songs) do
+    for i, v in ipairs(SongManager.songs) do
         if v.name == name then
             SongManager.song = v
         end

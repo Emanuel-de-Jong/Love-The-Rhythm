@@ -40,7 +40,7 @@ OptionsScene.draw = function()
     love.graphics.setFont(optionsSettings.font)
 
     local i = 1
-    for k, v in pairs(Options.options) do
+    for k in pairs(Options.options) do
         love.graphics.print(k, optionsSettings.x, i * spacing)
         i = i + 1
     end

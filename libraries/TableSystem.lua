@@ -1,7 +1,7 @@
 local TableSystem = Class:new()
 
 TableSystem.checkEmpty = function(t)
-    for k, v in pairs(t) do
+    for k in pairs(t) do
         return false
     end
 
@@ -33,7 +33,7 @@ TableSystem.getKeyWithPosition = function(t, position)
     local i = 1
     local key = nil
 
-    for k, v in pairs(t) do
+    for k in pairs(t) do
         if i == position then
             key = k
             break
