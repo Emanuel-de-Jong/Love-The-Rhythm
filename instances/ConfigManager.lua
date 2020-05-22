@@ -27,30 +27,30 @@ end
 ConfigManager.get = function(name)
     local path = FileSystem.rootPath .. "\\resources\\configs\\" .. name .. ".txt"
 
-    if FileSystem.checkFileEmpty(path) == true then
+    if FileSystem.checkFileEmpty(path) then
         return nil
     end
 
     local data = {}
-    local colonPos = nil
-    local k = nil
-    local v = nil
+    local colonPosition = nil
+    local key = nil
+    local value = nil
     local t = {}
     for line in io.lines(path) do
-        colonPos = string.find(line, ":")
-        k = string.sub(line, 1, colonPos - 1)
-        v = string.sub(line, colonPos + 1)
+        colonPosition = string.find(line, ":")
+        key = string.sub(line, 1, colonPosition - 1)
+        value = string.sub(line, colonPosition + 1)
 
-        if tonumber(v) then
-            data[k] = tonumber(v)
-        elseif string.find(v, ",") then
-            for s in string.gmatch(v, '([^,]+)') do
+        if tonumber(value) then
+            data[key] = tonumber(value)
+        elseif string.find(value, ",") then
+            for s in string.gmatch(value, '([^,]+)') do
                 table.insert(t, s)
             end
-            data[k] = t
+            data[key] = t
             t = {}
         else
-            data[k] = v
+            data[key] = value
         end
     end
 

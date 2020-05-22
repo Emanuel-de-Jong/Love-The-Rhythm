@@ -107,7 +107,7 @@ end
 FileSystem.checkFileExists = function(path)
     local file = io.open(path, "r")
 
-    if file ~= nil then
+    if file then
         io.close(file)
         return true
     else
@@ -118,7 +118,7 @@ end
 FileSystem.checkFileEmpty = function(path)
     local file = io.open(path, "r")
 
-    if file ~= nil then
+    if file then
         local content = file:read("*a")
 
         io.close(file)

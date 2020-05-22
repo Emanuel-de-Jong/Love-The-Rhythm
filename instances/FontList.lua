@@ -1,15 +1,21 @@
 local FontList = Class:new()
 
-FontList.instances = {}
+FontList.fonts = {}
 
 local newFont = love.graphics.newFont
-FontList.getFont = function(path, size)
+
+FontList.get = function(path, size)
 	path = "resources/fonts/" .. path
-	if not (FontList.instances[path] and FontList.instances[path][size]) then
-		FontList.instances[path] = FontList.instances[path] or {}
-		FontList.instances[path][size] = newFont(path, size)
+
+	if not FontList.fonts[path] then
+		FontList.fonts[path] = {}
 	end
-	return FontList.instances[path][size]
+
+	if not FontList.fonts[path][size] then
+		FontList.fonts[path][size] = newFont(path, size)
+	end
+	
+	return FontList.fonts[path][size]
 end
 
 return FontList

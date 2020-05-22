@@ -16,8 +16,11 @@ end
 
 local function getConfig()
     local data = ConfigManager.get("Options")
-    if data ~= nil then
-        Options.options = data
+
+    for k, v in pairs(data) do
+        if Options.options[k] then
+            Options.options[k] = v
+        end
     end
 end
 

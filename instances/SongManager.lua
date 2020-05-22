@@ -13,7 +13,8 @@ end
 
 local function getConfig()
     local data = ConfigManager.get("SongManager")
-    if data ~= nil then
+
+    if data then
         SongManager.changeByName(data["song"])
     end
 end
@@ -33,7 +34,9 @@ SongManager.changeByInstance = function(song)
 end
 
 SongManager.changeByIndex = function(index)
-    SongManager.song = SongManager.songs[index]
+    if SongManager.songs[index] then
+        SongManager.song = SongManager.songs[index]
+    end
     setConfig()
 end
 

@@ -10,13 +10,13 @@ local scroll = 0
 local optionsSettings = {
     x = 0,
     w = 0,
-    font = FontList.getFont("Modak.ttf", 20)
+    font = FontList.get("Modak.ttf", 20)
 }
 
 local optionsValues = {
     x = 0,
     w = 0,
-    font = FontList.getFont("Modak.ttf", 20)
+    font = FontList.get("Modak.ttf", 20)
 }
 
 OptionsScene.calculatePositions = function()
@@ -64,7 +64,7 @@ OptionsScene.mousepressed = function(x, y, button, istouch, presses)
 
             local key = TableSystem.getKeyByPosition(Options.options, index)
 
-            if Options.options[key] ~= nil then
+            if Options.options[key] then
                 if button == 1 then
                     Options.setValue(key, Options.options[key] + 1)
                 else

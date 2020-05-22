@@ -3,14 +3,14 @@ local Collision = require("libraries/Collision")
 local SceneManager = require("instances/SceneManager")
 local MenuScene = Class:new()
 
-local title = {text="VSRRG", x = 0, y = 0, w = 0, h = 0, font = FontList.getFont("Modak.ttf", 50)}
+local title = {text="VSRRG", x = 0, y = 0, w = 0, h = 0, font = FontList.get("Modak.ttf", 50)}
 
 local buttons = {
     {text = "Start", scene = "Select", x = 0, y = 0, w = 0, h = 0},
     {text = "Options", scene = "Options", x = 0, y = 0, w = 0, h = 0},
     {text = "Quit", scene = "Quit", x = 0, y = 0, w = 0, h = 0}
 }
-local buttonsFont = FontList.getFont("Modak.ttf", 30)
+local buttonsFont = FontList.get("Modak.ttf", 30)
 
 MenuScene.calculatePositions = function()
     local screenHeight = love.graphics.getHeight()

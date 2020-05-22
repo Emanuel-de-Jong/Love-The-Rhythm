@@ -9,7 +9,7 @@ local songsSettings = {
     x = 0,
     w = 0,
     scroll = 0,
-    font = FontList.getFont("Modak.ttf", 20)
+    font = FontList.get("Modak.ttf", 20)
 }
 
 local chartsSettings = {
@@ -17,7 +17,7 @@ local chartsSettings = {
     x = 0,
     w = 0,
     scroll = 0,
-    font = FontList.getFont("Modak.ttf", 15)
+    font = FontList.get("Modak.ttf", 15)
 }
 
 SelectScene.calculatePositions = function()
@@ -46,7 +46,7 @@ SelectScene.draw = function()
     
     love.graphics.pop()
 
-    if SongManager.song ~= nil then
+    if SongManager.song then
         love.graphics.push()
         love.graphics.translate(0, chartsSettings.scroll)
 
