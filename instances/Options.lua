@@ -34,6 +34,10 @@ Options.setWithValue = function(key, value)
     setConfig()
 end
 
+Options.get = function()
+    return Options.options
+end
+
 Options.init = function()
     syncWithConfig()
 end

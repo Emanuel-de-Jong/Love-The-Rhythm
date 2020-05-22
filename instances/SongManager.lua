@@ -19,6 +19,10 @@ local function syncWithConfig()
     end
 end
 
+SongManager.set = function(songs)
+    SongManager.songs = songs
+end
+
 SongManager.setWithName = function(name)
     for k, v in pairs(SongManager.songs) do
         if v.name == name then
@@ -38,6 +42,10 @@ SongManager.setWithIndex = function(index)
         SongManager.song = SongManager.songs[index]
     end
     setConfig()
+end
+
+SongManager.get = function()
+    return SongManager.songs
 end
 
 SongManager.init = function()

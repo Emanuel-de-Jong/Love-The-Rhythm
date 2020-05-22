@@ -13,6 +13,10 @@ SceneManager.set = function(name)
     end
 end
 
+SceneManager.get = function()
+    return SceneManager.scene
+end
+
 SceneManager.goBack = function()
     if(#SceneManager.sceneHistory > 1) then
         SceneManager.sceneHistory[#SceneManager.sceneHistory] = nil
