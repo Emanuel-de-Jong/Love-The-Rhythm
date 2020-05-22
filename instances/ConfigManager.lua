@@ -1,4 +1,4 @@
-local FileSystem = require("instances/FileSystem")
+local FileSystem = require("libraries/FileSystem")
 local ConfigManager = Class:new()
 
 ConfigManager.configList = {}

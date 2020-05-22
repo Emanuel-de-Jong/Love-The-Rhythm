@@ -1,6 +1,6 @@
 local SongManager = require("instances/SongManager")
 local SceneManager = require("instances/SceneManager")
-local Collision = require("instances/Collision")
+local Collision = require("libraries/Collision")
 local FontList = require("instances/FontList")
 local SelectScene = Class:new()
 

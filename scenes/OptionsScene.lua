@@ -1,22 +1,22 @@
 local FontList = require("instances/FontList")
-local Collision = require("instances/Collision")
+local Collision = require("libraries/Collision")
 local Options = require("instances/Options")
-local TableSystem = require("instances/TableSystem")
+local TableSystem = require("libraries/TableSystem")
 local OptionsScene = Class:new()
 
 local spacing = 50
 local scroll = 0
 
 local optionsSettings = {
-    x=0,
-    w=0,
-    font=FontList.getFont("Modak.ttf", 20)
+    x = 0,
+    w = 0,
+    font = FontList.getFont("Modak.ttf", 20)
 }
 
 local optionsValues = {
-    x=0,
-    w=0,
-    font=FontList.getFont("Modak.ttf", 20)
+    x = 0,
+    w = 0,
+    font = FontList.getFont("Modak.ttf", 20)
 }
 
 OptionsScene.calculatePositions = function()

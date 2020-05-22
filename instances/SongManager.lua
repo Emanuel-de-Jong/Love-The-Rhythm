@@ -1,6 +1,6 @@
 local Song = require("classes/Song")
 local ConfigManager = require("instances/ConfigManager")
-local FileSystem = require("instances.FileSystem")
+local FileSystem = require("libraries/FileSystem")
 local SongManager = Class:new()
 
 SongManager.songs = {}

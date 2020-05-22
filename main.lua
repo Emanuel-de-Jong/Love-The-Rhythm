@@ -1,4 +1,4 @@
-Class = require("instances/Class")
+Class = require("classes/Class")
 
 local SceneManager = require("instances/SceneManager")
 local Input = require("instances/Input")

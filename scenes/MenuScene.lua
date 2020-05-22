@@ -1,5 +1,5 @@
 local FontList = require("instances/FontList")
-local Collision = require("instances/Collision")
+local Collision = require("libraries/Collision")
 local SceneManager = require("instances/SceneManager")
 local MenuScene = Class:new()
 
