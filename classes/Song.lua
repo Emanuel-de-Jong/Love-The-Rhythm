@@ -2,6 +2,7 @@ local Chart = require("classes/Chart")
 local FileSystem = require("libraries/FileSystem")
 local Song = Class:new()
 
+-- checks if charts is not empty and if the audiofile exists
 local function checkValid(self)
     if self.charts[1] then
         local path = self.path .. "/" .. self.charts[1].General.AudioFilename

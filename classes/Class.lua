@@ -1,5 +1,7 @@
 local Class = {}
 
+-- metamethod that looks at every new index and calls it when the key is init
+-- this makes it so a class will always call init when it is required for the first time
 Class.__newindex = function(t, key, value)
 	rawset(t, key, value)
 	if key == "init" then

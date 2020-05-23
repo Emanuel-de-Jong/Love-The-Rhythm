@@ -1,5 +1,6 @@
 local SceneManager = Class:new()
 
+-- keeps the previous scenes for when you want to go back
 local sceneHistory = {}
 
 SceneManager.scene = nil

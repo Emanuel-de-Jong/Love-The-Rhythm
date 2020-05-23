@@ -3,11 +3,7 @@ local OptionManager = Class:new()
 
 OptionManager.options = {
     volume = 0,
-    scrollSpeed = 10,
-    -- noteColor = {
-    --     value= 'white',
-    --     choices = {'white', 'red', 'green', 'blue'}
-    -- }
+    scrollSpeed = 10
 }
 
 local setConfig = function()

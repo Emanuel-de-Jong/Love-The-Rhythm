@@ -40,6 +40,8 @@ SongManager.setWithIndex = function(index)
     end
 end
 
+-- fills SongManager.songs with all valid songs and charts in the resources/songs dir
+-- this program will only support osu mania songs
 SongManager.init = function()
     local songPaths = FileSystem.getDirectories(FileSystem.rootPath .. "/resources/songs")
 

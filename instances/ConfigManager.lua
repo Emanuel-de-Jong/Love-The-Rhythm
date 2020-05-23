@@ -1,6 +1,7 @@
 local FileSystem = require("libraries/FileSystem")
 local ConfigManager = Class:new()
 
+-- turns data into a txt file
 ConfigManager.set = function(name, data)
     local path = FileSystem.rootPath .. "/resources/configs/" .. name .. ".txt"
     local config = io.open(path, "w")
@@ -9,7 +10,7 @@ ConfigManager.set = function(name, data)
     for k, v in pairs(data) do
         line = k .. ":"
 
-        if type(v) == "table" then
+        if type(v) == "table" then -- tables get turned into comma seperated lines
             for s in pairs(v) do
                 line = line .. s .. ","
             end
@@ -24,6 +25,7 @@ ConfigManager.set = function(name, data)
     config:close()
 end
 
+-- turns a txt file into data
 ConfigManager.get = function(name)
     local path = FileSystem.rootPath .. "/resources/configs/" .. name .. ".txt"
 
@@ -44,6 +46,7 @@ ConfigManager.get = function(name)
         if tonumber(value) then
             data[key] = tonumber(value)
         elseif value:find(",") then
+            -- adds every value between a comma to a table
             for s in value:gmatch("([^,]+)") do
                 table.insert(t, s)
             end

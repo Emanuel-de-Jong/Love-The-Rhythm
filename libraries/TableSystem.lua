@@ -1,6 +1,7 @@
 local TableSystem = Class:new()
 
 TableSystem.checkEmpty = function(t)
+    -- if it loops at least once, there is something in it
     for k in pairs(t) do
         return false
     end
@@ -8,6 +9,8 @@ TableSystem.checkEmpty = function(t)
     return true
 end
 
+-- the next get functions are for tables that don't have an index in numerical order
+-- for example if you want the second index of {speed = 8, fullscreen = true, color = "red"}
 TableSystem.getElementWithPosition = function(t, position)
     local i = 1
 

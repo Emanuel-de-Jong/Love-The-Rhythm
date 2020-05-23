@@ -30,6 +30,7 @@ end
 
 FileSystem.getAll = function(path)
     local paths = {}
+    -- everything in the path
     local directory = io.popen('dir "'..path..'" /b')
     local pathsEmpty = true
 
@@ -46,6 +47,7 @@ end
 
 FileSystem.getDirectories = function(path)
     local paths = {}
+    -- every directory in the path
     local directory = io.popen('dir "'..path..'" /b /ad')
     local pathsEmpty = true
 
@@ -62,10 +64,13 @@ end
 
 FileSystem.getFiles = function(path, extension)
     local paths = {}
+    -- everything in the path
     local directory = io.popen('dir "'..path..'" /b')
     local pathsEmpty = true
 
     for filename in directory:lines() do
+        -- checks if the file has the right extension
+        -- or when no extension given, if it is not a directory (has a .)
         if (extension and filename:find(extension)) or (not extension and filename:find("%.")) then
             pathsEmpty = false
             paths[filename] = path .. "/" .. filename
