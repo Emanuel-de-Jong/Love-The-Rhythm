@@ -25,7 +25,6 @@ TableSystem.getKeyWithPosition = function(t, position)
     for k in pairs(t) do
         if i == position then
             return k
-            break
         end
         i = i + 1
     end
