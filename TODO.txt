@@ -1,0 +1,6 @@
+more checks on reading input and files
+save just the changed value to the config
+support dropdown and keybind options
+cache charts
+audio preview on select
+actual gameplay
