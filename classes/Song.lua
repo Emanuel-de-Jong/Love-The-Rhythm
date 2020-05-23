@@ -9,8 +9,7 @@ local Song = Class:new()
 -- checks if charts is not empty and if the audiofile exists
 local function checkValid(self)
     if self.charts[1] then
-        local path = self.path .. "/" .. self.charts[1].General.AudioFilename
-        if FileSystem.checkFileExists(path) then
+        if FileSystem.checkFileExists(self.audioPath) then
             self.isValid = true
             return true
         end
@@ -34,9 +33,14 @@ Song.construct = function(self, path)
         end
     end
 
-    if checkValid(self) then
+    if self.charts[1] then
         self.chart = self.charts[1]
         self.name = self.chart.Metadata.Title
+        self.audioPath = self.path .. "/" .. self.charts[1].General.AudioFilename
+    end
+
+    if not checkValid(self) then
+        return
     end
 end
 
