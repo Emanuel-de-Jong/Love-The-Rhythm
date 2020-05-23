@@ -1,3 +1,8 @@
+--[[
+manages user changeable options.
+used mostly by PlayScene and set by OptionsScene.
+--]]
+
 local ConfigManager = require("instances/ConfigManager")
 local OptionManager = Class:new()
 

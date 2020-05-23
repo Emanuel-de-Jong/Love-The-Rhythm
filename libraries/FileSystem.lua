@@ -1,3 +1,7 @@
+--[[
+IO functions the lua io library lacks.
+--]]
+
 local FileSystem = Class:new()
 
 FileSystem.rootPath = love.filesystem.getWorkingDirectory()

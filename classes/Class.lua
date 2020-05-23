@@ -1,3 +1,7 @@
+--[[
+the base class. makes lua object oriented ish.
+--]]
+
 local Class = {}
 
 -- metamethod that looks at every new index and calls it when the key is init

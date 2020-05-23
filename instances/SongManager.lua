@@ -1,3 +1,7 @@
+--[[
+keeps track of the current song and has all songs.
+--]]
+
 local Song = require("classes/Song")
 local ConfigManager = require("instances/ConfigManager")
 local FileSystem = require("libraries/FileSystem")

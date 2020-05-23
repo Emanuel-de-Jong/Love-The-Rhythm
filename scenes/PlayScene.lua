@@ -1,3 +1,8 @@
+--[[
+plays a chart.
+BIG WIP
+--]]
+
 local SongManager = require("instances/SongManager")
 local PlayScene = Class:new()
 

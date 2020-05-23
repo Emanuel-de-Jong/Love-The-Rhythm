@@ -1,3 +1,7 @@
+--[[
+keeps a list of [fonts][sizes] to prevent creating already existing love newFont objects.
+--]]
+
 local FontManager = Class:new()
 
 local fonts = {}

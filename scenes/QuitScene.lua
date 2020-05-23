@@ -1,3 +1,7 @@
+--[[
+quits the program.
+--]]
+
 local QuitScene = Class:new()
 
 QuitScene.load = function()

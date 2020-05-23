@@ -1,3 +1,7 @@
+--[[
+lets the user change OptionsManager.options.
+--]]
+
 local FontManager = require("instances/FontManager")
 local OptionManager = require("instances/OptionManager")
 local CollisionSystem = require("libraries/CollisionSystem")

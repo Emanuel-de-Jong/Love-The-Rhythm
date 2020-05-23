@@ -1,3 +1,7 @@
+--[[
+starts the program and handles the main loops
+--]]
+
 Class = require("classes/Class")
 
 local InputManager = require("instances/InputManager")

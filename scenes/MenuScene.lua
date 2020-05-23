@@ -1,3 +1,7 @@
+--[[
+the main menu.
+--]]
+
 local FontManager = require("instances/FontManager")
 local SceneManager = require("instances/SceneManager")
 local CollisionSystem = require("libraries/CollisionSystem")

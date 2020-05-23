@@ -1,3 +1,7 @@
+--[[
+reads from and writes to text files to keep data after closing.
+--]]
+
 local FileSystem = require("libraries/FileSystem")
 local ConfigManager = Class:new()
 

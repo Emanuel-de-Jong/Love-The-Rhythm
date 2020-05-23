@@ -1,3 +1,7 @@
+--[[
+represents a directory with .osu files in resources/songs.
+--]]
+
 local Chart = require("classes/Chart")
 local FileSystem = require("libraries/FileSystem")
 local Song = Class:new()

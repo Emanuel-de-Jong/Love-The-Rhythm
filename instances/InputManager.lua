@@ -1,3 +1,7 @@
+--[[
+manages input on a global scale.
+--]]
+
 local SceneManager = require("instances/SceneManager")
 local InputManager = Class:new()
 

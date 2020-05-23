@@ -1,3 +1,7 @@
+--[[
+lets the user choose a song and chart.
+--]]
+
 local FontManager = require("instances/FontManager")
 local SceneManager = require("instances/SceneManager")
 local SongManager = require("instances/SongManager")

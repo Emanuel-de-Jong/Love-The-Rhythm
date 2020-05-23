@@ -1,3 +1,7 @@
+--[[
+represents a single .osu file.
+--]]
+
 local Chart = Class:new()
 
 -- decides how the data of the catrgory should be imported

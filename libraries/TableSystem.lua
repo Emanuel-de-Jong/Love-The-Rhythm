@@ -1,3 +1,7 @@
+--[[
+table functions the lua table library lacks.
+--]]
+
 local TableSystem = Class:new()
 
 TableSystem.checkEmpty = function(t)

@@ -1,3 +1,8 @@
+--[[
+keeps track of the current scene and previous scenes.
+also handles the changing of scenes.
+--]]
+
 local SceneManager = Class:new()
 
 -- keeps the previous scenes for when you want to go back
