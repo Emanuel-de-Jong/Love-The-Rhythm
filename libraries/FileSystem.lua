@@ -85,7 +85,7 @@ FileSystem.getFiles = function(path, extension)
 end
 
 FileSystem.getFile = function(path, extension, name)
-    local path = {}
+    local paths = {}
     local pathEmpty = true
 
     if name and extension then
@@ -93,7 +93,7 @@ FileSystem.getFile = function(path, extension, name)
         for k, v in pairs(FileSystem.getFiles(path, extension)) do
             if k == filename then
                 pathEmpty = false
-                path[k] = v
+                paths[k] = v
                 break;
             end
         end
@@ -101,7 +101,7 @@ FileSystem.getFile = function(path, extension, name)
         for k, v in pairs(FileSystem.getFiles(path)) do
             if FileSystem.getFilenameWithoutExtension(k) == name then
                 pathEmpty = false
-                path[k] = v
+                paths[k] = v
                 break;
             end
         end
@@ -116,7 +116,7 @@ FileSystem.getFile = function(path, extension, name)
     if pathEmpty then
         return nil
     else
-        return path
+        return paths
     end
 end
 
