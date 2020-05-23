@@ -39,7 +39,7 @@ local function syncWithFile(self)
     local type = "format"
     local colonPos = nil
 
-    for line in io.lines(self.path) do\
+    for line in io.lines(self.path) do
         -- // is a comment
         if #line ~= 0 and line:sub(1, 2) ~= "//" then
              -- a new category always starts with [
