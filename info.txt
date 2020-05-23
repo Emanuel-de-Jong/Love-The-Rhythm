@@ -1,0 +1,24 @@
+directory tree:
+classes -- classes that get instanced multiple times
+instances -- classes with only one instance that keep track of/manage something
+libraries -- a bunch of usefull functions
+resources
+    configs -- text files that save program states and user customizations
+    fonts
+    images
+    songs -- osu beatmaps
+scenes -- the user interface. serve as a bridge between user input and the program. also visualize data.
+
+
+
+coding conventions:
+function get -- returns the main focus of the class or nil
+function set -- sets a value to the main focus of the class
+function check -- returns true or false
+
+function construct -- gets called on a new instance of a class. only usefull for classes inside the classes dir
+function init -- gets called on the first require of the class. needs to be at the bottom just before the return
+function load -- gets called when the scene is loaded. only usefull for classes inside the scenes dir
+function unload -- opposite of load
+
+local variable or function in the root of a script -- if a variable or function shouldn't or doesn't make sense to be called by an outside source
