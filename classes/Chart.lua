@@ -25,6 +25,10 @@ local requiredOptions = {
     Events = {}
 }
 
+local columnPerKeymode = {
+    ["4"] = {["64"] = 1, ["192"] = 2, ["320"] = 3, ["448"] = 4}
+}
+
 local function syncWithFile(self)
     self.Format = nil
     self.General = {}
@@ -76,6 +80,34 @@ local function checkValid(self)
     return true
 end
 
+local function setHitObjects(self)
+    local newHitObjects = {}
+    local index = nil
+    local keymode = self.Difficulty.CircleSize
+
+    if keymode ~= "4" then
+        self.isValid = false
+        return 
+    end
+
+    for i, v in ipairs(self.HitObjects) do
+        newHitObjects[i] = {}
+        index = 1
+
+        for s in v:gmatch("([^,]+)") do
+            if index == 1 then
+                newHitObjects[i].column = columnPerKeymode[keymode][s]
+            elseif index == 3 then
+                newHitObjects[i].time = tonumber(s)
+            end
+            
+            index = index + 1
+        end
+    end
+
+    self.HitObjects = newHitObjects
+end
+
 Chart.construct = function(self, filename, path)
     self.filename = filename
     self.path = path
@@ -87,6 +119,8 @@ Chart.construct = function(self, filename, path)
     end
     
     self.name = self.Metadata.Version
+
+    setHitObjects(self)
 end
 
 return Chart
