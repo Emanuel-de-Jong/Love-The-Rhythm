@@ -39,9 +39,7 @@ FileSystem.getAll = function(path)
     end
     directory:close()
 
-    if pathsEmpty then
-        return nil
-    else
+    if not pathsEmpty then
         return paths
     end
 end
@@ -57,9 +55,7 @@ FileSystem.getDirectories = function(path)
     end
     directory:close()
 
-    if pathsEmpty then
-        return nil
-    else
+    if not pathsEmpty then
         return paths
     end
 end
@@ -77,46 +73,29 @@ FileSystem.getFiles = function(path, extension)
     end
     directory:close()
     
-    if pathsEmpty then
-        return nil
-    else
+    if not pathsEmpty then
         return paths
     end
 end
 
 FileSystem.getFile = function(path, extension, name)
-    local paths = {}
-    local pathEmpty = true
-
     if name and extension then
         local filename = name .. extension
         for k, v in pairs(FileSystem.getFiles(path, extension)) do
             if k == filename then
-                pathEmpty = false
-                paths[k] = v
-                break;
+                return {[k] = v}
             end
         end
     elseif name then
         for k, v in pairs(FileSystem.getFiles(path)) do
             if FileSystem.getFilenameWithoutExtension(k) == name then
-                pathEmpty = false
-                paths[k] = v
-                break;
+                return {[k] = v}
             end
         end
     elseif extension then
         for k, v in pairs(FileSystem.getFiles(path, extension)) do
-            pathEmpty = false
-            path[k] = v
-            break;
+            return {[k] = v}
         end
-    end
-
-    if pathEmpty then
-        return nil
-    else
-        return paths
     end
 end
 
