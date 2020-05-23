@@ -16,6 +16,10 @@ end
 
 SceneManager.goBack = function()
     if(#sceneHistory > 1) then
+        if SceneManager.scene.unload then
+            SceneManager.scene.unload()
+        end
+
         sceneHistory[#sceneHistory] = nil
         SceneManager.scene = sceneHistory[#sceneHistory]
 

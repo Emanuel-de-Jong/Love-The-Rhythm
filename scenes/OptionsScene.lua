@@ -66,9 +66,9 @@ OptionsScene.mousepressed = function(x, y, button, istouch, presses)
 
             if OptionManager.options[key] then
                 if button == 1 then
-                    OptionManager.setWithValue(key, OptionManager.options[key] + 1)
+                    OptionManager.setWithElement(key, OptionManager.options[key] + 1)
                 else
-                    OptionManager.setWithValue(key, OptionManager.options[key] - 1)
+                    OptionManager.setWithElement(key, OptionManager.options[key] - 1)
                 end
             end
         end

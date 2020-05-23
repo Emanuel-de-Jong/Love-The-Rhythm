@@ -27,7 +27,7 @@ OptionManager.set = function(options)
     setConfig()
 end
 
-OptionManager.setWithValue = function(key, value)
+OptionManager.setWithElement = function(key, value)
     OptionManager.options[key] = value
     setConfig()
 end

@@ -18,8 +18,9 @@ local syncWithConfig = function()
     end
 end
 
-SongManager.set = function(songs)
-    SongManager.songs = songs
+SongManager.set = function(song)
+    SongManager.song = song
+    setConfig()
 end
 
 SongManager.setWithName = function(name)
@@ -30,11 +31,6 @@ SongManager.setWithName = function(name)
             return
         end
     end
-end
-
-SongManager.setWithInstance = function(song)
-    SongManager.song = song
-    setConfig()
 end
 
 SongManager.setWithIndex = function(index)
