@@ -76,7 +76,8 @@ local function checkValid(self)
     return true
 end
 
-Chart.construct = function(self, path)
+Chart.construct = function(self, filename, path)
+    self.filename = filename
     self.path = path
 
     syncWithFile(self)
