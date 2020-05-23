@@ -35,6 +35,8 @@ SelectScene.load = function()
 end
 
 SelectScene.draw = function()
+    -- translate offsets the coordinate system so that x and y's can stay the same but you will see movement on the screen
+    -- between push and pop is where translate will have effect
     love.graphics.push()
     love.graphics.translate(0, songsSettings.scroll)
 
@@ -66,11 +68,13 @@ SelectScene.mousepressed = function(x, y, button, istouch, presses)
             y = y - songsSettings.scroll
             local index = math.floor(y / songsSettings.spacing)
 
-            SongManager.setWithIndex(index)
+            -- changes the SongManager.song to the pressed song
+            SongManager.setWithIndex(index) 
         elseif CollisionSystem.checkPointBoxX(x, chartsSettings.x,chartsSettings.w) then
             y = y - chartsSettings.scroll
             local index = math.floor(y / chartsSettings.spacing)
 
+            -- changes the SongManager.song.chart to the pressed chart
             SongManager.song.chart = SongManager.song.charts[index]
 
             SceneManager.set("Play")

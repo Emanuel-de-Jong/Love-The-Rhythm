@@ -7,6 +7,7 @@ function love.load(arg, unfilteredArg)
     SceneManager.set("Menu")
 end
 
+-- goes through all used love callback functions and calls the corresponding function of the current scene
 function love.update(dt)
     if SceneManager.scene.update then
         SceneManager.scene.update(dt)

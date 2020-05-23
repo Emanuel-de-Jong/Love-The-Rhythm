@@ -1,2 +1,0 @@
-check only and all outside files and input
-comments

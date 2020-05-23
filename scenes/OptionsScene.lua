@@ -34,6 +34,8 @@ OptionsScene.load = function()
 end
 
 OptionsScene.draw = function()
+    -- translate offsets the coordinate system so that x and y's can stay the same but you will see movement on the screen
+    -- between push and pop is where translate will have effect
     love.graphics.push()
     love.graphics.translate(0, scroll)
 
@@ -65,6 +67,7 @@ OptionsScene.mousepressed = function(x, y, button, istouch, presses)
             local key = TableSystem.getKeyWithPosition(OptionManager.options, index)
 
             if OptionManager.options[key] then
+                -- increments or decrements the pressed option depending on button press
                 if button == 1 then
                     OptionManager.setWithElement(key, OptionManager.options[key] + 1)
                 else
