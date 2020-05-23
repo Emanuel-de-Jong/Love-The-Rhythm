@@ -16,9 +16,13 @@ local setConfig = function()
 end
 
 local syncWithConfig = function()
-    for k, v in pairs(ConfigManager.get("OptionManager")) do
-        if OptionManager.options[k] then
-            OptionManager.options[k] = v
+    local data = ConfigManager.get("OptionManager")
+    
+    if data then
+        for k, v in pairs(data) do
+            if OptionManager.options[k] then
+                OptionManager.options[k] = v
+            end
         end
     end
 end
