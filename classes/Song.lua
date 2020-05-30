@@ -40,7 +40,7 @@ Song.construct = function(self, directory, path)
 
     self.chart = self.charts[1]
     self.name = self.chart.Metadata.Title
-    self.audioPath = "resources/songs/" .. self.directory .. "/" .. self.charts[1].General.AudioFilename
+    self.audioPath = "resources/songs/" .. self.directory .. "/" .. self.chart.General.AudioFilename
     self.audio = love.audio.newSource(self.audioPath)
 end
 
