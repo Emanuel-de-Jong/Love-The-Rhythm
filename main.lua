@@ -8,6 +8,7 @@ local InputManager = require("instances/InputManager")
 local SceneManager = require("instances/SceneManager")
 
 function love.load(arg, unfilteredArg)
+    -- SceneManager.set("Test")
     SceneManager.set("Menu")
 end
 
