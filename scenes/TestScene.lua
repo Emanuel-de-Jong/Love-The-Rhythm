@@ -9,6 +9,29 @@ local font = FontManager.get("Helvetica.ttf", 22)
 local screenHeight = love.graphics.getHeight()
 
 local callbacks = {
+	"keypressed",
+	"keyreleased",
+	"mousefocus",
+	"mousemoved",
+	"mousepressed",
+	"mousereleased",
+	"wheelmoved",
+	"gamepadaxis",
+	"gamepadpressed",
+	"gamepadreleased",
+	"joystickadded",
+	"joystickremoved",
+	"joystickaxis",
+	"joystickhat",
+	"joystickpressed",
+	"joystickreleased",
+	"touchmoved",
+	"touchpressed",
+	"touchreleased",
+	"textinput",
+}
+
+local values = {
 	gamepadaxis = {
         joystick = "",
         axis = "",
@@ -117,10 +140,10 @@ TestScene.draw = function()
 
     local x = 30
     local y = 20
-    for callback in pairs(callbacks) do
+    for _, callback in pairs(callbacks) do
         love.graphics.print(callback, x, y)
 
-        for key, value in pairs(callbacks[callback]) do
+        for key, value in pairs(values[callback]) do
             y = y + 25
             love.graphics.print(key .. ": " .. value, x + 15, y)
         end
@@ -138,13 +161,13 @@ TestScene.resize = function(w, h)
     screenHeight = love.graphics.getHeight()
 end
 
-for callback in pairs(callbacks) do
+for callback in pairs(values) do
     TestScene[callback] = function(...)
         local args = {...}
         local i = 1
 
-        for key in pairs(callbacks[callback]) do
-            callbacks[callback][key] = tostring(args[i])
+        for key in pairs(values[callback]) do
+            values[callback][key] = tostring(args[i])
             i = i + 1
         end
     end
