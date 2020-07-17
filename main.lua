@@ -45,8 +45,8 @@ local callbacks = {
 }
 
 function love.load(arg, unfilteredArg)
-    -- SceneManager.set("Test")
-    SceneManager.set("Menu")
+    SceneManager.set("Test")
+    -- SceneManager.set("Menu")
 end
 
 -- goes through all love callback functions and calls the corresponding function of the current scene
