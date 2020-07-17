@@ -99,12 +99,19 @@ function printC(from, to)
     print(s)
 end
 
+TestScene.loada = function()
+	print(7%8)
+end
+
 TestScene.load = function()
     local row
-    local col
-
-    local notes
-    local shift
+	local col
+	
+	local groups
+	local average
+	local remainder
+	local pos
+	local shift
 
     local rowT
     local start
@@ -115,7 +122,27 @@ TestScene.load = function()
         for from = 1, to - 1 do
             config[to][from] = {}
 
-            notes = round(to / from) + 1
+			groups = {}
+			average = round(to / from)
+			remainder = to - (average * to)
+
+			for i = 1, from do
+				groups[i] = average
+			end 
+
+			if remainder % 2 and not from % 2 then
+				remainder = remainder + 1
+			end
+
+			remainder = math.abs(remainder)
+
+			pos = round(from / remainder)
+			for i = 1, remainder do
+				group[pos * i] = average + 1
+			end
+
+
+
             shift = round(to / from)
 
             for row = 1, from do
@@ -127,7 +154,7 @@ TestScene.load = function()
                 end
 
                 start = (row * shift) - (shift - 1)
-                for a = start, start + notes - 1 do
+                for i = 1, from do
 
                     if rowT[a] then
                         rowT[a] = 1
