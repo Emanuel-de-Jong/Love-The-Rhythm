@@ -99,144 +99,186 @@ function printC(from, to)
     print(s)
 end
 
+-- TestScene.loada = function()
+-- 	local average
+-- 	local groups = {}
+-- 	local remainder
+-- 	local remOdd = false
+-- 	local fromOdd = false
+-- 	local changeGroup
+-- 	local remHalf
+-- 	local remQuart
+-- 	local pos
+
+-- 	local to = 30
+-- 	local from = 19
+
+-- 	average = round(to / from)
+
+-- 	for i = 1, from do
+-- 		groups[i] = average
+-- 	end
+
+-- 	remainder = to - (average * from)
+
+-- 	if remainder % 2 == 1 then
+-- 		remOdd = true
+-- 	end
+
+-- 	if from % 2 == 1 then
+-- 		fromOdd = true
+-- 	end
+
+-- 	if remOdd and not fromOdd then
+-- 		remainder = remainder + 1
+-- 	end
+
+-- 	if remainder ~= 0 then
+-- 		if remainder > 0 then
+-- 			changeGroup = average + 1
+-- 		else
+-- 			changeGroup = average - 1
+-- 		end
+-- 		remainder = math.abs(remainder)
+
+-- 		remHalf = math.floor(remainder / 2)
+-- 		remQuart = math.floor(remainder / 4)
+-- 		pos = math.ceil(from / 4)
+
+-- 		print("remainder: " .. remainder)
+-- 		print("remHalf: " .. remHalf)
+-- 		print("remQuart: " .. remQuart)
+-- 		print("pos: " .. pos)
+-- 		print("-------------------")
+
+-- 		print("for loop 1")
+-- 		for i = 1, remHalf do
+-- 			print(pos - remQuart + (i - 1))
+-- 			groups[pos - remQuart + (i - 1)] = changeGroup
+-- 		end
+
+-- 		print("if statement")
+-- 		if remOdd then
+-- 			print(math.ceil(#groups/2))
+-- 			groups[math.ceil(#groups/2)] = changeGroup
+-- 		end
+
+-- 		print("for loop 2")
+-- 		for i = 1, remHalf do
+-- 			print((pos * 3) + remQuart - (i - 1))
+-- 			groups[(pos * 3) + remQuart - (i - 1)] = changeGroup
+-- 		end
+-- 	end
+
+-- 	printD(groups)
+-- end
+
 TestScene.load = function()
 	local average
-	local groups = {}
+	local groups
 	local remainder
-	local remOdd = false
-	local fromOdd = false
 	local changeGroup
 	local remHalf
 	local remQuart
-	local pos
+	local posLeft
+	local posRight
 
-	local to = 15
-	local from = 9
+	local shift
+    local rowT
+    local start
 
-	average = round(to / from)
+    for to = 5, 20 do
+        config[to] = {}
 
-	for i = 1, from do
-		groups[i] = average
-	end
+        for from = 4, to - 1 do
+            config[to][from] = {}
 
-	remainder = to - (average * from)
+			groups = {}
 
-	if remainder % 2 == 1 then
-		remOdd = true
-	end
+			average = round(to / from)
 
-	if from % 2 == 1 then
-		fromOdd = true
-	end
-
-	if remOdd and not fromOdd then
-		remainder = remainder + 1
-	end
-
-	if remainder ~= 0 then
-		if remainder > 0 then
-			changeGroup = average + 1
-		else
-			changeGroup = average - 1
-		end
-		remainder = math.abs(remainder)
-
-		remHalf = math.floor(remainder / 2)
-		remQuart = math.floor(remainder / 4)
-		pos = math.ceil(from / 4)
-
-		print("average: " .. average)
-		print("remainder: " .. remainder)
-		print("remOdd: " .. tostring(remOdd))
-		print("fromOdd: " .. tostring(fromOdd))
-		print("changeGroup: " .. changeGroup)
-		print("remHalf: " .. remHalf)
-		print("remQuart: " .. remQuart)
-		print("pos: " .. pos)
-		print("-------------------")
-
-		for i = 1, remainder do
-			print("i: " .. i)
-			if i == remainder and fromOdd and remOdd then
-				print("if: 1")
-				print("index: " .. math.ceil(#groups/2))
-				groups[math.ceil(#groups/2)] = changeGroup
-			elseif i <= remHalf then
-				print("if: 2")
-				print("index: " .. pos - remQuart + (i - 1))
-				groups[pos - remQuart + (i - 1)] = changeGroup
-			else
-				print("if: 3")
-				print("index: " .. (pos * 3) + remQuart - (i - 1 - remHalf))
-				groups[(pos * 3) + remQuart - (i - 1 - remHalf)] = changeGroup
+			for i = 1, from do
+				groups[i] = average
 			end
-			print("-------------------")
-		end
-	end
 
-	printD(groups)
+			remainder = to - (average * from)
+
+			if remainder % 2 == 1 and from % 2 == 0 then
+				remainder = remainder + 1
+			end
+
+			if remainder ~= 0 then
+				if remainder > 0 then
+					changeGroup = average + 1
+				else
+					changeGroup = average - 1
+				end
+
+				remainder = math.abs(remainder)
+				remHalf = math.floor(remainder / 2)
+				remQuart = math.floor(remainder / 4)
+				posLeft = math.ceil(from / 4)
+				posRight = from - posLeft + 1
+
+				print("from: " .. from)
+				print("remainder: " .. remainder)
+				print("remHalf: " .. remHalf)
+				print("remQuart: " .. remQuart)
+				print("posLeft: " .. posLeft)
+				print("posRight: " .. posRight)
+				print()
+
+				print("for loop 1")
+				for i = 1, remHalf do
+					print("   " .. posLeft - remQuart + (i - 1))
+					groups[posLeft - remQuart + (i - 1)] = changeGroup
+				end
+
+				print("if statement")
+				if remainder % 2 == 1 then
+					print("   " .. math.ceil(#groups/2))
+					groups[math.ceil(#groups/2)] = changeGroup
+				end
+
+				print("for loop 2")
+				for i = 1, remHalf do
+					print("  " .. posRight + remQuart - (i - 1))
+					groups[posRight + remQuart - (i - 1)] = changeGroup
+				end
+
+				print()
+			end
+
+			for index, value in ipairs(groups) do
+				print(("%02d = %d"):format(index, value))
+			end
+
+			print(("-"):rep(34))
+
+
+            -- shift = round(to / from)
+
+            -- for row = 1, from do
+            --     config[to][from][row] = {}
+            --     rowT = config[to][from][row]
+
+            --     for col = 1, to do
+            --         config[to][from][row][col] = 0
+            --     end
+
+            --     start = (row * shift) - (shift - 1)
+            --     for i = 1, from do
+
+            --         if rowT[i] then
+            --             rowT[i] = 1
+            --         end
+            --     end
+            -- end
+        end
+    end
+
+    -- printC(10, 10)
 end
-
--- TestScene.loada = function()
--- 	local groups
--- 	local average
--- 	local remainder
--- 	local pos
--- 	local shift
-
---     local rowT
---     local start
-
---     for to = 2, 20 do
---         config[to] = {}
-
---         for from = 1, to - 1 do
---             config[to][from] = {}
-
--- 			groups = {}
--- 			average = round(to / from)
--- 			remainder = to - (average * to)
-
--- 			for i = 1, from do
--- 				groups[i] = average
--- 			end
-
--- 			if remainder % 2 and not from % 2 then
--- 				remainder = remainder + 1
--- 			end
-
--- 			remainder = math.abs(remainder)
-
--- 			pos = round(from / remainder)
--- 			for i = 1, remainder do
--- 				groups[pos * i] = average + 1
--- 			end
-
-
-
---             shift = round(to / from)
-
---             for row = 1, from do
---                 config[to][from][row] = {}
---                 rowT = config[to][from][row]
-
---                 for col = 1, to do
---                     config[to][from][row][col] = 0
---                 end
-
---                 start = (row * shift) - (shift - 1)
---                 for i = 1, from do
-
---                     if rowT[i] then
---                         rowT[i] = 1
---                     end
---                 end
---             end
---         end
---     end
-
---     printC(10, 10)
--- end
 
 -- [x][x-1]: 2 per row, 1 row down
 -- [x][x/2]: 2 per row, 2 row down
