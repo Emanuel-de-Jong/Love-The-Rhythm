@@ -103,14 +103,15 @@ TestScene.load = function()
 	local average
 	local groups = {}
 	local remainder
+	local remOdd = false
 	local fromOdd = false
 	local changeGroup
 	local remHalf
 	local remQuart
 	local pos
 
-	local to = 20
-	local from = 12 
+	local to = 15
+	local from = 9
 
 	average = round(to / from)
 
@@ -120,25 +121,34 @@ TestScene.load = function()
 
 	remainder = to - (average * from)
 
+	if remainder % 2 == 1 then
+		remOdd = true
+	end
+
 	if from % 2 == 1 then
 		fromOdd = true
 	end
 
-	if remainder % 2 == 1 and not fromOdd then
+	if remOdd and not fromOdd then
 		remainder = remainder + 1
 	end
 
 	if remainder ~= 0 then
-		changeGroup = average + (1 and remainder > 0 or -1)
-
+		if remainder > 0 then
+			changeGroup = average + 1
+		else
+			changeGroup = average - 1
+		end
 		remainder = math.abs(remainder)
+
 		remHalf = math.floor(remainder / 2)
 		remQuart = math.floor(remainder / 4)
-		pos = math.ceil(from / 3)
+		pos = math.ceil(from / 4)
 
 		print("average: " .. average)
 		print("remainder: " .. remainder)
-		print("fromOdd: " .. fromOdd)
+		print("remOdd: " .. tostring(remOdd))
+		print("fromOdd: " .. tostring(fromOdd))
 		print("changeGroup: " .. changeGroup)
 		print("remHalf: " .. remHalf)
 		print("remQuart: " .. remQuart)
@@ -146,18 +156,19 @@ TestScene.load = function()
 		print("-------------------")
 
 		for i = 1, remainder do
-			if i == 1 and fromOdd then
-				print("first if")
-				print(math.ceil(#groups/2))
+			print("i: " .. i)
+			if i == remainder and fromOdd and remOdd then
+				print("if: 1")
+				print("index: " .. math.ceil(#groups/2))
 				groups[math.ceil(#groups/2)] = changeGroup
-			elseif i <= (remHalf + 1 and fromOdd or remHalf) then
-				print("second if")
-				print(pos - remQuart + (i - 1))
+			elseif i <= remHalf then
+				print("if: 2")
+				print("index: " .. pos - remQuart + (i - 1))
 				groups[pos - remQuart + (i - 1)] = changeGroup
 			else
-				print("third if")
-				print((pos * 2) + remQuart - (i - 1))
-				groups[(pos * 2) + remQuart - (i - 1)] = changeGroup
+				print("if: 3")
+				print("index: " .. (pos * 3) + remQuart - (i - 1 - remHalf))
+				groups[(pos * 3) + remQuart - (i - 1 - remHalf)] = changeGroup
 			end
 			print("-------------------")
 		end
