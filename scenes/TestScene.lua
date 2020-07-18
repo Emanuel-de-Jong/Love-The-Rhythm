@@ -99,73 +99,133 @@ function printC(from, to)
     print(s)
 end
 
-TestScene.loada = function()
-	print(7%8)
-end
-
 TestScene.load = function()
-    local row
-	local col
-	
-	local groups
 	local average
+	local groups = {}
 	local remainder
+	local fromOdd = false
+	local changeGroup
+	local remHalf
+	local remQuart
 	local pos
-	local shift
 
-    local rowT
-    local start
+	local to = 20
+	local from = 12 
 
-    for to = 2, 20 do
-        config[to] = {}
+	average = round(to / from)
 
-        for from = 1, to - 1 do
-            config[to][from] = {}
+	for i = 1, from do
+		groups[i] = average
+	end
 
-			groups = {}
-			average = round(to / from)
-			remainder = to - (average * to)
+	remainder = to - (average * from)
 
-			for i = 1, from do
-				groups[i] = average
-			end 
+	if from % 2 == 1 then
+		fromOdd = true
+	end
 
-			if remainder % 2 and not from % 2 then
-				remainder = remainder + 1
+	if remainder % 2 == 1 and not fromOdd then
+		remainder = remainder + 1
+	end
+
+	if remainder ~= 0 then
+		changeGroup = average + (1 and remainder > 0 or -1)
+
+		remainder = math.abs(remainder)
+		remHalf = math.floor(remainder / 2)
+		remQuart = math.floor(remainder / 4)
+		pos = math.ceil(from / 3)
+
+		print("average: " .. average)
+		print("remainder: " .. remainder)
+		print("fromOdd: " .. fromOdd)
+		print("changeGroup: " .. changeGroup)
+		print("remHalf: " .. remHalf)
+		print("remQuart: " .. remQuart)
+		print("pos: " .. pos)
+		print("-------------------")
+
+		for i = 1, remainder do
+			if i == 1 and fromOdd then
+				print("first if")
+				print(math.ceil(#groups/2))
+				groups[math.ceil(#groups/2)] = changeGroup
+			elseif i <= (remHalf + 1 and fromOdd or remHalf) then
+				print("second if")
+				print(pos - remQuart + (i - 1))
+				groups[pos - remQuart + (i - 1)] = changeGroup
+			else
+				print("third if")
+				print((pos * 2) + remQuart - (i - 1))
+				groups[(pos * 2) + remQuart - (i - 1)] = changeGroup
 			end
+			print("-------------------")
+		end
+	end
 
-			remainder = math.abs(remainder)
-
-			pos = round(from / remainder)
-			for i = 1, remainder do
-				group[pos * i] = average + 1
-			end
-
-
-
-            shift = round(to / from)
-
-            for row = 1, from do
-                config[to][from][row] = {}
-                rowT = config[to][from][row]
-
-                for col = 1, to do
-                    config[to][from][row][col] = 0
-                end
-
-                start = (row * shift) - (shift - 1)
-                for i = 1, from do
-
-                    if rowT[a] then
-                        rowT[a] = 1
-                    end
-                end
-            end
-        end
-    end
-    
-    printC(10, 10)
+	printD(groups)
 end
+
+-- TestScene.loada = function()
+-- 	local groups
+-- 	local average
+-- 	local remainder
+-- 	local pos
+-- 	local shift
+
+--     local rowT
+--     local start
+
+--     for to = 2, 20 do
+--         config[to] = {}
+
+--         for from = 1, to - 1 do
+--             config[to][from] = {}
+
+-- 			groups = {}
+-- 			average = round(to / from)
+-- 			remainder = to - (average * to)
+
+-- 			for i = 1, from do
+-- 				groups[i] = average
+-- 			end
+
+-- 			if remainder % 2 and not from % 2 then
+-- 				remainder = remainder + 1
+-- 			end
+
+-- 			remainder = math.abs(remainder)
+
+-- 			pos = round(from / remainder)
+-- 			for i = 1, remainder do
+-- 				groups[pos * i] = average + 1
+-- 			end
+
+
+
+--             shift = round(to / from)
+
+--             for row = 1, from do
+--                 config[to][from][row] = {}
+--                 rowT = config[to][from][row]
+
+--                 for col = 1, to do
+--                     config[to][from][row][col] = 0
+--                 end
+
+--                 start = (row * shift) - (shift - 1)
+--                 for i = 1, from do
+
+--                     if rowT[i] then
+--                         rowT[i] = 1
+--                     end
+--                 end
+--             end
+--         end
+--     end
+
+--     printC(10, 10)
+-- end
 
 -- [x][x-1]: 2 per row, 1 row down
 -- [x][x/2]: 2 per row, 2 row down
