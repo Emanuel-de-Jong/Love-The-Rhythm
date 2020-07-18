@@ -108,6 +108,7 @@ TestScene.load = function()
 	local remQuart
 	local posLeft
 	local posRight
+	local fromHalf
 
 	local shift
     local rowT
@@ -123,14 +124,16 @@ TestScene.load = function()
 
 			average = round(to / from)
 
-			for i = 1, from do
-				groups[i] = average
-			end
-
 			remainder = to - (average * from)
 
 			if remainder % 2 == 1 and from % 2 == 0 then
 				remainder = remainder + 1
+			end
+
+			average = average + 1
+
+			for i = 1, from do
+				groups[i] = average
 			end
 
 			if remainder ~= 0 then
@@ -189,10 +192,29 @@ TestScene.load = function()
                 for col = 1, to do
                     rowT[col] = 0
                 end
+			end
 
-                for i = 1, groups[row] do
-                    rowT[i] = 1
+			
+			fromHalf = math.ceil(from / 2)
+
+			start = 1
+			for row = 1, fromHalf do
+				rowT = config[to][from][row]
+
+				for i = 1, groups[row] do
+                    rowT[start + (i - 1)] = 1
                 end
+				start = start + (groups[row] - 1)
+			end
+
+			start = to
+			for row = from, fromHalf + 1, -1 do
+				rowT = config[to][from][row]
+
+				for i = 1, groups[row] do
+                    rowT[start - (i - 1)] = 1
+                end
+				start = start - (groups[row] - 1)
 			end
 			
 
