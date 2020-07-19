@@ -109,12 +109,13 @@ TestScene.load = function()
 	local posLeft
 	local posRight
 	local fromHalf
+	local remNegative
 
 	local shift
     local rowT
     local start
 
-    for to = 5, 10 do
+    for to = 5, 15 do
         config[to] = {}
 
         for from = 4, to - 1 do
@@ -137,15 +138,16 @@ TestScene.load = function()
 			end
 
 			if remainder ~= 0 then
-				if remainder > 0 then
-					changeGroup = average + 1
-				else
-					changeGroup = average - 1
+				remNegative = remainder < 0 and true or false
+				remainder = math.abs(remainder)
+
+				if remNegative then
+					remainder = from - remainder
 				end
 
-				remainder = math.abs(remainder)
+				changeGroup = average + 1
 				remHalf = math.floor(remainder / 2)
-				remQuart = math.floor(remainder / 4)
+				remQuart = math.ceil(remainder / 4)
 				posLeft = math.ceil(from / 4)
 				posRight = from - posLeft + 1
 
@@ -160,7 +162,7 @@ TestScene.load = function()
 				-- print("for loop 1")
 				for i = 1, remHalf do
 					-- print("   " .. posLeft - remQuart + (i - 1))
-					groups[posLeft - remQuart + (i - 1)] = changeGroup
+					groups[posLeft + remQuart - (i - 1)] = changeGroup
 				end
 
 				-- print("if statement")
@@ -172,7 +174,13 @@ TestScene.load = function()
 				-- print("for loop 2")
 				for i = 1, remHalf do
 					-- print("  " .. posRight + remQuart - (i - 1))
-					groups[posRight + remQuart - (i - 1)] = changeGroup
+					groups[posRight - remQuart + (i - 1)] = changeGroup
+				end
+
+				if remNegative then
+					for i, ones in pairs(groups) do
+						groups[i] = ones - 1
+					end
 				end
 
 				-- print()
@@ -187,10 +195,9 @@ TestScene.load = function()
 
 			for row = 1, from do
                 config[to][from][row] = {}
-                rowT = config[to][from][row]
 
                 for col = 1, to do
-                    rowT[col] = 0
+                    config[to][from][row][col] = 0
                 end
 			end
 
@@ -218,27 +225,15 @@ TestScene.load = function()
 			end
 			
 
-            -- shift = round(to / from)
-
             -- for row = 1, from do
-            --     config[to][from][row] = {}
-            --     rowT = config[to][from][row]
-
-            --     for col = 1, to do
-            --         rowT[col] = 0
-            --     end
-
-            --     start = (row * shift) - shift
             --     for i = 1, groups[row] do
-            --         if rowT[start + i] then
-            --             rowT[start + i] = 1
-            --         end
+            --         config[to][from][row][i] = 1
             --     end
             -- end
         end
     end
 
-    printC(5, 10)
+    printC(5, 15)
 end
 
 -- [x][x-1]: 2 per row, 1 row down
