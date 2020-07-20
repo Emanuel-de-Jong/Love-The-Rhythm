@@ -99,6 +99,160 @@ function printC(from, to)
     print(s)
 end
 
+TestScene.loada = function()
+	local average
+	local groups
+	local remainder
+	local remHalf
+	local remQuart
+	local posLeft
+	local posRight
+	local fromHalf
+	local remNegative
+	local changeGroup
+
+	local shift
+    local rowT
+    local start
+
+	local to = 10
+	local from = 5
+
+	config[to] = {}
+	config[to][from] = {}
+
+	groups = {}
+
+	average = round(to / from)
+	print("average: " .. average)
+
+	remainder = to - (average * from)
+	print("remainder: " .. remainder)
+	print()
+
+	if (from % 2 == 1) or (remainder % 2 == 1 and from % 2 == 0) then
+		print("if: true")
+		remainder = remainder - 1
+		print("remainder: " .. remainder)
+	end
+
+	average = average + 1
+	print("average: " .. average)
+
+	for i = 1, from do
+		groups[i] = average
+	end
+	printD(groups)
+
+	fromHalf = math.ceil(from / 2)
+	print("fromHalf: " .. fromHalf)
+
+	if remainder ~= 0 then
+		remNegative = remainder < 0 and true or false
+		print("remNegative: " .. tostring(remNegative))
+		remainder = math.abs(remainder)
+		print("remainder: " .. remainder)
+
+		if remNegative then
+			print("if: true")
+			remainder = from - remainder
+			print("remainder: " .. remainder)
+		end
+		print()
+
+		changeGroup = average + 1
+		remHalf = math.floor(remainder / 2)
+		if remHalf == math.floor(from / 2) then
+			for i, ones in pairs(groups) do
+				if i ~= fromHalf or remainder % 2 == 1 then
+					print("i: " .. i)
+					groups[i] = changeGroup
+					print("value: " .. groups[i])
+				end
+			end
+			print()
+		else
+			print("remHalf: " .. remHalf)
+			remQuart = math.floor(remainder / 4)
+			print("remQuart: " .. remQuart)
+			posLeft = math.ceil(from / 4)
+			print("posLeft: " .. posLeft)
+			posRight = from - posLeft + 1
+			print("posRight: " .. posRight)
+			print()
+
+			for i = 1, remHalf do
+				print("i: " .. i)
+				print("index: " .. posLeft + remQuart - (i - 1))
+				groups[posLeft + remQuart - (i - 1)] = changeGroup
+				print("value: " .. groups[posLeft + remQuart - (i - 1)])
+			end
+			print()
+
+			if remainder % 2 == 1 then
+				print("index: " .. fromHalf)
+				groups[fromHalf] = changeGroup
+				print("value: " .. groups[fromHalf])
+			end
+			print()
+
+			for i = 1, remHalf do
+				print("i: " .. i)
+				print("index: " .. posRight - remQuart + (i - 1))
+				groups[posRight - remQuart + (i - 1)] = changeGroup
+				print("value: " .. groups[posRight - remQuart + (i - 1)])
+			end
+			print()
+		end
+
+		if remNegative then
+			print("if: true")
+			for i, ones in pairs(groups) do
+				groups[i] = ones - 1
+			end
+			printD(groups)
+		end
+	end
+
+
+	for row = 1, from do
+		config[to][from][row] = {}
+
+		for col = 1, to do
+			config[to][from][row][col] = 0
+		end
+	end
+
+	start = 1
+	for row = 1, fromHalf do
+		rowT = config[to][from][row]
+
+		for i = 1, groups[row] do
+			rowT[start + (i - 1)] = 1
+		end
+		start = start + (groups[row] - 1)
+	end
+
+	start = to
+	for row = from, fromHalf + 1, -1 do
+		rowT = config[to][from][row]
+
+		for i = 1, groups[row] do
+			rowT[start - (i - 1)] = 1
+		end
+		start = start - (groups[row] - 1)
+	end
+
+	local s = ""
+	for row = 1, from do
+		for col = 1, to do
+			s = s .. config[to][from][row][col]
+		end
+		s = s .. "\n"
+	end
+	print(s)
+end
+
 TestScene.load = function()
 	local average
 	local groups
@@ -109,6 +263,7 @@ TestScene.load = function()
 	local posRight
 	local fromHalf
 	local remNegative
+	local changeGroup
 
 	local shift
     local rowT
@@ -136,6 +291,8 @@ TestScene.load = function()
 				groups[i] = average
 			end
 
+			fromHalf = math.ceil(from / 2)
+
 			if remainder ~= 0 then
 				remNegative = remainder < 0 and true or false
 				remainder = math.abs(remainder)
@@ -144,21 +301,30 @@ TestScene.load = function()
 					remainder = from - remainder
 				end
 
+				changeGroup = average + 1
 				remHalf = math.floor(remainder / 2)
-				remQuart = math.floor(remainder / 4)
-				posLeft = math.ceil(from / 4)
-				posRight = from - posLeft + 1
+				if remHalf == math.floor(from / 2) then
+					for i, ones in pairs(groups) do
+						if i ~= fromHalf or remainder % 2 == 1 then
+							groups[i] = changeGroup
+						end
+					end
+				else
+					remQuart = math.floor(remainder / 4)
+					posLeft = math.ceil(from / 4)
+					posRight = from - posLeft + 1
 
-				for i = 1, remHalf do
-					groups[posLeft + remQuart - (i - 1)] = average + 1
-				end
+					for i = 1, remHalf do
+						groups[posLeft + remQuart - (i - 1)] = changeGroup
+					end
 
-				if remainder % 2 == 1 then
-					groups[math.ceil(#groups/2)] = average + 1
-				end
+					if remainder % 2 == 1 then
+						groups[fromHalf] = changeGroup
+					end
 
-				for i = 1, remHalf do
-					groups[posRight - remQuart + (i - 1)] = average + 1
+					for i = 1, remHalf do
+						groups[posRight - remQuart + (i - 1)] = changeGroup
+					end
 				end
 
 				if remNegative then
@@ -176,9 +342,6 @@ TestScene.load = function()
                     config[to][from][row][col] = 0
                 end
 			end
-
-			
-			fromHalf = math.ceil(from / 2)
 
 			start = 1
 			for row = 1, fromHalf do
