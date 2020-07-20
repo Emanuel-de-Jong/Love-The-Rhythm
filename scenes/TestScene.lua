@@ -85,16 +85,22 @@ local config = {}
 function printC(from, to)
     local s = ""
     for i = from or 2, to or 20 do
-        for j = from - 1 or 1, i - 1 do
-            s = s .. ("[%02d][%02d] "):format(i, j)
-            for x = 1, j do
-                for y = 1, i do
-                    s = s .. config[i][j][x][y]
-                end
-                s = s .. "\n\t "
-            end
-            s = s .. "\n"
-        end
+		for j = from - 1 or 1, i - 1 do
+			s = s .. ("config[%d][%d] = {"):format(i, j)
+			for x = 1, j do
+				s = s .. "\n\t{"
+				for y = 1, i do
+					s = s .. config[i][j][x][y] .. ","
+				end
+				
+				-- if (j%2==1 and x == math.ceil(j/2)) or (j%2==0 and (x==j/2 or x==(j/2)+1)) then
+				-- 	s = s .. "--"
+				-- end
+
+				s = s .. "},"
+			end
+			s = s .. "\n}\n\n"
+		end
     end
     print(s)
 end
