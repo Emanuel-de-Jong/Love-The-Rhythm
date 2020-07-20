@@ -103,7 +103,6 @@ TestScene.load = function()
 	local average
 	local groups
 	local remainder
-	local changeGroup
 	local remHalf
 	local remQuart
 	local posLeft
@@ -115,7 +114,7 @@ TestScene.load = function()
     local rowT
     local start
 
-    for to = 5, 15 do
+    for to = 5, 20 do
         config[to] = {}
 
         for from = 4, to - 1 do
@@ -127,8 +126,8 @@ TestScene.load = function()
 
 			remainder = to - (average * from)
 
-			if remainder % 2 == 1 and from % 2 == 0 then
-				remainder = remainder + 1
+			if (from % 2 == 1) or (remainder % 2 == 1 and from % 2 == 0) then
+				remainder = remainder - 1
 			end
 
 			average = average + 1
@@ -145,36 +144,21 @@ TestScene.load = function()
 					remainder = from - remainder
 				end
 
-				changeGroup = average + 1
 				remHalf = math.floor(remainder / 2)
-				remQuart = math.ceil(remainder / 4)
+				remQuart = math.floor(remainder / 4)
 				posLeft = math.ceil(from / 4)
 				posRight = from - posLeft + 1
 
-				-- print("from: " .. from)
-				-- print("remainder: " .. remainder)
-				-- print("remHalf: " .. remHalf)
-				-- print("remQuart: " .. remQuart)
-				-- print("posLeft: " .. posLeft)
-				-- print("posRight: " .. posRight)
-				-- print()
-
-				-- print("for loop 1")
 				for i = 1, remHalf do
-					-- print("   " .. posLeft - remQuart + (i - 1))
-					groups[posLeft + remQuart - (i - 1)] = changeGroup
+					groups[posLeft + remQuart - (i - 1)] = average + 1
 				end
 
-				-- print("if statement")
 				if remainder % 2 == 1 then
-					-- print("   " .. math.ceil(#groups/2))
-					groups[math.ceil(#groups/2)] = changeGroup
+					groups[math.ceil(#groups/2)] = average + 1
 				end
 
-				-- print("for loop 2")
 				for i = 1, remHalf do
-					-- print("  " .. posRight + remQuart - (i - 1))
-					groups[posRight - remQuart + (i - 1)] = changeGroup
+					groups[posRight - remQuart + (i - 1)] = average + 1
 				end
 
 				if remNegative then
@@ -182,15 +166,7 @@ TestScene.load = function()
 						groups[i] = ones - 1
 					end
 				end
-
-				-- print()
 			end
-
-			-- for index, value in ipairs(groups) do
-			-- 	print(("%02d = %d"):format(index, value))
-			-- end
-
-			-- print(("-"):rep(34))
 
 
 			for row = 1, from do
@@ -233,7 +209,7 @@ TestScene.load = function()
         end
     end
 
-    printC(5, 15)
+    printC(5, 20)
 end
 
 -- [x][x-1]: 2 per row, 1 row down
