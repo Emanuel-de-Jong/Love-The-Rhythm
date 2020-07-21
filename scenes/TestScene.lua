@@ -283,7 +283,6 @@ TestScene.load = function()
 
 	local changeGroup
 
-    local rowT
     local start
 
     for to = 5, 20 do
@@ -299,7 +298,7 @@ TestScene.load = function()
 			fromHalfUp = math.ceil(from / 2)
 			fromHalfDown = math.floor(from / 2)
 			fromQuartLeft = math.ceil(from / 4)
-			fromQuartRight = math.floor((from / 4) * 3) + 1
+			fromQuartRight = from - fromQuartLeft + 1
 			fromEven = from % 2 == 0 and true or false
 
 			groups = {}
@@ -307,7 +306,7 @@ TestScene.load = function()
 			average = round(to / from)
 
 			remainder = to - (average * from)
-			if (not fromEven) or (not remEven and fromEven) then
+			if (not fromEven) or (fromEven and not remEven) then
 				remainder = remainder - 1
 			end
 			if toEven and fromEven then
@@ -381,21 +380,19 @@ TestScene.load = function()
 
 			start = 1
 			for row = 1, fromHalfUp do
-				rowT = config[to][from][row]
-
 				for i = 1, groups[row] do
-                    rowT[start + (i - 1)] = 1
-                end
+                    config[to][from][row][start + (i - 1)] = 1
+				end
+				
 				start = start + (groups[row] - 1)
 			end
 
 			start = to
 			for row = from, fromHalfUp + 1, -1 do
-				rowT = config[to][from][row]
-
 				for i = 1, groups[row] do
-                    rowT[start - (i - 1)] = 1
-                end
+                    config[to][from][row][start - (i - 1)] = 1
+				end
+				
 				start = start - (groups[row] - 1)
 			end
 			
