@@ -92,12 +92,12 @@ function printC(from, to)
 				for y = 1, i do
 					s = s .. config[i][j][x][y] .. ","
 				end
-				
-				-- if (j%2==1 and x == math.ceil(j/2)) or (j%2==0 and (x==j/2 or x==(j/2)+1)) then
-				-- 	s = s .. "--"
-				-- end
 
 				s = s .. "},"
+
+				if (j%2==1 and x == math.ceil(j/2)) or (j%2==0 and (x==j/2 or x==(j/2)+1)) then
+					s = s .. "--"
+				end
 			end
 			s = s .. "\n}\n\n"
 		end
@@ -299,7 +299,7 @@ TestScene.load = function()
 			fromHalfUp = math.ceil(from / 2)
 			fromHalfDown = math.floor(from / 2)
 			fromQuartLeft = math.ceil(from / 4)
-			fromQuartRight = from - fromQuartLeft + 1
+			fromQuartRight = math.floor((from / 4) * 3) + 1
 			fromEven = from % 2 == 0 and true or false
 
 			groups = {}
@@ -309,6 +309,9 @@ TestScene.load = function()
 			remainder = to - (average * from)
 			if (not fromEven) or (not remEven and fromEven) then
 				remainder = remainder - 1
+			end
+			if toEven and fromEven then
+				remainder = remainder - 2
 			end
 			remPos = remainder > 0 and true or false
 			remainder = math.abs(remainder)
@@ -341,6 +344,10 @@ TestScene.load = function()
 						if i ~= fromHalfUp or not remEven then
 							groups[i] = changeGroup
 						end
+					end
+				elseif to < 10 then
+					for i = 1, remainder do
+						groups[fromHalfDown - remHalfDown + (i - 1)] = changeGroup
 					end
 				else
 					for i = 1, remHalfDown do
