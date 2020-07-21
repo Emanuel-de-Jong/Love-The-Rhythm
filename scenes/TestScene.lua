@@ -260,18 +260,29 @@ TestScene.loada = function()
 end
 
 TestScene.load = function()
-	local average
 	local groups
+	local average
+
+	local toHalfUp
+	local toHalfDown
+	local toEven
+
+	local fromHalfUp
+	local fromHalfDown
+	local fromQuartLeft
+	local fromQuartRight
+	local fromEven
+
 	local remainder
-	local remHalf
-	local remQuart
-	local posLeft
-	local posRight
-	local fromHalf
-	local remNegative
+	local remHalfUp
+	local remHalfDown
+	local remQuartUp
+	local remQuartDown
+	local remEven
+	local remPos
+
 	local changeGroup
 
-	local shift
     local rowT
     local start
 
@@ -279,61 +290,73 @@ TestScene.load = function()
         config[to] = {}
 
         for from = 4, to - 1 do
-            config[to][from] = {}
+			config[to][from] = {}
+			
+			toHalfUp = math.ceil(to / 2)
+			toHalfDown = math.floor(to / 2)
+			toEven = to % 2 == 0 and true or false
+
+			fromHalfUp = math.ceil(from / 2)
+			fromHalfDown = math.floor(from / 2)
+			fromQuartLeft = math.ceil(from / 4)
+			fromQuartRight = from - fromQuartLeft + 1
+			fromEven = from % 2 == 0 and true or false
 
 			groups = {}
 
 			average = round(to / from)
 
 			remainder = to - (average * from)
-
-			if (from % 2 == 1) or (remainder % 2 == 1 and from % 2 == 0) then
+			if (not fromEven) or (not remEven and fromEven) then
 				remainder = remainder - 1
 			end
+			remPos = remainder > 0 and true or false
+			remainder = math.abs(remainder)
+			remHalfUp = math.ceil(remainder / 2)
+			remHalfDown = math.floor(remainder / 2)
+			remQuartUp = math.ceil(remainder / 4)
+			remQuartDown = math.floor(remainder / 4)
+			remEven = remainder % 2 == 0 and true or false
 
 			average = average + 1
+			changeGroup = average + 1
 
 			for i = 1, from do
 				groups[i] = average
 			end
 
-			fromHalf = math.ceil(from / 2)
-
 			if remainder ~= 0 then
-				remNegative = remainder < 0 and true or false
-				remainder = math.abs(remainder)
 
-				if remNegative then
+				if not remPos then
 					remainder = from - remainder
+					remHalfUp = math.ceil(remainder / 2)
+					remHalfDown = math.floor(remainder / 2)
+					remQuartUp = math.ceil(remainder / 4)
+					remQuartDown = math.floor(remainder / 4)
+					remEven = remainder % 2 == 0 and true or false
 				end
 
-				changeGroup = average + 1
-				remHalf = math.floor(remainder / 2)
-				if remHalf == math.floor(from / 2) then
+				if remHalfDown == fromHalfDown then
 					for i, ones in pairs(groups) do
-						if i ~= fromHalf or remainder % 2 == 1 then
+						if i ~= fromHalfUp or not remEven then
 							groups[i] = changeGroup
 						end
 					end
 				else
-					remQuart = math.floor(remainder / 4)
-					posLeft = math.ceil(from / 4)
-					posRight = from - posLeft + 1
-
-					for i = 1, remHalf do
-						groups[posLeft + remQuart - (i - 1)] = changeGroup
+					for i = 1, remHalfDown do
+						groups[fromQuartLeft + remQuartUp - (i - 1)] = changeGroup
 					end
 
-					if remainder % 2 == 1 then
-						groups[fromHalf] = changeGroup
+					if not remEven then
+						groups[fromHalfUp] = changeGroup
 					end
 
-					for i = 1, remHalf do
-						groups[posRight - remQuart + (i - 1)] = changeGroup
+					for i = 1, remHalfDown do
+						groups[fromQuartRight - remQuartUp + (i - 1)] = changeGroup
 					end
 				end
 
-				if remNegative then
+				if not remPos then
 					for i, ones in pairs(groups) do
 						groups[i] = ones - 1
 					end
@@ -350,7 +373,7 @@ TestScene.load = function()
 			end
 
 			start = 1
-			for row = 1, fromHalf do
+			for row = 1, fromHalfUp do
 				rowT = config[to][from][row]
 
 				for i = 1, groups[row] do
@@ -360,7 +383,7 @@ TestScene.load = function()
 			end
 
 			start = to
-			for row = from, fromHalf + 1, -1 do
+			for row = from, fromHalfUp + 1, -1 do
 				rowT = config[to][from][row]
 
 				for i = 1, groups[row] do
