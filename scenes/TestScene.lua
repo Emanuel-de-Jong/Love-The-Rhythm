@@ -102,7 +102,7 @@ function printC(from, to)
     print(s)
 end
 
-TestScene.load = function()
+TestScene.loada = function()
 	local groups
 	local average
 
@@ -128,8 +128,8 @@ TestScene.load = function()
 
     local start
 
-	local to = 10
-	local from = 5
+	local to = 9
+	local from = 4
 
 	config[to] = {}
 	config[to][from] = {}
@@ -156,7 +156,7 @@ TestScene.load = function()
 
 	remainder = to - (average * from)
 	print("remainder: " .. remainder)
-	if (not fromEven) or (fromEven and not remEven) then
+	if (not fromEven) or (fromEven and remainder % 2 == 1) then
 		print("remainder if 1")
 		remainder = remainder - 1
 		print("remainder: " .. remainder)
@@ -303,7 +303,7 @@ TestScene.load = function()
 	print(s)
 end
 
-TestScene.loada = function()
+TestScene.load = function()
 	local groups
 	local average
 
@@ -334,7 +334,7 @@ TestScene.loada = function()
 
         for from = 4, to - 1 do
 			config[to][from] = {}
-			
+
 			toHalfUp = math.ceil(to / 2)
 			toHalfDown = math.floor(to / 2)
 			toEven = to % 2 == 0 and true or false
@@ -350,7 +350,7 @@ TestScene.loada = function()
 			average = round(to / from)
 
 			remainder = to - (average * from)
-			if (not fromEven) or (fromEven and not remEven) then
+			if (not fromEven) or (fromEven and remainder % 2 == 1) then
 				remainder = remainder - 1
 			end
 			if toEven and fromEven then
