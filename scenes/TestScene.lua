@@ -84,7 +84,8 @@ local config = {}
 
 function printC(from, to)
     local s = ""
-    for i = from or 2, to or 20 do
+	for i = from or 2, to or 20 do
+		s = s .. ("config[%d] = {}\n\n"):format(i)
 		for j = from - 1 or 1, i - 1 do
 			s = s .. ("config[%d][%d] = {"):format(i, j)
 			for x = 1, j do
@@ -94,10 +95,6 @@ function printC(from, to)
 				end
 
 				s = s .. "},"
-
-				if (j%2==1 and x == math.ceil(j/2)) or (j%2==0 and (x==j/2 or x==(j/2)+1)) then
-					s = s .. "--"
-				end
 			end
 			s = s .. "\n}\n\n"
 		end
@@ -293,10 +290,13 @@ TestScene.load = function()
 		start = start - (groups[row] - 1)
 	end
 
-	local s = ""
+	local s = ("[%d][%d]:\n"):format(to, from)
 	for row = 1, from do
 		for col = 1, to do
 			s = s .. config[to][from][row][col]
+		end
+		if (not fromEven and row == fromHalfUp) or (fromEven and (row == fromHalfUp or row == fromHalfUp + 1)) then
+			s = s .. "--"
 		end
 		s = s .. "\n"
 	end
@@ -444,6 +444,17 @@ TestScene.loada = function()
 				start = start - (groups[row] - 1)
 			end
 			
+			local s = ("[%d][%d]:\n"):format(to, from)
+			for row = 1, from do
+				for col = 1, to do
+					s = s .. config[to][from][row][col]
+				end
+				if (not fromEven and row == fromHalfUp) or (fromEven and (row == fromHalfUp or row == fromHalfUp + 1)) then
+					s = s .. "--"
+				end
+				s = s .. "\n"
+			end
+			print(s)
 
             -- for row = 1, from do
             --     for i = 1, groups[row] do
@@ -453,7 +464,7 @@ TestScene.loada = function()
         end
     end
 
-    printC(5, 20)
+    -- printC(5, 20)
 end
 
 -- [x][x-1]: 2 per row, 1 row down
