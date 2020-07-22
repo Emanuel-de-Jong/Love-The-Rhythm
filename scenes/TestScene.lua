@@ -143,7 +143,7 @@ TestScene.loada = function()
 	fromEven = from % 2 == 0 and true or false
 	fromHalfUp = math.ceil(from / 2)
 	fromHalfDown = math.floor(from / 2)
-	fromQuartLeft = math.floor((fromEven and from or from - 1) / 4)
+	fromQuartLeft = math.floor(from / 4)
 	fromQuartRight = from - fromQuartLeft + 1
 	print(("from: %d   fromHalfUp: %d   fromHalfDown: %d   fromQuartLeft: %d   fromQuartRight: %d   fromEven: %s"):format(from, fromHalfUp, fromHalfDown, fromQuartLeft, fromQuartRight, fromEven))
 	print()
@@ -204,12 +204,6 @@ TestScene.loada = function()
 			print()
 		end
 
-		-- if remHalfDown == fromHalfDown then
-		-- 	for i, ones in pairs(groups) do
-		-- 		if i ~= fromHalfUp or not remEven then
-		-- 			groups[i] = changeGroup
-		-- 		end
-		-- 	end
 		if not fromEven and to <= 10 or to <= 8 then
 			print("from odd and to <=10 or to <= 8 if")
 
@@ -342,7 +336,7 @@ TestScene.load = function()
 			fromEven = from % 2 == 0 and true or false
 			fromHalfUp = math.ceil(from / 2)
 			fromHalfDown = math.floor(from / 2)
-			fromQuartLeft = math.floor((fromEven and from or from - 1) / 4)
+			fromQuartLeft = math.floor(from / 4)
 			fromQuartRight = from - fromQuartLeft + 1
 
 			groups = {}
@@ -382,12 +376,6 @@ TestScene.load = function()
 					remQuartDown = math.floor(remainder / 4)
 				end
 
-				-- if remHalfDown == fromHalfDown then
-				-- 	for i, ones in pairs(groups) do
-				-- 		if i ~= fromHalfUp or not remEven then
-				-- 			groups[i] = changeGroup
-				-- 		end
-				-- 	end
 				if not fromEven and to <= 10 or to <= 8 then
 					for i = 0, remHalfDown - 1 do
 						groups[(fromEven and fromHalfUp or fromHalfUp - 1) - i] = changeGroup
@@ -455,21 +443,10 @@ TestScene.load = function()
 				s = s .. "\n"
 			end
 			print(s)
-
-            -- for row = 1, from do
-            --     for i = 1, groups[row] do
-            --         config[to][from][row][i] = 1
-            --     end
-            -- end
         end
     end
 
     -- printC(5, 20)
 end
-
--- [x][x-1]: 2 per row, 1 row down
--- [x][x/2]: 2 per row, 2 row down
--- [e][e-2]: 2 per row, 1 row down, middle 2 row down
--- [o][o-2]: 2 per row, 1 row down, middle 3 per row
 
 return TestScene
