@@ -338,28 +338,32 @@ TestScene.load = function()
 					remEven = remainder % 2 == 0 and true or false
 				end
 
-				if remHalfDown == fromHalfDown then
-					for i, ones in pairs(groups) do
-						if i ~= fromHalfUp or not remEven then
-							groups[i] = changeGroup
-						end
+				-- if remHalfDown == fromHalfDown then
+				-- 	for i, ones in pairs(groups) do
+				-- 		if i ~= fromHalfUp or not remEven then
+				-- 			groups[i] = changeGroup
+				-- 		end
+				-- 	end
+				if to < 9 then
+					for i = 0, remHalfDown - 1 do
+						groups[(fromEven and fromHalfUp or fromHalfUp - 1) - i] = changeGroup
 					end
-				elseif to < 10 then
-					for i = 1, remainder do
-						groups[fromHalfDown - remHalfDown + (i - 1)] = changeGroup
+
+					for i = 0, remHalfDown - 1 do
+						groups[(fromHalfUp + 1) + i] = changeGroup
 					end
 				else
-					for i = 1, remHalfDown do
-						groups[fromQuartLeft + remQuartUp - (i - 1)] = changeGroup
+					for i = 0, remHalfDown - 1 do
+						groups[fromQuartLeft + remQuartDown - i] = changeGroup
 					end
 
-					if not remEven then
-						groups[fromHalfUp] = changeGroup
+					for i = 0, remHalfDown - 1 do
+						groups[fromQuartRight - remQuartDown + i] = changeGroup
 					end
+				end
 
-					for i = 1, remHalfDown do
-						groups[fromQuartRight - remQuartUp + (i - 1)] = changeGroup
-					end
+				if not remEven then
+					groups[fromHalfUp] = changeGroup
 				end
 
 				if not remPos then
