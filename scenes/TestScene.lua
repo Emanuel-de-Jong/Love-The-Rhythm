@@ -128,23 +128,23 @@ TestScene.loada = function()
 
     local start
 
-	local to = 9
-	local from = 4
+	local to = 12
+	local from = 7
 
 	config[to] = {}
 	config[to][from] = {}
 
+	toEven = to % 2 == 0 and true or false
 	toHalfUp = math.ceil(to / 2)
 	toHalfDown = math.floor(to / 2)
-	toEven = to % 2 == 0 and true or false
 	print(("to: %d   toHalfUp: %d   toHalfDown: %d   toEven: %s"):format(to, toHalfUp, toHalfDown, toEven))
 	print()
 
+	fromEven = from % 2 == 0 and true or false
 	fromHalfUp = math.ceil(from / 2)
 	fromHalfDown = math.floor(from / 2)
-	fromQuartLeft = math.ceil(from / 4)
+	fromQuartLeft = math.floor((fromEven and from or from - 1) / 4)
 	fromQuartRight = from - fromQuartLeft + 1
-	fromEven = from % 2 == 0 and true or false
 	print(("from: %d   fromHalfUp: %d   fromHalfDown: %d   fromQuartLeft: %d   fromQuartRight: %d   fromEven: %s"):format(from, fromHalfUp, fromHalfDown, fromQuartLeft, fromQuartRight, fromEven))
 	print()
 
@@ -168,11 +168,11 @@ TestScene.loada = function()
 	end
 	remPos = remainder > 0 and true or false
 	remainder = math.abs(remainder)
+	remEven = remainder % 2 == 0 and true or false
 	remHalfUp = math.ceil(remainder / 2)
 	remHalfDown = math.floor(remainder / 2)
 	remQuartUp = math.ceil(remainder / 4)
 	remQuartDown = math.floor(remainder / 4)
-	remEven = remainder % 2 == 0 and true or false
 	print(("remainder: %d   remPos: %s   remHalfUp: %d   remHalfDown: %d   remQuartUp: %d   remQuartDown: %d   remEven: %s"):format(remainder, remPos, remHalfUp, remHalfDown, remQuartUp, remQuartDown, remEven))
 	print()
 
@@ -195,11 +195,11 @@ TestScene.loada = function()
 		if not remPos then
 			print("remainder negative if 1")
 			remainder = from - remainder
+			remEven = remainder % 2 == 0 and true or false
 			remHalfUp = math.ceil(remainder / 2)
 			remHalfDown = math.floor(remainder / 2)
 			remQuartUp = math.ceil(remainder / 4)
 			remQuartDown = math.floor(remainder / 4)
-			remEven = remainder % 2 == 0 and true or false
 			print(("remainder: %d   remHalfUp: %d   remHalfDown: %d   remQuartUp: %d   remQuartDown: %d   remEven: %s"):format(remainder, remHalfUp, remHalfDown, remQuartUp, remQuartDown, remEven))
 			print()
 		end
@@ -210,8 +210,8 @@ TestScene.loada = function()
 		-- 			groups[i] = changeGroup
 		-- 		end
 		-- 	end
-		if to < 9 then
-			print("to < 9 if")
+		if not fromEven and to <= 10 or to <= 8 then
+			print("from odd and to <=10 or to <= 8 if")
 
 			print("for 1")
 			for i = 0, remHalfDown - 1 do
@@ -228,21 +228,21 @@ TestScene.loada = function()
 				groups[(fromHalfUp + 1) + i] = changeGroup
 			end
 		else
-			print("to < 9 else")
+			print("from odd and to <=10 or to <= 8 else")
 
 			print("for 1")
 			for i = 0, remHalfDown - 1 do
 				print("i: " .. i)
-				print("index: " .. fromQuartLeft + remQuartDown - i)
-				groups[fromQuartLeft + remQuartDown - i] = changeGroup
+				print("index: " .. fromQuartLeft + remQuartUp - i)
+				groups[fromQuartLeft + remQuartUp - i] = changeGroup
 			end
 			print()
 
 			print("for 2")
 			for i = 0, remHalfDown - 1 do
 				print("i: " .. i)
-				print("index: " .. fromQuartRight - remQuartDown + i)
-				groups[fromQuartRight - remQuartDown + i] = changeGroup
+				print("index: " .. fromQuartRight - remQuartUp + i)
+				groups[fromQuartRight - remQuartUp + i] = changeGroup
 			end
 		end
 		print()
@@ -335,15 +335,15 @@ TestScene.load = function()
         for from = 4, to - 1 do
 			config[to][from] = {}
 
+			toEven = to % 2 == 0 and true or false
 			toHalfUp = math.ceil(to / 2)
 			toHalfDown = math.floor(to / 2)
-			toEven = to % 2 == 0 and true or false
 
+			fromEven = from % 2 == 0 and true or false
 			fromHalfUp = math.ceil(from / 2)
 			fromHalfDown = math.floor(from / 2)
-			fromQuartLeft = math.ceil(from / 4)
+			fromQuartLeft = math.floor((fromEven and from or from - 1) / 4)
 			fromQuartRight = from - fromQuartLeft + 1
-			fromEven = from % 2 == 0 and true or false
 
 			groups = {}
 
@@ -358,11 +358,11 @@ TestScene.load = function()
 			end
 			remPos = remainder > 0 and true or false
 			remainder = math.abs(remainder)
+			remEven = remainder % 2 == 0 and true or false
 			remHalfUp = math.ceil(remainder / 2)
 			remHalfDown = math.floor(remainder / 2)
 			remQuartUp = math.ceil(remainder / 4)
 			remQuartDown = math.floor(remainder / 4)
-			remEven = remainder % 2 == 0 and true or false
 
 			average = average + 1
 			changeGroup = average + 1
@@ -375,11 +375,11 @@ TestScene.load = function()
 
 				if not remPos then
 					remainder = from - remainder
+					remEven = remainder % 2 == 0 and true or false
 					remHalfUp = math.ceil(remainder / 2)
 					remHalfDown = math.floor(remainder / 2)
 					remQuartUp = math.ceil(remainder / 4)
 					remQuartDown = math.floor(remainder / 4)
-					remEven = remainder % 2 == 0 and true or false
 				end
 
 				-- if remHalfDown == fromHalfDown then
@@ -388,7 +388,7 @@ TestScene.load = function()
 				-- 			groups[i] = changeGroup
 				-- 		end
 				-- 	end
-				if to < 9 then
+				if not fromEven and to <= 10 or to <= 8 then
 					for i = 0, remHalfDown - 1 do
 						groups[(fromEven and fromHalfUp or fromHalfUp - 1) - i] = changeGroup
 					end
@@ -398,11 +398,11 @@ TestScene.load = function()
 					end
 				else
 					for i = 0, remHalfDown - 1 do
-						groups[fromQuartLeft + remQuartDown - i] = changeGroup
+						groups[fromQuartLeft + remQuartUp - i] = changeGroup
 					end
 
 					for i = 0, remHalfDown - 1 do
-						groups[fromQuartRight - remQuartDown + i] = changeGroup
+						groups[fromQuartRight - remQuartUp + i] = changeGroup
 					end
 				end
 
