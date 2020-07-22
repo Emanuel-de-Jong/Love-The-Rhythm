@@ -105,20 +105,30 @@ function printC(from, to)
     print(s)
 end
 
-TestScene.loada = function()
-	local average
+TestScene.load = function()
 	local groups
+	local average
+
+	local toHalfUp
+	local toHalfDown
+	local toEven
+
+	local fromHalfUp
+	local fromHalfDown
+	local fromQuartLeft
+	local fromQuartRight
+	local fromEven
+
 	local remainder
-	local remHalf
-	local remQuart
-	local posLeft
-	local posRight
-	local fromHalf
-	local remNegative
+	local remHalfUp
+	local remHalfDown
+	local remQuartUp
+	local remQuartDown
+	local remEven
+	local remPos
+
 	local changeGroup
 
-	local shift
-    local rowT
     local start
 
 	local to = 10
@@ -127,92 +137,128 @@ TestScene.loada = function()
 	config[to] = {}
 	config[to][from] = {}
 
+	toHalfUp = math.ceil(to / 2)
+	toHalfDown = math.floor(to / 2)
+	toEven = to % 2 == 0 and true or false
+	print(("to: %d   toHalfUp: %d   toHalfDown: %d   toEven: %s"):format(to, toHalfUp, toHalfDown, toEven))
+	print()
+
+	fromHalfUp = math.ceil(from / 2)
+	fromHalfDown = math.floor(from / 2)
+	fromQuartLeft = math.ceil(from / 4)
+	fromQuartRight = from - fromQuartLeft + 1
+	fromEven = from % 2 == 0 and true or false
+	print(("from: %d   fromHalfUp: %d   fromHalfDown: %d   fromQuartLeft: %d   fromQuartRight: %d   fromEven: %s"):format(from, fromHalfUp, fromHalfDown, fromQuartLeft, fromQuartRight, fromEven))
+	print()
+
 	groups = {}
 
 	average = round(to / from)
 	print("average: " .. average)
+	print()
 
 	remainder = to - (average * from)
 	print("remainder: " .. remainder)
-	print()
-
-	if (from % 2 == 1) or (remainder % 2 == 1 and from % 2 == 0) then
-		print("if: true")
+	if (not fromEven) or (fromEven and not remEven) then
+		print("remainder if 1")
 		remainder = remainder - 1
 		print("remainder: " .. remainder)
 	end
+	if toEven and fromEven then
+		print("remainder if 2")
+		remainder = remainder - 2
+		print("remainder: " .. remainder)
+	end
+	remPos = remainder > 0 and true or false
+	remainder = math.abs(remainder)
+	remHalfUp = math.ceil(remainder / 2)
+	remHalfDown = math.floor(remainder / 2)
+	remQuartUp = math.ceil(remainder / 4)
+	remQuartDown = math.floor(remainder / 4)
+	remEven = remainder % 2 == 0 and true or false
+	print(("remainder: %d   remPos: %s   remHalfUp: %d   remHalfDown: %d   remQuartUp: %d   remQuartDown: %d   remEven: %s"):format(remainder, remPos, remHalfUp, remHalfDown, remQuartUp, remQuartDown, remEven))
+	print()
 
 	average = average + 1
 	print("average: " .. average)
+	changeGroup = average + 1
+	print("changeGroup: " .. changeGroup)
+	print()
 
 	for i = 1, from do
 		groups[i] = average
 	end
 	printD(groups)
-
-	fromHalf = math.ceil(from / 2)
-	print("fromHalf: " .. fromHalf)
+	print()
 
 	if remainder ~= 0 then
-		remNegative = remainder < 0 and true or false
-		print("remNegative: " .. tostring(remNegative))
-		remainder = math.abs(remainder)
-		print("remainder: " .. remainder)
+		print("remainder 0 if")
+		print()
 
-		if remNegative then
-			print("if: true")
+		if not remPos then
+			print("remainder negative if 1")
 			remainder = from - remainder
-			print("remainder: " .. remainder)
+			remHalfUp = math.ceil(remainder / 2)
+			remHalfDown = math.floor(remainder / 2)
+			remQuartUp = math.ceil(remainder / 4)
+			remQuartDown = math.floor(remainder / 4)
+			remEven = remainder % 2 == 0 and true or false
+			print(("remainder: %d   remHalfUp: %d   remHalfDown: %d   remQuartUp: %d   remQuartDown: %d   remEven: %s"):format(remainder, remHalfUp, remHalfDown, remQuartUp, remQuartDown, remEven))
+			print()
+		end
+
+		-- if remHalfDown == fromHalfDown then
+		-- 	for i, ones in pairs(groups) do
+		-- 		if i ~= fromHalfUp or not remEven then
+		-- 			groups[i] = changeGroup
+		-- 		end
+		-- 	end
+		if to < 9 then
+			print("to < 9 if")
+
+			print("for 1")
+			for i = 0, remHalfDown - 1 do
+				print("i: " .. i)
+				print("index: " .. (fromEven and fromHalfUp or fromHalfUp - 1) - i)
+				groups[(fromEven and fromHalfUp or fromHalfUp - 1) - i] = changeGroup
+			end
+			print()
+
+			print("for 1")
+			for i = 0, remHalfDown - 1 do
+				print("i: " .. i)
+				print("index: " .. (fromHalfUp + 1) + i)
+				groups[(fromHalfUp + 1) + i] = changeGroup
+			end
+		else
+			print("to < 9 else")
+
+			print("for 1")
+			for i = 0, remHalfDown - 1 do
+				print("i: " .. i)
+				print("index: " .. fromQuartLeft + remQuartDown - i)
+				groups[fromQuartLeft + remQuartDown - i] = changeGroup
+			end
+			print()
+
+			print("for 2")
+			for i = 0, remHalfDown - 1 do
+				print("i: " .. i)
+				print("index: " .. fromQuartRight - remQuartDown + i)
+				groups[fromQuartRight - remQuartDown + i] = changeGroup
+			end
 		end
 		print()
 
-		changeGroup = average + 1
-		remHalf = math.floor(remainder / 2)
-		if remHalf == math.floor(from / 2) then
-			for i, ones in pairs(groups) do
-				if i ~= fromHalf or remainder % 2 == 1 then
-					print("i: " .. i)
-					groups[i] = changeGroup
-					print("value: " .. groups[i])
-				end
-			end
-			print()
-		else
-			print("remHalf: " .. remHalf)
-			remQuart = math.floor(remainder / 4)
-			print("remQuart: " .. remQuart)
-			posLeft = math.ceil(from / 4)
-			print("posLeft: " .. posLeft)
-			posRight = from - posLeft + 1
-			print("posRight: " .. posRight)
-			print()
-
-			for i = 1, remHalf do
-				print("i: " .. i)
-				print("index: " .. posLeft + remQuart - (i - 1))
-				groups[posLeft + remQuart - (i - 1)] = changeGroup
-				print("value: " .. groups[posLeft + remQuart - (i - 1)])
-			end
-			print()
-
-			if remainder % 2 == 1 then
-				print("index: " .. fromHalf)
-				groups[fromHalf] = changeGroup
-				print("value: " .. groups[fromHalf])
-			end
-			print()
-
-			for i = 1, remHalf do
-				print("i: " .. i)
-				print("index: " .. posRight - remQuart + (i - 1))
-				groups[posRight - remQuart + (i - 1)] = changeGroup
-				print("value: " .. groups[posRight - remQuart + (i - 1)])
-			end
+		if not remEven then
+			print("remainder odd if")
+			print("index: " .. fromHalfUp)
+			groups[fromHalfUp] = changeGroup
 			print()
 		end
 
-		if remNegative then
-			print("if: true")
+		if not remPos then
+			print("remainder negative if 2")
 			for i, ones in pairs(groups) do
 				groups[i] = ones - 1
 			end
@@ -230,22 +276,20 @@ TestScene.loada = function()
 	end
 
 	start = 1
-	for row = 1, fromHalf do
-		rowT = config[to][from][row]
-
+	for row = 1, fromHalfUp do
 		for i = 1, groups[row] do
-			rowT[start + (i - 1)] = 1
+			config[to][from][row][start + (i - 1)] = 1
 		end
+		
 		start = start + (groups[row] - 1)
 	end
 
 	start = to
-	for row = from, fromHalf + 1, -1 do
-		rowT = config[to][from][row]
-
+	for row = from, fromHalfUp + 1, -1 do
 		for i = 1, groups[row] do
-			rowT[start - (i - 1)] = 1
+			config[to][from][row][start - (i - 1)] = 1
 		end
+		
 		start = start - (groups[row] - 1)
 	end
 
@@ -259,7 +303,7 @@ TestScene.loada = function()
 	print(s)
 end
 
-TestScene.load = function()
+TestScene.loada = function()
 	local groups
 	local average
 
