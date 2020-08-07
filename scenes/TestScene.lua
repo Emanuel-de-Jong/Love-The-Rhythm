@@ -137,7 +137,7 @@ TestScene.load = function()
 	local resLength = 0
 	local resLengthGoal = length * height
 
-	local direction = 'R'
+	local direction = 0
 
 	local right = length
 	local bottom = height
@@ -145,39 +145,33 @@ TestScene.load = function()
 	local top = 1
 
 	while resLength < resLengthGoal do
-		if direction == 'R' then
+		if direction == 0 then
 			for j = left, right do
 				resLength = resLength + 1
 				result[resLength] = arr[top][j]
 			end
-
 			top = top + 1
-			direction = 'D'
-		elseif direction == 'D' then
+		elseif direction == 1 then
 			for j = top, bottom do
 				resLength = resLength + 1
 				result[resLength] = arr[j][right]
 			end
-
 			right = right - 1
-			direction = 'L'
-		elseif direction == 'L' then
+		elseif direction == 2 then
 			for j = right, left, -1 do
 				resLength = resLength + 1
 				result[resLength] = arr[bottom][j]
 			end
-
 			bottom = bottom - 1
-			direction = 'U'
 		else
 			for j = bottom, top, -1 do
 				resLength = resLength + 1
 				result[resLength] = arr[j][left]
 			end
-
-			direction = 'R'
 			left = left + 1
 		end
+
+		direction = (direction + 1) % 4
 	end
 
 	print(table.concat(result, ", "))
