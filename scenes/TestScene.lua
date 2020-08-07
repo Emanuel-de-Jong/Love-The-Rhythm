@@ -130,59 +130,41 @@ TestScene.load = function()
 		{13,12,11,10,09}
 	}
 
+	local result = {}
+	
 	local length = #arr[1]
 	local height = #arr
-	local direction = "R"
-	local result = {}
 
-	local right = 1
-	local left = length
-	local down = 1
-	local up = height
-
-	local val
+	local right = length
+	local bottom = height
+	local left = 1
+	local top = 1
 
 	while #result < length * height do
-		val = 1
-
-		print(
-			"direction: " .. direction
-		)
-
-		if direction == "R" then
-			for j = right, left do
-				print(("[%02d][%02d]"):format(down, j))
-			end
-
-			right = right + 1
-			direction = "D"
-		elseif direction == "L" then
-			for j = left, right, -1 do
-				print(("[%02d][%02d]"):format(up, j))
-			end
-
-			left = left + 1
-			direction = "U"
-		elseif direction == "D" then
-			for j = down, up do
-				print(("[%02d][%02d]"):format(j, left))
-			end
-
-			down = down + 1
-			direction = "L"
-		elseif direction == "U" then
-			for j = up, down, -1 do
-				print(("[%02d][%02d]"):format(j , right))
-			end
-
-			up = up + 1
-			direction = "R"
+		-- to the right
+		for j = left, right do
+			result[#result + 1] = arr[top][j]
 		end
+		top = top + 1
+		
+		-- down
+		for j = top, bottom do
+			result[#result + 1] = arr[j][right]
+		end
+		right = right - 1
 
-		result[#result + 1] = val
-		print(("-"):rep(32))
+		-- to the left
+		for j = right, left, -1 do
+			result[#result + 1] = arr[bottom][j]
+		end
+		bottom = bottom - 1
+
+		-- up
+		for j = bottom, top, -1 do
+			result[#result + 1] = arr[j][left]
+		end
+		left = left + 1
 	end
-
 
 	print(table.concat(result, ", "))
 end
