@@ -130,40 +130,54 @@ TestScene.load = function()
 		{13,12,11,10,09}
 	}
 
-	local result = {}
-	
 	local length = #arr[1]
 	local height = #arr
+
+	local result = {}
+	local resLength = 0
+	local resLengthGoal = length * height
+
+	local direction = 'R'
 
 	local right = length
 	local bottom = height
 	local left = 1
 	local top = 1
 
-	while #result < length * height do
-		-- to the right
-		for j = left, right do
-			result[#result + 1] = arr[top][j]
-		end
-		top = top + 1
-		
-		-- down
-		for j = top, bottom do
-			result[#result + 1] = arr[j][right]
-		end
-		right = right - 1
+	while resLength < resLengthGoal do
+		if direction == 'R' then
+			for j = left, right do
+				resLength = resLength + 1
+				result[resLength] = arr[top][j]
+			end
 
-		-- to the left
-		for j = right, left, -1 do
-			result[#result + 1] = arr[bottom][j]
-		end
-		bottom = bottom - 1
+			top = top + 1
+			direction = 'D'
+		elseif direction == 'D' then
+			for j = top, bottom do
+				resLength = resLength + 1
+				result[resLength] = arr[j][right]
+			end
 
-		-- up
-		for j = bottom, top, -1 do
-			result[#result + 1] = arr[j][left]
+			right = right - 1
+			direction = 'L'
+		elseif direction == 'L' then
+			for j = right, left, -1 do
+				resLength = resLength + 1
+				result[resLength] = arr[bottom][j]
+			end
+
+			bottom = bottom - 1
+			direction = 'U'
+		else
+			for j = bottom, top, -1 do
+				resLength = resLength + 1
+				result[resLength] = arr[j][left]
+			end
+
+			direction = 'R'
+			left = left + 1
 		end
-		left = left + 1
 	end
 
 	print(table.concat(result, ", "))
