@@ -104,10 +104,10 @@ TestScene.load = function()
 		-- {08,07,06}
 
 		-- 4x4
-		{01,02,03,04},
-		{12,13,14,05},
-		{11,16,15,06},
-		{10,09,08,07}
+		-- {01,02,03,04},
+		-- {12,13,14,05},
+		-- {11,16,15,06},
+		-- {10,09,08,07}
 
 		-- 5x4
 		-- {01,02,03,04,05},
@@ -123,68 +123,63 @@ TestScene.load = function()
 		-- {11,10,09,08}
 
 		-- 5x5
-		-- {01,02,03,04,05},
-		-- {16,17,18,19,06},
-		-- {15,24,25,20,07},
-		-- {14,23,22,21,08},
-		-- {13,12,11,10,09}
+		{01,02,03,04,05},
+		{16,17,18,19,06},
+		{15,24,25,20,07},
+		{14,23,22,21,08},
+		{13,12,11,10,09}
 	}
 
-	local length = #arr[0]
+	local length = #arr[1]
 	local height = #arr
 	local direction = "R"
 	local result = {}
-	local row = 1
-	local col = 1
+
+	local right = 1
+	local left = length
+	local down = 1
+	local up = height
+
 	local val
 
 	while #result < length * height do
 		val = 1
 
 		print(
-			"direction: " .. direction ..
-			"\nrow: " .. row ..
-			"\ncol: " .. col
+			"direction: " .. direction
 		)
 
 		if direction == "R" then
-			for j = 1, length - col do
-				print(("[%d02][%d02]"):format(row, j + math.floor(col/2)))
-				-- val = arr[row][j + math.floor(col/2)]
-				result[#result + 1] = val
+			for j = right, left do
+				print(("[%02d][%02d]"):format(down, j))
 			end
 
-			row = row + 1
+			right = right + 1
 			direction = "D"
 		elseif direction == "L" then
-			for j = length, col, -1 do
-				print(("[%d02][%d02]"):format(row, j - math.floor(col/2)))
-				-- val = arr[row][j - math.floor(col/2)]
-				result[#result + 1] = val
+			for j = left, right, -1 do
+				print(("[%02d][%02d]"):format(up, j))
 			end
 
-			row = row + 1
+			left = left + 1
 			direction = "U"
 		elseif direction == "D" then
-			for j = 1, height - row do
-				print(("[%d02][%d02]"):format(j + math.floor(row/2), col))
-				-- val = arr[j + math.floor(row/2)][col]
-				result[#result + 1] = val
+			for j = down, up do
+				print(("[%02d][%02d]"):format(j, left))
 			end
 
-			col = col + 1
+			down = down + 1
 			direction = "L"
-		else
-			for j = height, row, -1 do
-				print(("[%d02][%d02]"):format(j - math.floor(row/2), col))
-				-- val = arr[j - math.floor(row/2)][col]
-				result[#result + 1] = val
+		elseif direction == "U" then
+			for j = up, down, -1 do
+				print(("[%02d][%02d]"):format(j , right))
 			end
 
-			col = col + 1
+			up = up + 1
 			direction = "R"
 		end
 
+		result[#result + 1] = val
 		print(("-"):rep(32))
 	end
 
