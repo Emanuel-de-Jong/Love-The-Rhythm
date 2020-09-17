@@ -5,6 +5,10 @@ testing stuff.
 local TestScene = Class:new()
 
 function printT(tableToPrint)
+    if type(tableToPrint) ~= "table" then
+        print(tostring(tableToPrint))
+        return
+    end
     local next, pairs, type, format, tostring, remove, print = next, pairs, type, string.format, tostring, table.remove, print
     local tables = {{tableToPrint,"  "}}
     local oldTables = {}
@@ -15,9 +19,10 @@ function printT(tableToPrint)
     while next(tables) ~= nil do
         tablesLength = #tables
         tTabs = tables[tablesLength][2]
+        str = str .. format("%s%s\n", tTabs, tostring(tables[tablesLength][1]))
         for key, value in pairs(tables[tablesLength][1]) do
             if type(value) ~= "table" then
-                str = str .. format("%s%s  =  %s\n", tTabs, tostring(key), tostring(value))
+                str = str .. format("%s  %s  =  %s\n", tTabs, tostring(key), tostring(value))
             elseif oldTables[tostring(value)] == nil then
                 tables[#tables+1] = {
                     value,
