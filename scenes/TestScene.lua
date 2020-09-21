@@ -5,24 +5,22 @@ testing stuff.
 local TestScene = Class:new()
 
 function printT(parentTable)
-    local tostring, next, rep, type, format, pairs, print = tostring, next, string.rep, type, string.format, pairs, print
+    local tostring, next, rep, type, format, pairs, concat, print = tostring, next, string.rep, type, string.format, pairs, table.concat, print
     if type(parentTable) ~= "table" then return print(tostring(parentTable)) end
-    local t, tTabs, tablesInT, tablesInTSize
+    local t, tTabs, tablesInTSize
     local tableStack = {{ 1, parentTable, 1 }}
     local tableStackSize = 1
-    local strToPrint = ""
+    local toPrint = {}
+    local toPrintSize = 0
     local tableHistory = { tostring(parentTable) }
-    local loopsSincePrint = 0
+    local tablesInT = {}
     while next(tableStack) ~= nil do
         t = tableStack[tableStackSize]
         tTabs = rep("  ", t[3] - 1)
-        if type(t[1]) == "number" then
-            strToPrint = strToPrint .. format("%s[%s] = %s - %s\n", tTabs, tostring(t[1]), tostring(t[2]), tostring(t[3]))
-        else
-            strToPrint = strToPrint .. format("%s[\"%s\"] = %s - %s\n", tTabs, tostring(t[1]), tostring(t[2]), tostring(t[3]))
-        end
+        if type(t[1]) == "string" then t[1] = format("\"%s\"", t[1]) end
+        toPrintSize = toPrintSize + 1
+        toPrint[toPrintSize] = format("%s[%s] -- %s, depth: %d\n", tTabs, tostring(t[1]), tostring(t[2]), t[3])
         tTabs = tTabs .. "  "
-        tablesInT = {}
         tablesInTSize = 0
         for key, value in pairs(t[2]) do
             if type(value) == "table" and tableHistory[tostring(value)] == nil then
@@ -30,11 +28,10 @@ function printT(parentTable)
                 tablesInT[tablesInTSize] = { key, value, t[3] + 1 }
                 tableHistory[tostring(value)] = true
             else
-                if type(key) == "number" then
-                    strToPrint = strToPrint .. format("%s[%s] = %s\n", tTabs, tostring(key), tostring(value))
-                else
-                    strToPrint = strToPrint .. format("%s[\"%s\"] = %s\n", tTabs, tostring(key), tostring(value))
-                end
+                if type(key) == "string" then key = format("\"%s\"", key) end
+                if type(value) == "string" then value = format("\"%s\"", value) end
+                toPrintSize = toPrintSize + 1
+                toPrint[toPrintSize] = format("%s[%s] = %s\n", tTabs, tostring(key), tostring(value))
             end
         end
         tableStack[tableStackSize] = nil
@@ -43,14 +40,8 @@ function printT(parentTable)
             tableStackSize = tableStackSize + 1
             tableStack[tableStackSize] = tablesInT[i]
         end
-        loopsSincePrint = loopsSincePrint + 1
-        if loopsSincePrint == 50 then
-            print(strToPrint)
-            strToPrint = ""
-            loopsSincePrint = 0
-        end
     end
-    print(strToPrint)
+    print(concat(toPrint))
 end
 
 return TestScene
