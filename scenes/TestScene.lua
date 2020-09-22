@@ -82,11 +82,15 @@ local TestScene = Class:new()
 
 local config = {}
 
-function printC(from, to)
+function printC(toStart, toEnd, fromStart, fromEnd)
+    toStart = toStart or 5
+    toEnd = toEnd or 20
+    fromStart = fromStart or (toStart - 1)
+    fromEnd = fromEnd or (toEnd - 1)
     local s = ""
-	for i = from or 2, to or 20 do
+	for i = toStart, toEnd do
 		s = s .. ("config[%d] = {}\n\n"):format(i)
-		for j = from - 1 or 1, i - 1 do
+		for j = fromStart, math.min(i - 1, fromEnd) do
 			s = s .. ("config[%d][%d] = {"):format(i, j)
 			for x = 1, j do
 				s = s .. "\n\t{"
@@ -100,201 +104,6 @@ function printC(from, to)
 		end
     end
     print(s)
-end
-
-TestScene.loada = function()
-	local groups
-	local average
-
-	local toHalfUp
-	local toHalfDown
-	local toEven
-
-	local fromHalfUp
-	local fromHalfDown
-	local fromQuartLeft
-	local fromQuartRight
-	local fromEven
-
-	local remainder
-	local remHalfUp
-	local remHalfDown
-	local remQuartUp
-	local remQuartDown
-	local remEven
-	local remPos
-
-	local changeGroup
-
-    local start
-
-	local to = 12
-	local from = 7
-
-	config[to] = {}
-	config[to][from] = {}
-
-	toEven = to % 2 == 0 and true or false
-	toHalfUp = math.ceil(to / 2)
-	toHalfDown = math.floor(to / 2)
-	print(("to: %d   toHalfUp: %d   toHalfDown: %d   toEven: %s"):format(to, toHalfUp, toHalfDown, toEven))
-	print()
-
-	fromEven = from % 2 == 0 and true or false
-	fromHalfUp = math.ceil(from / 2)
-	fromHalfDown = math.floor(from / 2)
-	fromQuartLeft = math.floor(from / 4)
-	fromQuartRight = from - fromQuartLeft + 1
-	print(("from: %d   fromHalfUp: %d   fromHalfDown: %d   fromQuartLeft: %d   fromQuartRight: %d   fromEven: %s"):format(from, fromHalfUp, fromHalfDown, fromQuartLeft, fromQuartRight, fromEven))
-	print()
-
-	groups = {}
-
-	average = round(to / from)
-	print("average: " .. average)
-	print()
-
-	remainder = to - (average * from)
-	print("remainder: " .. remainder)
-	if (not fromEven) or (fromEven and remainder % 2 == 1) then
-		print("remainder if 1")
-		remainder = remainder - 1
-		print("remainder: " .. remainder)
-	end
-	if toEven and fromEven then
-		print("remainder if 2")
-		remainder = remainder - 2
-		print("remainder: " .. remainder)
-	end
-	remPos = remainder > 0 and true or false
-	remainder = math.abs(remainder)
-	remEven = remainder % 2 == 0 and true or false
-	remHalfUp = math.ceil(remainder / 2)
-	remHalfDown = math.floor(remainder / 2)
-	remQuartUp = math.ceil(remainder / 4)
-	remQuartDown = math.floor(remainder / 4)
-	print(("remainder: %d   remPos: %s   remHalfUp: %d   remHalfDown: %d   remQuartUp: %d   remQuartDown: %d   remEven: %s"):format(remainder, remPos, remHalfUp, remHalfDown, remQuartUp, remQuartDown, remEven))
-	print()
-
-	average = average + 1
-	print("average: " .. average)
-	changeGroup = average + 1
-	print("changeGroup: " .. changeGroup)
-	print()
-
-	for i = 1, from do
-		groups[i] = average
-	end
-	printD(groups)
-	print()
-
-	if remainder ~= 0 then
-		print("remainder 0 if")
-		print()
-
-		if not remPos then
-			print("remainder negative if 1")
-			remainder = from - remainder
-			remEven = remainder % 2 == 0 and true or false
-			remHalfUp = math.ceil(remainder / 2)
-			remHalfDown = math.floor(remainder / 2)
-			remQuartUp = math.ceil(remainder / 4)
-			remQuartDown = math.floor(remainder / 4)
-			print(("remainder: %d   remHalfUp: %d   remHalfDown: %d   remQuartUp: %d   remQuartDown: %d   remEven: %s"):format(remainder, remHalfUp, remHalfDown, remQuartUp, remQuartDown, remEven))
-			print()
-		end
-
-		if not fromEven and to <= 10 or to <= 8 then
-			print("from odd and to <=10 or to <= 8 if")
-
-			print("for 1")
-			for i = 0, remHalfDown - 1 do
-				print("i: " .. i)
-				print("index: " .. (fromEven and fromHalfUp or fromHalfUp - 1) - i)
-				groups[(fromEven and fromHalfUp or fromHalfUp - 1) - i] = changeGroup
-			end
-			print()
-
-			print("for 1")
-			for i = 0, remHalfDown - 1 do
-				print("i: " .. i)
-				print("index: " .. (fromHalfUp + 1) + i)
-				groups[(fromHalfUp + 1) + i] = changeGroup
-			end
-		else
-			print("from odd and to <=10 or to <= 8 else")
-
-			print("for 1")
-			for i = 0, remHalfDown - 1 do
-				print("i: " .. i)
-				print("index: " .. fromQuartLeft + remQuartUp - i)
-				groups[fromQuartLeft + remQuartUp - i] = changeGroup
-			end
-			print()
-
-			print("for 2")
-			for i = 0, remHalfDown - 1 do
-				print("i: " .. i)
-				print("index: " .. fromQuartRight - remQuartUp + i)
-				groups[fromQuartRight - remQuartUp + i] = changeGroup
-			end
-		end
-		print()
-
-		if not remEven then
-			print("remainder odd if")
-			print("index: " .. fromHalfUp)
-			groups[fromHalfUp] = changeGroup
-			print()
-		end
-
-		if not remPos then
-			print("remainder negative if 2")
-			for i, ones in pairs(groups) do
-				groups[i] = ones - 1
-			end
-			printD(groups)
-		end
-	end
-
-
-	for row = 1, from do
-		config[to][from][row] = {}
-
-		for col = 1, to do
-			config[to][from][row][col] = 0
-		end
-	end
-
-	start = 1
-	for row = 1, fromHalfUp do
-		for i = 1, groups[row] do
-			config[to][from][row][start + (i - 1)] = 1
-		end
-		
-		start = start + (groups[row] - 1)
-	end
-
-	start = to
-	for row = from, fromHalfUp + 1, -1 do
-		for i = 1, groups[row] do
-			config[to][from][row][start - (i - 1)] = 1
-		end
-		
-		start = start - (groups[row] - 1)
-	end
-
-	local s = ("[%d][%d]:\n"):format(to, from)
-	for row = 1, from do
-		for col = 1, to do
-			s = s .. config[to][from][row][col]
-		end
-		if (not fromEven and row == fromHalfUp) or (fromEven and (row == fromHalfUp or row == fromHalfUp + 1)) then
-			s = s .. "--"
-		end
-		s = s .. "\n"
-	end
-	print(s)
 end
 
 TestScene.load = function()
@@ -325,8 +134,7 @@ TestScene.load = function()
 
     for to = 5, 20 do
         config[to] = {}
-
-        for from = 4, to - 1 do
+        for from = 1, to - 1 do
 			config[to][from] = {}
 
 			toEven = to % 2 == 0 and true or false
@@ -432,21 +240,21 @@ TestScene.load = function()
 				start = start - (groups[row] - 1)
 			end
 			
-			local s = ("[%d][%d]:\n"):format(to, from)
-			for row = 1, from do
-				for col = 1, to do
-					s = s .. config[to][from][row][col]
-				end
-				if (not fromEven and row == fromHalfUp) or (fromEven and (row == fromHalfUp or row == fromHalfUp + 1)) then
-					s = s .. "--"
-				end
-				s = s .. "\n"
-			end
-			print(s)
+			-- local s = ("[%d][%d]:\n"):format(to, from)
+			-- for row = 1, from do
+			-- 	for col = 1, to do
+			-- 		s = s .. config[to][from][row][col]
+			-- 	end
+			-- 	if (not fromEven and row == fromHalfUp) or (fromEven and (row == fromHalfUp or row == fromHalfUp + 1)) then
+			-- 		s = s .. "--"
+			-- 	end
+			-- 	s = s .. "\n"
+			-- end
+			-- print(s)
         end
     end
 
-    -- printC(5, 20)
+    printC()
 end
 
 return TestScene
