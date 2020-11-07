@@ -12,7 +12,7 @@ function printT(parentTable)
     local tableStackSize = 1
     local toPrint = {}
     local toPrintSize = 0
-    local tableHistory = { tostring(parentTable) }
+    local tableHistory = { [tostring(parentTable)] = true }
     local tablesInT = {}
     while next(tableStack) ~= nil do
         t = tableStack[tableStackSize]
@@ -53,7 +53,7 @@ function writeT(parentTable, path)
     local tableStackSize = 1
     local toPrint = {}
     local toPrintSize = 0
-    local tableHistory = { tostring(parentTable) }
+    local tableHistory = { [tostring(parentTable)] = true }
     local tablesInT = {}
     while next(tableStack) ~= nil do
         t = tableStack[tableStackSize]
