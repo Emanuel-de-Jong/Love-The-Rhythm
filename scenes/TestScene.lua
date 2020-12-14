@@ -2,91 +2,52 @@
 testing stuff.
 --]]
 
-function getS(t)
-	local c = 0
-	for _, v in pairs(t) do
-		c = c + 1
-		if type(v) == "table" then c = c + getS(v) end
-	end
-	return c
-end
+local TestScene = Class:new()
 
-tableStrings = {}
-function getD(o, r)
-	if not r then
-		tableStrings = {}
-		r = 0
-	end
-	if type(o) == "table" then
-		local i = 0
-		local e = 0
-		for _ in pairs(o) do e = e + 1 end
-		local s = "{ -- " .. tostring(o) .. "\n"
-		for k, v in pairs(o) do
-			if type(k) ~= "number" then k = '"'..k..'"' end
-			if type(v) == "table" then
-				local ts = tostring(v)
-				if tableStrings[ts] then
-					v = '"'..ts..'"'
-				else
-					tableStrings[ts] = true
-					v = getD(v, r + 1)
-				end
-			else
-				v = getD(v, r + 1)
-			end
-			s = s .. ("\t"):rep(r) .. "\t["..k.."] = " .. v
-			i = i + 1
-			if i ~= e then s = s .. "," end
-			s = s .. "\n"
-		end
-		return s .. ("\t"):rep(r) .. "}"
-	else
-		return tostring(o)
-	end
-end
-
-function printS(t)
-	print(
-		("-"):rep(50) ..
-		"\nsize: " .. getS(t) ..
-		"\n" .. ("-"):rep(50)
-	)
-end
-
-function printD(t)
-	print(
-		("-"):rep(50) ..
-		"\ndump: \n" ..
-		getD(t) ..
-		"\n" .. ("-"):rep(50)
-	)
-end
-
-function printT(t)
-	print(
-		("-"):rep(50) ..
-		"\nsize: " .. getS(t) ..
-		"\n" .. ("-"):rep(50) ..
-		"\ndump: \n" ..
-		getD(t) ..
-		"\n" .. ("-"):rep(50)
-	)
-end
+toStart = 5
+toEnd = 20
+fromStart = 4
+fromEnd = 19
+printStyle = "code" -- simple, code
+-- printPath = "D:\\Media\\Downloads\\automap.txt"
 
 function round(x)
     return math.floor(x + 0.5)
 end
 
-local TestScene = Class:new()
-
 local config = {}
 
-function printC(toStart, toEnd, fromStart, fromEnd, path)
-    toStart = toStart or 5
-    toEnd = toEnd or 20
-    fromStart = fromStart or (toStart - 1)
-    fromEnd = fromEnd or (toEnd - 1)
+function printSimple()
+	local sum
+    local s = {}
+	for i = toStart, toEnd do
+		for j = fromStart, math.min(i - 1, fromEnd) do
+			s[#s+1] = ("\n[%d][%d]:\n"):format(i, j)
+			for x = 1, j do
+				for y = 1, i do
+					s[#s+1] = config[i][j][x][y]
+				end
+				sum = math.ceil(j / 2)
+				if x == sum or (j % 2 == 0 and x - 1 == sum) then
+					s[#s+1] = "--\n"
+				else
+					s[#s+1] = "\n"
+				end
+			end
+		end
+	end
+
+	if printPath then
+		local file = io.open(printPath, "w")
+		file:write(table.concat(s))
+		file:close()
+		print("done")
+	else
+		print(table.concat(s))
+	end
+end
+
+function printCode()
     local s = {}
 	for i = toStart, toEnd do
 		s[#s+1] = ("config[%d] = {}\n\n"):format(i)
@@ -97,15 +58,14 @@ function printC(toStart, toEnd, fromStart, fromEnd, path)
 				for y = 1, i do
 					s[#s+1] = config[i][j][x][y] .. ","
 				end
-
 				s[#s+1] = "},"
 			end
 			s[#s+1] = "\n}\n\n"
 		end
 	end
 
-	if path then
-		local file = io.open(path, "w")
+	if printPath then
+		local file = io.open(printPath, "w")
 		file:write(table.concat(s))
 		file:close()
 		print("done")
@@ -140,9 +100,9 @@ TestScene.load = function()
 
     local start
 
-    for to = 5, 88 do
+    for to = toStart, toEnd do
         config[to] = {}
-        for from = 4, to - 1 do
+        for from = fromStart, math.min(to - 1, fromEnd) do
 			config[to][from] = {}
 
 			toEven = to % 2 == 0 and true or false
@@ -247,23 +207,14 @@ TestScene.load = function()
 				
 				start = start - (groups[row] - 1)
 			end
-			
-			-- local s = ("[%d][%d]:\n"):format(to, from)
-			-- for row = 1, from do
-			-- 	for col = 1, to do
-			-- 		s = s .. config[to][from][row][col]
-			-- 	end
-			-- 	if (not fromEven and row == fromHalfUp) or (fromEven and (row == fromHalfUp or row == fromHalfUp + 1)) then
-			-- 		s = s .. "--"
-			-- 	end
-			-- 	s = s .. "\n"
-			-- end
-			-- print(s)
         end
-    end
+	end
 
-    printC(5, 88, 4, 87)
-    -- printC(5, 88, 4, 87, "D:\\Media\\Downloads\\automap.txt")
+	if printStyle == "simple" then
+		printSimple()
+	elseif printStyle == "code" then
+		printCode()
+	end
 end
 
 return TestScene
