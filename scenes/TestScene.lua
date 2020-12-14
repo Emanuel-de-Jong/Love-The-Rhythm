@@ -82,28 +82,36 @@ local TestScene = Class:new()
 
 local config = {}
 
-function printC(toStart, toEnd, fromStart, fromEnd)
+function printC(toStart, toEnd, fromStart, fromEnd, path)
     toStart = toStart or 5
     toEnd = toEnd or 20
     fromStart = fromStart or (toStart - 1)
     fromEnd = fromEnd or (toEnd - 1)
-    local s = ""
+    local s = {}
 	for i = toStart, toEnd do
-		s = s .. ("config[%d] = {}\n\n"):format(i)
+		s[#s+1] = ("config[%d] = {}\n\n"):format(i)
 		for j = fromStart, math.min(i - 1, fromEnd) do
-			s = s .. ("config[%d][%d] = {"):format(i, j)
+			s[#s+1] = ("config[%d][%d] = {"):format(i, j)
 			for x = 1, j do
-				s = s .. "\n\t{"
+				s[#s+1] = "\n\t{"
 				for y = 1, i do
-					s = s .. config[i][j][x][y] .. ","
+					s[#s+1] = config[i][j][x][y] .. ","
 				end
 
-				s = s .. "},"
+				s[#s+1] = "},"
 			end
-			s = s .. "\n}\n\n"
+			s[#s+1] = "\n}\n\n"
 		end
-    end
-    print(s)
+	end
+
+	if path then
+		local file = io.open(path, "w")
+		file:write(table.concat(s))
+		file:close()
+		print("done")
+	else
+		print(table.concat(s))
+	end
 end
 
 TestScene.load = function()
@@ -132,9 +140,9 @@ TestScene.load = function()
 
     local start
 
-    for to = 5, 20 do
+    for to = 5, 88 do
         config[to] = {}
-        for from = 1, to - 1 do
+        for from = 4, to - 1 do
 			config[to][from] = {}
 
 			toEven = to % 2 == 0 and true or false
@@ -254,7 +262,8 @@ TestScene.load = function()
         end
     end
 
-    printC()
+    printC(5, 88, 4, 87)
+    -- printC(5, 88, 4, 87, "D:\\Media\\Downloads\\automap.txt")
 end
 
 return TestScene
