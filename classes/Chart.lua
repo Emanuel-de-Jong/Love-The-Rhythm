@@ -7,13 +7,14 @@ local Chart = Class:new()
 -- decides how the data of the catrgory should be imported
 local typePerCategory = {
     Format = "format",
-    General = "setting",
-    Editor = "setting",
-    Metadata = "setting",
-    Difficulty = "setting",
-    Events = "event",
-    TimingPoints = "event",
-    HitObjects = "event"
+    General = "kv1space",
+    Editor = "kv1space",
+    Metadata = "kv",
+    Difficulty = "kv",
+    Events = "csl",
+    TimingPoints = "csl",
+    Colours = "kv2space",
+    HitObjects = "csl"
 }
 
 -- chart will be invalid if any of these values are missing
@@ -21,8 +22,11 @@ local requiredOptions = {
     General = {"AudioFilename", "PreviewTime", "Mode"},
     Editor = {},
     Metadata = {"Title", "Version"},
-    Difficulty = {},
-    Events = {}
+    Difficulty = {"CircleSize"}
+}
+
+local columnPerKeymode = {
+    ["4"] = {["64"] = 1, ["192"] = 2, ["320"] = 3, ["448"] = 4}
 }
 
 local function syncWithFile(self)
@@ -33,6 +37,7 @@ local function syncWithFile(self)
     self.Difficulty = {}
     self.Events = {}
     self.TimingPoints = {}
+    self.Colours = {}
     self.HitObjects = {}
 
     local category = "Format"
@@ -49,11 +54,16 @@ local function syncWithFile(self)
             else
                 if type == "format" then
                     self.Format = line:sub(#line - 1)
-                elseif type == "setting" then
+                elseif type == "kv" then
                     colonPos = line:find(":")
-                    -- key is before the colon, value after. the gsub removes spaces before and after the value
-                    self[category][line:sub(1, colonPos - 1)] = line:sub(colonPos + 1):gsub("^%s*(.-)%s*$", "%1")
-                elseif type == "event" then
+                    self[category][line:sub(1, colonPos - 1)] = line:sub(colonPos + 1)
+                elseif type == "kv1space" then
+                    colonPos = line:find(":")
+                    self[category][line:sub(1, colonPos - 1)] = line:sub(colonPos + 2)
+                elseif type == "kv2space" then
+                    colonPos = line:find(":")
+                    self[category][line:sub(1, colonPos - 2)] = line:sub(colonPos + 2)
+                elseif type == "csl" then
                     table.insert(self[category], line)
                 end
             end
@@ -72,18 +82,51 @@ local function checkValid(self)
         end
     end
 
+    if self.General.Mode ~= "3" or self.Difficulty.CircleSize ~= "4" then 
+        self.isValid = false
+        return false
+    end
+
     self.isValid = true
     return true
 end
 
-Chart.construct = function(self, path)
+local function setHitObjects(self)
+    local newHitObjects = {}
+    local index = nil
+    local keymode = self.Difficulty.CircleSize
+
+    for i, v in ipairs(self.HitObjects) do
+        newHitObjects[i] = {}
+        index = 1
+
+        for s in v:gmatch("([^,]+)") do
+            if index == 1 then
+                newHitObjects[i].column = columnPerKeymode[keymode][s]
+            elseif index == 3 then
+                newHitObjects[i].time = tonumber(s)
+            end
+            
+            index = index + 1
+        end
+    end
+
+    self.HitObjects = newHitObjects
+end
+
+Chart.construct = function(self, filename, path)
+    self.filename = filename
     self.path = path
 
     syncWithFile(self)
 
-    if checkValid(self) then
-        self.name = self.Metadata.Version
+    if not checkValid(self) then
+        return
     end
+    
+    self.name = self.Metadata.Version
+
+    setHitObjects(self)
 end
 
 return Chart
