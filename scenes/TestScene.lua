@@ -9,27 +9,26 @@ local font = FontManager.get("Helvetica.ttf", 22)
 local screenHeight = love.graphics.getHeight()
 
 local callbacks = {
-	"gamepadaxis",
-	"gamepadpressed",
-	"gamepadreleased",
-	"joystickadded",
-	"joystickaxis",
-	"joystickhat",
-	"joystickpressed",
-	"joystickreleased",
-	"joystickremoved",
 	"keypressed",
 	"keyreleased",
 	"mousefocus",
 	"mousemoved",
 	"mousepressed",
 	"mousereleased",
-	"textedited",
-	"textinput",
+	"wheelmoved",
+	"gamepadaxis",
+	"gamepadpressed",
+	"gamepadreleased",
+	"joystickadded",
+	"joystickremoved",
+	"joystickaxis",
+	"joystickhat",
+	"joystickpressed",
+	"joystickreleased",
 	"touchmoved",
 	"touchpressed",
 	"touchreleased",
-	"wheelmoved",
+	"textinput",
 }
 
 local values = {
@@ -102,11 +101,6 @@ local values = {
         button = "",
         istouch = "",
         presses = "",
-    },
-	textedited = {
-        text = "",
-        start = "",
-        length = "",
     },
 	textinput = {
         text = "",
