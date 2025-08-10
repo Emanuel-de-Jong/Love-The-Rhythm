@@ -2,61 +2,174 @@
 testing stuff.
 --]]
 
+local FontManager = require("instances/FontManager")
 local TestScene = Class:new()
 
-function printT(parentTable, path)
-    local file
-    if path then file = io.open(path, "w") end
-    local tostring, next, rep, type, format, pairs, concat, print = tostring, next, string.rep, type, string.format, pairs, table.concat, print
-    if type(parentTable) ~= "table" then
-        if path then
-            file:write(tostring(parentTable))
-            file:close()
-            return print("printT done")
+local font = FontManager.get("Helvetica.ttf", 22)
+local screenHeight = love.graphics.getHeight()
+
+local callbacks = {
+	"keypressed",
+	"keyreleased",
+	"mousefocus",
+	"mousemoved",
+	"mousepressed",
+	"mousereleased",
+	"wheelmoved",
+	"gamepadaxis",
+	"gamepadpressed",
+	"gamepadreleased",
+	"joystickadded",
+	"joystickremoved",
+	"joystickaxis",
+	"joystickhat",
+	"joystickpressed",
+	"joystickreleased",
+	"touchmoved",
+	"touchpressed",
+	"touchreleased",
+	"textinput",
+}
+
+local values = {
+	gamepadaxis = {
+        joystick = "",
+        axis = "",
+        value = "",
+    },
+	gamepadpressed = {
+        joystick = "",
+        button = "",
+    },
+    gamepadreleased = {
+        joystick = "",
+        button = "",
+    },
+	joystickadded = {
+        joystick = "",
+    },
+	joystickaxis = {
+        joystick = "",
+        axis = "",
+        value = "",
+    },
+	joystickhat = {
+        joystick = "",
+        hat = "",
+        direction = "",
+    },
+	joystickpressed = {
+        joystick = "",
+        button = "",
+    },
+	joystickreleased = {
+        joystick = "",
+        button = "",
+    },
+	joystickremoved = {
+        joystick = "",
+    },
+	keypressed = {
+        key = "",
+        scancode = "",
+        isrepeat = "",
+    },
+	keyreleased = {
+        key = "",
+        scancode = "",
+    },
+	mousefocus = {
+        focus = "",
+    },
+	mousemoved = {
+        x = "",
+        y = "",
+        dx = "",
+        dy = "",
+        istouch = "",
+    },
+    mousepressed = {
+        x = "",
+        y = "",
+        button = "",
+        istouch = "",
+        pressed = "",
+    },
+	mousereleased = {
+        x = "",
+        y = "",
+        button = "",
+        istouch = "",
+        presses = "",
+    },
+	textinput = {
+        text = "",
+    },
+	touchmoved = {
+        id = "",
+        x = "",
+        y = "",
+        dx = "",
+        dy = "",
+        pressure = "",
+    },
+    touchpressed = {
+        id = "",
+        x = "",
+        y = "",
+        dx = "",
+        dy = "",
+        pressure = "",
+    },
+	touchreleased = {
+        id = "",
+        x = "",
+        y = "",
+        dx = "",
+        dy = "",
+        pressure = "",
+    },
+	wheelmoved = {
+        x = "",
+        y = "",
+    },
+}
+
+TestScene.draw = function()
+    love.graphics.setFont(font)
+
+    local x = 30
+    local y = 20
+    for _, callback in pairs(callbacks) do
+        love.graphics.print(callback, x, y)
+
+        for key, value in pairs(values[callback]) do
+            y = y + 25
+            love.graphics.print(key .. ": " .. value, x + 15, y)
+        end
+
+        if y > screenHeight - 200 then
+            x = x + 400
+            y = 20
         else
-            return print(tostring(parentTable))
+            y = y + 45
         end
     end
-    local t, tTabs, tablesInTSize
-    local tableStack = {{ 1, parentTable, 1 }}
-    local tableStackSize = 1
-    local toPrint = {}
-    local toPrintSize = 0
-    local tableHistory = { [tostring(parentTable)] = true }
-    local tablesInT = {}
-    while next(tableStack) ~= nil do
-        t = tableStack[tableStackSize]
-        tTabs = rep("  ", t[3] - 1)
-        if type(t[1]) == "string" then t[1] = format("\"%s\"", t[1]) end
-        toPrintSize = toPrintSize + 1
-        toPrint[toPrintSize] = format("%s[%s] -- %s, depth: %d\n", tTabs, tostring(t[1]), tostring(t[2]), t[3])
-        tTabs = tTabs .. "  "
-        tablesInTSize = 0
-        for key, value in pairs(t[2]) do
-            if type(value) == "table" and tableHistory[tostring(value)] == nil then
-                tablesInTSize = tablesInTSize + 1
-                tablesInT[tablesInTSize] = { key, value, t[3] + 1 }
-                tableHistory[tostring(value)] = true
-            else
-                if type(key) == "string" then key = format("\"%s\"", key) end
-                if type(value) == "string" then value = format("\"%s\"", value) end
-                toPrintSize = toPrintSize + 1
-                toPrint[toPrintSize] = format("%s[%s] = %s\n", tTabs, tostring(key), tostring(value))
-            end
+end
+
+TestScene.resize = function(w, h)
+    screenHeight = love.graphics.getHeight()
+end
+
+for callback in pairs(values) do
+    TestScene[callback] = function(...)
+        local args = {...}
+        local i = 1
+
+        for key in pairs(values[callback]) do
+            values[callback][key] = tostring(args[i])
+            i = i + 1
         end
-        tableStack[tableStackSize] = nil
-        tableStackSize = tableStackSize - 1
-        for i = tablesInTSize, 1, -1 do
-            tableStackSize = tableStackSize + 1
-            tableStack[tableStackSize] = tablesInT[i]
-        end
-    end
-    if path then
-        file:write(concat(toPrint))
-        file:close()
-        print("printT done")
-    else
-        print(concat(toPrint))
     end
 end
 
