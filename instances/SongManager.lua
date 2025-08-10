@@ -51,7 +51,7 @@ SongManager.init = function()
 
     local song = nil
     for k, v in pairs(songPaths) do
-        song = Song:new(nil, v)
+        song = Song:new(nil, k, v)
         if song.isValid then
             table.insert(SongManager.songs, song)
         end
