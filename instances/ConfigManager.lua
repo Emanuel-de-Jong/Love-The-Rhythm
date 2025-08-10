@@ -1,5 +1,5 @@
 --[[
-reads from and writes to text files to keep data after closing.
+reads from and writes to text files to keep data after closing. 
 --]]
 
 local FileSystem = require("libraries/FileSystem")
