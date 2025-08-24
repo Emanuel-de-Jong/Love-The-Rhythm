@@ -1,4 +1,5 @@
 # Love The Rhythm
+A rhythm game written in Love2D. I made this not for the game itself, but to learn the framework, to learn how to make a custom OOP structure in this non OOP language and to have a codebase to make other projects on.
 
 **Active Development:** <br>
 **Last Change:** <br>
