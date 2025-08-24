@@ -1,1 +1,3 @@
 resources/configs/
+resources/songs/*
+!resources/songs/.gitkeep

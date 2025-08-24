@@ -6,7 +6,7 @@ A rhythm game written in Love2D. I made this not for the game itself, but to lea
 
 | | |
 | :---: | :---: |
-| ![](/Screenshots/.png) | ![](/Screenshots/.png) |
+| ![](/Screenshots/1-Main_Menu.png) | ![](/Screenshots/.png) |
 
 ## Setup
 1. Install Love2D [0.10.2](https://github.com/love2d/love/releases/tag/0.10.2).

@@ -7,7 +7,7 @@ local SceneManager = require("instances/SceneManager")
 local CollisionSystem = require("libraries/CollisionSystem")
 local MenuScene = Class:new()
 
-local title = {text="VSRRG", x = 0, y = 0, w = 0, h = 0, font = FontManager.get("Modak.ttf", 50)}
+local title = {text="VSRG", x = 0, y = 0, w = 0, h = 0, font = FontManager.get("Modak.ttf", 50)}
 
 local buttons = {
     {text = "Start", scene = "Select", x = 0, y = 0, w = 0, h = 0},
